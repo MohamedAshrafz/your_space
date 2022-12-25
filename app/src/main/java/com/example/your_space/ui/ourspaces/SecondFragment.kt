@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSecondBinding
@@ -36,7 +38,15 @@ class SecondFragment : Fragment() {
             OurSpacesAdabter{ spaceItem ->
                 spaceViewModel.onSelectSpaceItem(spaceItem)
             }
+        binding.lifecycleOwner = this
         binding.spaceItemsRecyclerView.adapter = adaptor
+        spaceViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->
+            if (selectedSpaceItem != null) {
+                requireView().findNavController()
+                    .navigate(R.id.action_SecondFragment_to_spaceDetailsFragment)
+
+            }
+        })
 
         return binding.root
 
