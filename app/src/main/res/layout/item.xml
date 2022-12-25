@@ -13,23 +13,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/itemLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/item_background">
 
         <ImageView
             android:id="@+id/item_img"
-            android:layout_width="224dp"
-            android:layout_height="160dp"
+            android:layout_width="197dp"
+            android:layout_height="156dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:src="@drawable/coworking"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@drawable/coworking" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/item_tv"
@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
-            android:text="Add your text here"
+            android:text="@{homeItem.textView}"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

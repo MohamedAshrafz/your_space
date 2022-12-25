@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import com.example.your_space.R
 import com.example.your_space.databinding.FragmentFirstBinding
 import com.example.your_space.databinding.ItemBinding
+import com.example.your_space.ui.ViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,8 +28,8 @@ class FirstFragment : Fragment() {
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        val homeViewModel by activityViewModels<HomeViewModel>()
-        homeViewModel.list.observe(viewLifecycleOwner, Observer { list ->
+        val homeViewModel by activityViewModels<ViewModel>()
+        homeViewModel.homeList.observe(viewLifecycleOwner, Observer { list ->
             for (item in list){
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 
