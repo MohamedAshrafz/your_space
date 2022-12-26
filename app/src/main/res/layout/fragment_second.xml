@@ -27,15 +27,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/spaceItemsRecyclerView"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:spaceItemsList="@{viewModel.spacesList}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgSpaces" />
+            app:layout_constraintTop_toBottomOf="@+id/imgSpaces"
+            app:spaceItemsList="@{viewModel.spacesList}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

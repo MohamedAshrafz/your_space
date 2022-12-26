@@ -5,8 +5,4 @@
 <!--        android:width="3dp"-->
 <!--        android:color="@color/item_shape_color" />-->
     <corners android:radius="@dimen/shape_item_radius" />
-    <padding
-        android:left="@dimen/shape_padding"
-        android:right="@dimen/shape_padding"
-        android:top="@dimen/shape_padding" />
 </shape>

@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.WindowCompat
+import androidx.core.view.forEach
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.findNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,7 +23,7 @@ import com.firebase.ui.auth.AuthUI
 
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var appBarConfiguration: AppBarConfiguration
+    //    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,22 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         // setting the bottom navigation with the navController
         binding.bottomNavigation.setupWithNavController(navController)
+
+        val listOfMenuItems = mutableListOf<MenuItem>()
+        binding.bottomNavigation.menu.forEach { item ->
+            listOfMenuItems.add(item)
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+                if (listOfMenuItems.any { it.itemId == destination.id }) {
+                    binding.bottomNavigation.visibility = View.VISIBLE
+                }
+                else{
+                    binding.bottomNavigation.visibility = View.GONE
+                }
+        }
+
 
 //        // getting the app bar configuration
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -74,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-            return super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
