@@ -14,7 +14,8 @@
         android:id="@+id/constraintLayoutSpaceItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/item_background">
+        android:layout_margin="@dimen/shape_padding"
+        android:background="@drawable/background_shape">
 
         <TextView
             android:id="@+id/tvTitle"

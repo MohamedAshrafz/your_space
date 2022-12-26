@@ -38,6 +38,7 @@ class SecondFragment : Fragment() {
             OurSpacesAdabter{ spaceItem ->
                 spaceViewModel.onSelectSpaceItem(spaceItem)
             }
+
         binding.lifecycleOwner = this
         binding.spaceItemsRecyclerView.adapter = adaptor
         spaceViewModel.navigateOnSelectedItem.observe(viewLifecycleOwner, Observer { navigateOnSelectedItem ->

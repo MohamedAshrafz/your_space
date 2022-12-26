@@ -12,9 +12,14 @@
         android:icon="@drawable/ic_baseline_place_48"
         android:title="@string/our_spaces"/>
     <item
-        android:id="@id/ThirdFragment"
+        android:id="@id/bookingFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_add_a_photo_48"
-        android:title="@string/add_photo"/>
+        android:icon="@drawable/ic_baseline_calendar_today_48"
+        android:title="@string/bookings"/>
+    <item
+        android:id="@+id/maps"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_48"
+        android:title="@string/maps"/>
 
 </menu>

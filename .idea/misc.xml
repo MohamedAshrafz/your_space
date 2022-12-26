@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable-anydpi/background_shape.xml" value="0.2265" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable-v24/ic_baseline_add_a_photo_48.xml" value="0.124" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/home_pin_48px.xml" value="0.2265" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.2265" />
@@ -13,11 +14,13 @@
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/coworking_space_item.xml" value="0.22826086956521738" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_first.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_second.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_space_details.xml" value="0.22826086956521738" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_third.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/item.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/drawer_menu.xml" value="0.253125" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/menu_main.xml" value="0.11302083333333333" />
         <entry key="..\:/your space/your_space/app/src/main/res/layout/activity_authentication.xml" value="0.20833333333333334" />
         <entry key="..\:/your space/your_space/app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />
