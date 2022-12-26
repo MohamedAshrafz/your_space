@@ -1,10 +1,11 @@
-package com.example.your_space
+package com.example.your_space.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.your_space.R
 
 
 class SpaceDetailsFragment : Fragment() {

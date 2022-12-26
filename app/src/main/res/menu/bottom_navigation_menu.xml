@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@id/FirstFragment"
+        android:id="@id/Home"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_48"
         android:title="@string/home"/>
     <item
         android:id="@id/SecondFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_48"
-        android:title="@string/map"/>
+        android:icon="@drawable/ic_baseline_place_48"
+        android:title="@string/our_spaces"/>
     <item
         android:id="@id/ThirdFragment"
         android:enabled="true"

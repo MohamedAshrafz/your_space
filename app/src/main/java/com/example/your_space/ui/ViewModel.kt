@@ -23,8 +23,17 @@ class ViewModel : ViewModel() {
     val selectedSpaceItem: LiveData<SpaceItem?>
         get() = _selectedSpaceItem
 
+    private val _navigateOnSelectedItem = MutableLiveData<Boolean>(false)
+    val navigateOnSelectedItem: LiveData<Boolean>
+        get() = _navigateOnSelectedItem
+
     fun onSelectSpaceItem(spaceItem: SpaceItem) {
         _selectedSpaceItem.value = spaceItem
+        _navigateOnSelectedItem.value = true
+    }
+
+    fun clearSelectedItem() {
+        _navigateOnSelectedItem.value = false
     }
 
 
@@ -34,16 +43,46 @@ class ViewModel : ViewModel() {
 
     private fun fillList() {
         _homeList.value?.apply {
-            add(HomeItem("go to our spaces","@drawable/coworking"))
-            add(HomeItem("go to our spaces","@drawable/coworking"))
-            add(HomeItem("go to our spaces","@drawable/coworking"))
+            add(HomeItem("go to our spaces", "@drawable/coworking"))
+            add(HomeItem("go to our spaces", "@drawable/coworking"))
+            add(HomeItem("go to our spaces", "@drawable/coworking"))
         }
         _spacesList.value?.apply {
-            add(SpaceItem("Co-working space 1","this is co-working space 1","@drawable/coworking"))
-            add(SpaceItem("Co-working space 2","this is co-working space 2","@drawable/coworking"))
-            add(SpaceItem("Co-working space 3","this is co-working space 3","@drawable/coworking"))
-            add(SpaceItem("Co-working space 4","this is co-working space 4","@drawable/coworking"))
-            add(SpaceItem("Co-working space 5","this is co-working space 5","@drawable/coworking"))
+            add(
+                SpaceItem(
+                    "Co-working space 1",
+                    "this is co-working space 1",
+                    "@drawable/coworking"
+                )
+            )
+            add(
+                SpaceItem(
+                    "Co-working space 2",
+                    "this is co-working space 2",
+                    "@drawable/coworking"
+                )
+            )
+            add(
+                SpaceItem(
+                    "Co-working space 3",
+                    "this is co-working space 3",
+                    "@drawable/coworking"
+                )
+            )
+            add(
+                SpaceItem(
+                    "Co-working space 4",
+                    "this is co-working space 4",
+                    "@drawable/coworking"
+                )
+            )
+            add(
+                SpaceItem(
+                    "Co-working space 5",
+                    "this is co-working space 5",
+                    "@drawable/coworking"
+                )
+            )
         }
     }
 }
