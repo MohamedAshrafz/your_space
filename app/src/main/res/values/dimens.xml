@@ -6,5 +6,6 @@
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="spaceDetails">16dp</dimen>
     <dimen name="shape_padding">20dp</dimen>
+    <dimen name="items_elevation">15dp</dimen>
 
 </resources>
