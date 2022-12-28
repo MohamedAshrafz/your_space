@@ -32,40 +32,45 @@ class ViewModel : ViewModel() {
     val selectedSpaceItem: LiveData<SpaceItem?>
         get() = _selectedSpaceItem
 
+    private val _navigateOnSelectedItem = MutableLiveData<Boolean>(false)
+    val navigateOnSelectedItem: LiveData<Boolean>
+        get() = _navigateOnSelectedItem
+
     fun onSelectSpaceItem(spaceItem: SpaceItem) {
         _selectedSpaceItem.value = spaceItem
-        //_navigateOnSelectedItem.value = true
-    }
-
-    fun clearSelectedItem() {
-        // _navigateOnSelectedItem.value = false
-        _selectedSpaceItem.value = null
+        _navigateOnSelectedItem.value = true
     }
 
     fun onCancelBookedItem(bookItem: BookItem) {
+        val  index = _bookedList.value?.indexOf(bookItem)
         _bookedList.value!!.remove(bookItem)
-        _showCancel.value = true
+        _showCancel.value = index
     }
 
     fun clearCancelBookedItem() {
-        _showCancel.value = false
+        _showCancel.value = -1
     }
 
     fun onDeleteBookedItem(bookItem: BookItem) {
+        val index = _bookHistoryList.value!!.indexOf(bookItem)
         _bookHistoryList.value!!.remove(bookItem)
-        _showDelete.value = true
+        _showDelete.value = index
     }
 
     fun clearDeleteBookedItem() {
-        _showDelete.value = false
+        _showDelete.value = -1
     }
 
-    private val _showCancel = MutableLiveData(false)
-    val showCancel: LiveData<Boolean>
+    fun clearSelectedItem() {
+        _navigateOnSelectedItem.value = false
+    }
+
+    private val _showCancel = MutableLiveData(-1)
+    val showCancel: LiveData<Int>
         get() = _showCancel
 
-    private val _showDelete = MutableLiveData(false)
-    val showDelete: LiveData<Boolean>
+    private val _showDelete = MutableLiveData(-1)
+    val showDelete: LiveData<Int>
         get() = _showDelete
 
 
@@ -76,8 +81,8 @@ class ViewModel : ViewModel() {
     private fun fillList() {
         _homeList.value?.apply {
             add(HomeItem("go to our spaces", "@drawable/coworking"))
-            add(HomeItem("Check your bookings", "@drawable/coworking"))
-            add(HomeItem("Found the nearest Co-working spaces now", "@drawable/coworking"))
+            add(HomeItem("go to our spaces", "@drawable/coworking"))
+            add(HomeItem("go to our spaces", "@drawable/coworking"))
         }
         _spacesList.value?.apply {
             add(

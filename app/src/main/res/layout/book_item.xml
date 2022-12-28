@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="bookItem"
+            type="com.example.your_space.ui.booking.BookItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutBookItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/shape_padding"
+        android:background="@drawable/background_shape"
+        android:elevation="@dimen/items_elevation"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/time_static_text"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/time_text"
+            app:layout_constraintStart_toStartOf="@+id/coworkingSpaceTitle_textView"
+            app:layout_constraintTop_toBottomOf="@+id/date_static_text" />
+
+        <ImageView
+            android:id="@+id/imgSpace"
+            android:layout_width="0dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/coworking" />
+
+        <TextView
+            android:id="@+id/date_static_text"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/date_text"
+            app:layout_constraintStart_toStartOf="@+id/coworkingSpaceTitle_textView"
+            app:layout_constraintTop_toBottomOf="@+id/coworkingSpaceTitle_textView" />
+
+        <TextView
+            android:id="@+id/coworkingSpaceTitle_textView"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{bookItem.spaceName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgSpace" />
+
+        <TextView
+            android:id="@+id/date_textView"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{bookItem.time}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/date_static_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/date_static_text" />
+
+        <TextView
+            android:id="@+id/time_textView"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{bookItem.date}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/time_static_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/time_static_text" />
+
+        <Button
+            android:id="@+id/func_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

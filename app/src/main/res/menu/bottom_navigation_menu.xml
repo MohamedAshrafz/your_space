@@ -20,6 +20,6 @@
         android:id="@+id/maps"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_map_48"
-        android:title="@string/maps"/>
+        android:title="@string/onMap"/>
 
 </menu>

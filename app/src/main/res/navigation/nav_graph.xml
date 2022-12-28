@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/Home"
         android:name="com.example.your_space.ui.homepage.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/home_label"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.your_space.ui.ourspaces.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/ourSpaces_label"
         tools:layout="@layout/fragment_second">
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
@@ -33,25 +33,28 @@
     <fragment
         android:id="@+id/spaceDetailsFragment"
         android:name="com.example.your_space.ui.SpaceDetailsFragment"
-        android:label="fragment_space_details"
+        android:label="@string/WorkSpaceDetails_label"
         tools:layout="@layout/fragment_space_details" >
         <action
             android:id="@+id/action_spaceDetailsFragment_to_SecondFragment2"
             app:destination="@id/SecondFragment" />
+        <argument
+            android:name="selectedSpaceItem"
+            app:argType="com.example.your_space.ui.ourspaces.SpaceItem" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.your_space.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/yourProfile_label"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.example.your_space.ui.aboutus.AboutUsFragment"
-        android:label="fragment_about_us"
+        android:label="@string/aboutUs_label"
         tools:layout="@layout/fragment_about_us" />
     <fragment
         android:id="@+id/bookingFragment"
         android:name="com.example.your_space.ui.booking.BookingFragment"
-        android:label="fragment_booking"
+        android:label="@string/Bookings_label"
         tools:layout="@layout/fragment_booking" />
 </navigation>

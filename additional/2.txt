@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.your_space.databinding.FragmentBookingBinding
 import com.example.your_space.ui.ViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 
 
@@ -77,26 +76,16 @@ class BookingFragment : Fragment() {
         })
 
         bookingViewModel.showDelete.observe(viewLifecycleOwner, Observer { value ->
-            if (value == true) {
-                _binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
+            if (value != -1) {
+                _binding.bookingRecyclerView.adapter?.notifyItemChanged(value)
                 bookingViewModel.clearDeleteBookedItem()
-                Snackbar.make(
-                    requireView(),
-                    "The item was successfully deleted",
-                    Snackbar.LENGTH_LONG
-                ).show()
             }
         })
 
         bookingViewModel.showCancel.observe(viewLifecycleOwner, Observer { value ->
-            if (value == true) {
-                _binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
+            if (value != -1) {
+                _binding.bookingRecyclerView.adapter?.notifyItemChanged(value)
                 bookingViewModel.clearCancelBookedItem()
-                Snackbar.make(
-                    requireView(),
-                    "The book was successfully cancelled",
-                    Snackbar.LENGTH_LONG
-                ).show()
             }
         })
 

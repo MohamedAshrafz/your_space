@@ -41,10 +41,11 @@ class SecondFragment : Fragment() {
 
         binding.lifecycleOwner = this
         binding.spaceItemsRecyclerView.adapter = adaptor
-        spaceViewModel.navigateOnSelectedItem.observe(viewLifecycleOwner, Observer { navigateOnSelectedItem ->
-            if (navigateOnSelectedItem) {
+
+        spaceViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->
+            if (selectedSpaceItem != null) {
                 requireView().findNavController()
-                    .navigate(R.id.action_SecondFragment_to_spaceDetailsFragment)
+                    .navigate(SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(selectedSpaceItem))
                 spaceViewModel.clearSelectedItem()
             }
         })

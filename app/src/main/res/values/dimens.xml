@@ -8,5 +8,6 @@
     <dimen name="shape_padding">10dp</dimen>
     <dimen name="items_elevation">15dp</dimen>
     <dimen name="shape_item_radius">20dp</dimen>
+    <dimen name="profile_font_size">20sp</dimen>
 
 </resources>

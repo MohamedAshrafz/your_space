@@ -2,8 +2,8 @@
     <string name="app_name">Your Space</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="home_label">Home</string>
+    <string name="ourSpaces_label">Our Spaces</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="home">Home</string>
@@ -12,7 +12,7 @@
     <string name="second_page">Second Page</string>
     <string name="first_page">First Page</string>
     <string name="bookings">Bookings</string>
-    <string name="maps">Maps</string>
+    <string name="onMap">On Map</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
@@ -24,4 +24,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Profile</string>
     <string name="about_us">About us</string>
+    <string name="date_text">Date:</string>
+    <string name="time_text">Time:</string>
+    <string name="Bookings_text">Bookings</string>
+    <string name="history_text">History</string>
+    <string name="aboutUs_label">About us</string>
+    <string name="yourProfile_label">Your Profile</string>
+    <string name="WorkSpaceDetails_label">Details</string>
+    <string name="Bookings_label">Bookings</string>
+    <string name="aboutus">We are a group of students studing Computer Engineering in Ain Shams University and we decided to develop
+        a mobile application to help students, teachers, and all the people to book a room for thier meeting</string>
 </resources>
