@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentFirstBinding
 import com.example.your_space.databinding.ItemBinding
 import com.example.your_space.ui.ViewModel
@@ -14,6 +15,10 @@ import com.example.your_space.ui.ViewModel
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+
+class ClassListener(val clickLL: () -> Unit) {
+}
+
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
@@ -27,18 +32,40 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        val listCL = mutableListOf<ClassListener>()
+
+        listCL.apply {
+            add(
+                ClassListener {
+                    findNavController().navigate(FirstFragmentDirections.actionFirstFragmentToSecondFragment())
+                })
+            add(
+                ClassListener {
+                    findNavController().navigate(FirstFragmentDirections.actionHomeToBookingFragment())
+                }
+            )
+            add(
+                ClassListener {}
+            )
+        }
+
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         val homeViewModel by activityViewModels<ViewModel>()
+        var i = 0
         homeViewModel.homeList.observe(viewLifecycleOwner, Observer { list ->
-            for (item in list){
+            for (item in list) {
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 
                 homeItemBinding.homeItem = item
+                homeItemBinding.itemLayout.setOnClickListener { listCL[list.indexOf(item)].clickLL() }
+
                 homeItemBinding.lifecycleOwner = this
 
                 binding.linearLayoutList.addView(homeItemBinding.itemLayout)
             }
         })
+
+        binding
         return binding.root
 
     }

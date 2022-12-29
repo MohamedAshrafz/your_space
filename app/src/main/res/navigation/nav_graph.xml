@@ -15,6 +15,9 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_Home_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"

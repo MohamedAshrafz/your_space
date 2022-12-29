@@ -49,14 +49,20 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-                if (listOfMenuItems.any { it.itemId == destination.id }) {
-                    binding.bottomNavigation.visibility = View.VISIBLE
-                }
-                else{
-                    binding.bottomNavigation.visibility = View.GONE
-                }
-        }
+            if (listOfMenuItems.any { it.itemId == destination.id }) {
+                binding.bottomNavigation.visibility = View.VISIBLE
+            } else {
+                binding.bottomNavigation.visibility = View.GONE
+            }
 
+            val item: MenuItem? = binding.toolbar.menu.findItem(R.id.logout)
+
+            if (item != null) {
+                item.isVisible = destination.id != R.id.profileFragment
+            }
+            // equal expression but more complicated
+//            binding.toolbar.menu.findItem(R.id.logout)?.isVisible = destination.id != R.id.profileFragment
+        }
 
 //        // getting the app bar configuration
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
