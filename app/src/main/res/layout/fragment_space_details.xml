@@ -17,14 +17,14 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@={spaceItem.spaceName}"
             android:textSize="34sp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,10 +42,11 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
             android:text="@={spaceItem.description}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Adress"
+            android:text="Address"
             android:textSize="@dimen/spaceDetails"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -103,10 +104,11 @@
 
         <TextView
             android:id="@+id/tvMobileSpaceDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             android:text="@={spaceItem.mobile}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -116,11 +118,11 @@
 
         <TextView
             android:id="@+id/textView18"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="46dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="187dp"
+            android:layout_marginEnd="16dp"
             android:text="Mobile"
             android:textSize="@dimen/spaceDetails"
             android:textStyle="bold"
@@ -141,11 +143,11 @@
 
         <TextView
             android:id="@+id/tvRatingSpaceDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="188dp"
+            android:layout_marginEnd="16dp"
             android:text="@={spaceItem.rating}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -165,11 +167,11 @@
 
         <TextView
             android:id="@+id/textView20"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="201dp"
+            android:layout_marginEnd="16dp"
             android:text="Offers free Wi-Fi"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
@@ -250,7 +252,7 @@
             android:id="@+id/book_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Book new"
+            android:text="Book now"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
