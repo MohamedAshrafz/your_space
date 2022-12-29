@@ -1,11 +1,14 @@
 package com.example.your_space.ui
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.your_space.R
+import com.example.your_space.databinding.FragmentSpaceDetailsBinding
+import com.example.your_space.ui.SpaceDetailsFragmentArgs.Companion.fromBundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -20,7 +23,14 @@ class SpaceDetailsFragment : Fragment() {
 //        activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)?.let {
 //            it.visibility = View.GONE
 //        }
-        return inflater.inflate(R.layout.fragment_space_details, container, false)
+        val binding = FragmentSpaceDetailsBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+
+        val spaceItem = SpaceDetailsFragmentArgs.fromBundle(requireArguments()).selectedSpaceItem
+
+        binding.spaceItem = spaceItem
+
+        return binding.root
     }
 
 
