@@ -60,4 +60,13 @@
         android:name="com.example.your_space.ui.booking.BookingFragment"
         android:label="@string/Bookings_label"
         tools:layout="@layout/fragment_booking" />
+    <fragment
+        android:id="@+id/addNewSpaceFragment"
+        android:name="com.example.your_space.ui.AddNewSpaceFragment"
+        android:label="fragment_add_new_space"
+        tools:layout="@layout/fragment_add_new_space" >
+        <action
+            android:id="@+id/action_addNewSpaceFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+    </fragment>
 </navigation>

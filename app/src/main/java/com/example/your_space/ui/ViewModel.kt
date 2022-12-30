@@ -1,5 +1,6 @@
 package com.example.your_space.ui
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -214,5 +215,14 @@ class ViewModel : ViewModel() {
             )
         }
 
+    }
+    fun isNull(spaceItem: SpaceItem) : Boolean {
+        if (spaceItem.spaceName.isNullOrEmpty()||
+            spaceItem.mobile.isNullOrEmpty()||
+            spaceItem.description.isNullOrEmpty()||
+            spaceItem.location.isNullOrEmpty()){
+            return true
+        }
+        return false
     }
 }

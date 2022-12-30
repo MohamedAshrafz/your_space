@@ -34,4 +34,5 @@
     <string name="Bookings_label">Bookings</string>
     <string name="aboutus">We are a group of students studing Computer Engineering in Ain Shams University and we decided to develop
         a mobile application to help students, teachers, and all the people to book a room for thier meeting</string>
+    <string name="addNewSpace">Add new co-working space</string>
 </resources>
