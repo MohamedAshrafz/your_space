@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BookItem(
-    val spaceName: String,
-    val Date: String,
+    val bookName: String,
+    val date: String,
     val time: String
 ): Parcelable

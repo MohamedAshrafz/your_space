@@ -13,5 +13,9 @@
         android:id="@id/addNewSpaceFragment"
         android:enabled="true"
         android:title="@string/addNewSpace" />
+    <item
+        android:id="@id/addNewBookFragment"
+        android:enabled="true"
+        android:title="@string/add_new_booking" />
 
 </menu>

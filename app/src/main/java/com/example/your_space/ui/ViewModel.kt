@@ -1,6 +1,5 @@
 package com.example.your_space.ui
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -216,13 +215,27 @@ class ViewModel : ViewModel() {
         }
 
     }
-    fun isNull(spaceItem: SpaceItem) : Boolean {
-        if (spaceItem.spaceName.isNullOrEmpty()||
-            spaceItem.mobile.isNullOrEmpty()||
-            spaceItem.description.isNullOrEmpty()||
-            spaceItem.location.isNullOrEmpty()){
+    fun isEmptySpace(spaceItem: SpaceItem) : Boolean {
+        if (spaceItem.spaceName.isEmpty()||
+            spaceItem.mobile.isEmpty()||
+            spaceItem.description.isEmpty()||
+            spaceItem.location.isEmpty()){
             return true
         }
         return false
+    }
+    fun isEmptyBook(bookItem: BookItem) : Boolean {
+        if (bookItem.bookName.isEmpty()||
+            bookItem.date.isEmpty()||
+            bookItem.time.isEmpty()){
+            return true
+        }
+        return false
+    }
+
+    fun addNewBook(bookItem: BookItem){
+        _bookedList.value?.add(
+            bookItem
+        )
     }
 }

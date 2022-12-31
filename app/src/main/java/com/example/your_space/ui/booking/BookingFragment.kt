@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentBookingBinding
 import com.example.your_space.ui.ViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -97,6 +99,19 @@ class BookingFragment : Fragment() {
                     "The book was successfully cancelled",
                     Snackbar.LENGTH_LONG
                 ).show()
+            }
+        })
+
+        _binding.addBookFab.setOnClickListener {
+            findNavController().navigate(BookingFragmentDirections.actionBookingFragmentToAddNewBookFragment())
+        }
+
+        _binding.bookingRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0)
+                    _binding.addBookFab.hide()
+                else if (dy < 0)
+                    _binding.addBookFab.show()
             }
         })
 

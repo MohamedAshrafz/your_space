@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             val item: MenuItem? = binding.toolbar.menu.findItem(R.id.logout)
 
             if (item != null) {
-                item.isVisible = destination.id != R.id.profileFragment
+                item.isVisible = listOfMenuItems.any { it.itemId == destination.id }
             }
             // equal expression but more complicated
 //            binding.toolbar.menu.findItem(R.id.logout)?.isVisible = destination.id != R.id.profileFragment

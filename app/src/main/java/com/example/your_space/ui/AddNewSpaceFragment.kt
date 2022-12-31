@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.your_space.R
 import com.example.your_space.databinding.FragmentAddNewSpaceBinding
 import com.example.your_space.ui.ourspaces.SpaceItem
 
@@ -40,15 +39,13 @@ class AddNewSpaceFragment : Fragment() {
                 "20-30 per hour",
                 binding.etSpaceDescription.text.toString(),
                 "drawable-v24/coworking.jpg")
-            if (!viewModel.isNull(spaceItem)){
+            if (!viewModel.isEmptySpace(spaceItem)){
                 viewModel.spacesList.value?.apply {
                     add(spaceItem)
                 }
                 findNavController().navigate(AddNewSpaceFragmentDirections.actionAddNewSpaceFragmentToSecondFragment())
             }
             else Toast.makeText(context,"Plaese Fill All Data",Toast.LENGTH_SHORT).show()
-
-
 
         }
 
