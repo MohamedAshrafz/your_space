@@ -84,7 +84,7 @@
             android:ems="10"
             android:hint="Specify co-working space"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="@+id/textView23"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView23"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline3" />
