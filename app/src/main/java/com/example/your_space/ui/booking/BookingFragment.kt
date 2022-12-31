@@ -18,6 +18,8 @@ import com.google.android.material.tabs.TabLayout
 class BookingFragment : Fragment() {
     private lateinit var _binding: FragmentBookingBinding
 
+    private var inHistoryTab = false
+
     companion object {
         const val bookingTabPosition = 0
         const val historyTabPosition = 1
@@ -61,10 +63,12 @@ class BookingFragment : Fragment() {
                         bookingTabPosition -> {
                             _binding.bookingRecyclerView.adapter = adaptorBooking
                             _binding.addBookFab.show()
+                            inHistoryTab = false
                         }
                         historyTabPosition -> {
                             _binding.bookingRecyclerView.adapter = adaptorHistory
                             _binding.addBookFab.hide()
+                            inHistoryTab = true
                         }
                     }
                 }
@@ -110,10 +114,12 @@ class BookingFragment : Fragment() {
 
         _binding.bookingRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0)
-                    _binding.addBookFab.hide()
-                else if (dy < 0)
-                    _binding.addBookFab.show()
+                if (!inHistoryTab){
+                    if (dy > 0)
+                        _binding.addBookFab.hide()
+                    else if (dy < 0)
+                        _binding.addBookFab.show()
+                }
             }
         })
 
