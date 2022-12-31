@@ -10,11 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSecondBinding
 import com.example.your_space.ui.ViewModel
-import com.example.your_space.ui.booking.BookingFragmentDirections
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -49,19 +47,6 @@ class SecondFragment : Fragment() {
                 requireView().findNavController()
                     .navigate(SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(selectedSpaceItem))
                 spaceViewModel.clearSelectedItem()
-            }
-        })
-
-        binding.addSpaceFab.setOnClickListener {
-            findNavController().navigate(SecondFragmentDirections.actionSecondFragmentToAddNewSpaceFragment())
-        }
-
-        binding.spaceItemsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0)
-                    binding.addSpaceFab.hide()
-                else if (dy < 0)
-                    binding.addSpaceFab.show()
             }
         })
 

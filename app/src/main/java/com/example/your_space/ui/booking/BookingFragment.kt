@@ -60,9 +60,11 @@ class BookingFragment : Fragment() {
                     when (tab.position) {
                         bookingTabPosition -> {
                             _binding.bookingRecyclerView.adapter = adaptorBooking
+                            _binding.addBookFab.show()
                         }
                         historyTabPosition -> {
                             _binding.bookingRecyclerView.adapter = adaptorHistory
+                            _binding.addBookFab.hide()
                         }
                     }
                 }
