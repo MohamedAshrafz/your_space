@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import com.example.your_space.R
 import com.example.your_space.databinding.FragmentFirstBinding
 import com.example.your_space.databinding.ItemBinding
 import com.example.your_space.ui.ViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -37,11 +40,21 @@ class FirstFragment : Fragment() {
         listCL.apply {
             add(
                 ClassListener {
-                    findNavController().navigate(FirstFragmentDirections.actionFirstFragmentToSecondFragment())
+                    val bottomNavigationView =
+                        activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                    val menuItem1 = bottomNavigationView?.menu?.get(1)
+                    if (menuItem1 != null) {
+                        NavigationUI.onNavDestinationSelected(menuItem1, findNavController())
+                    }
                 })
             add(
                 ClassListener {
-                    findNavController().navigate(FirstFragmentDirections.actionHomeToBookingFragment())
+                    val bottomNavigationView =
+                        activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+                    val menuItem2 = bottomNavigationView?.menu?.get(2)
+                    if (menuItem2 != null) {
+                        NavigationUI.onNavDestinationSelected(menuItem2, findNavController())
+                    }
                 }
             )
             add(
@@ -51,8 +64,8 @@ class FirstFragment : Fragment() {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         val homeViewModel by activityViewModels<ViewModel>()
-        var i = 0
-        homeViewModel.homeList.observe(viewLifecycleOwner, Observer { list ->
+
+        homeViewModel.homeList.observe(viewLifecycleOwner) { list ->
             for (item in list) {
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 
@@ -63,9 +76,7 @@ class FirstFragment : Fragment() {
 
                 binding.linearLayoutList.addView(homeItemBinding.itemLayout)
             }
-        })
-
-        binding
+        }
         return binding.root
 
     }
