@@ -141,35 +141,35 @@ class ViewModel : ViewModel() {
             add(
                 BookItem(
                     "Booked 1",
-                    "11 11 1111",
+                    "11/11/1111",
                     "11:11"
                 )
             )
             add(
                 BookItem(
                     "Booked 2",
-                    "22 22 2211",
+                    "22/22/2211",
                     "22:22"
                 )
             )
             add(
                 BookItem(
                     "Booked 3",
-                    "33 33 3311",
+                    "33/33/3311",
                     "33:33"
                 )
             )
             add(
                 BookItem(
                     "Booked 4",
-                    "44 44 4411",
+                    "44/44/4411",
                     "44:44"
                 )
             )
             add(
                 BookItem(
                     "Booked 5",
-                    "55 55 5511",
+                    "55/55/5511",
                     "55:55"
                 )
             )
@@ -180,35 +180,35 @@ class ViewModel : ViewModel() {
             add(
                 BookItem(
                     "History booked 1",
-                    "11 11 1111",
+                    "11/11/1111",
                     "11:11"
                 )
             )
             add(
                 BookItem(
                     "History booked 2",
-                    "22 22 2211",
+                    "22/22/2211",
                     "22:22"
                 )
             )
             add(
                 BookItem(
                     "History booked 3",
-                    "33 33 3311",
+                    "33/33/3311",
                     "33:33"
                 )
             )
             add(
                 BookItem(
                     "History booked 4",
-                    "44 44 4411",
+                    "44/44/4411",
                     "44:44"
                 )
             )
             add(
                 BookItem(
                     "History booked 5",
-                    "55 55 5511",
+                    "55/55/5511",
                     "55:55"
                 )
             )

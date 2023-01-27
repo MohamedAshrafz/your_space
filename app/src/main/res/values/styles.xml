@@ -15,4 +15,13 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="tabLayoutTheme">
+        <item name="colorSurface">#00FFFFFF</item>
+        <item name="colorPrimary">@color/button_color</item>
+    </style>
+
+    <style name="AppBarLayoutTheme">
+        <item name="colorSurface">#00FFFFFF</item>
+    </style>
 </resources>

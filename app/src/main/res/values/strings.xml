@@ -20,8 +20,6 @@
     <string name="login_text">login</string>
     <string name="hi_there_please_login">Hi there, please login</string>
     <string name="logout">logout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Profile</string>
     <string name="about_us">About us</string>
     <string name="date_text">Date:</string>
@@ -32,8 +30,11 @@
     <string name="yourProfile_label">Your Profile</string>
     <string name="WorkSpaceDetails_label">Details</string>
     <string name="Bookings_label">Bookings</string>
-    <string name="aboutus">We are a group of students studing Computer Engineering in Ain Shams University and we decided to develop
-        a mobile application to help students, teachers, and all the people to book a room for thier meeting</string>
+    <string name="aboutus">We are a group of students studying Computer Engineering in Ain Shams University and we decided to develop
+        a mobile application to help students, teachers, and all the people to book a room for their meeting</string>
     <string name="addNewSpace">Add new co-working space</string>
     <string name="add_new_booking">Add new booking</string>
+    <string name="google_maps_key">AIzaSyB4BQaboRt9fl4_IlmDPUwAV_BS3VeWTmw</string>
+    <string name="error_permission_needed">You need to grant location permission in order to for this app to work normally.</string>
+    <string name="Asking_to_enable_the_location">App cannot work without getting the location, please enable it</string>
 </resources>

@@ -89,4 +89,9 @@
             app:popUpTo="@id/bookingFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.your_space.ui.map.MapsFragment"
+        android:label="@string/onMap"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

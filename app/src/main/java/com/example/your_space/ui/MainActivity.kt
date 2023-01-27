@@ -20,11 +20,15 @@ import com.example.your_space.R
 import com.example.your_space.databinding.ActivityMainBinding
 import com.example.your_space.ui.authentication.AuthenticationActivity
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     //    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    // for saving the state of error_snackbar to dismiss it later when the location is enabled
+    var locationErrorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

@@ -2,6 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="item_background">#1E254B</color>
-    <color name="item_shape_color">#1E254B</color>
+    <color name="item_shape_color">#203647</color>
+
+    <color name="button_color">#007cc7</color>
+    <color name="fab_color">#D4EEFF</color>
+
+    <color name="colorSurface">#EBF7FF</color>
+    <color name="colorSecondaryContainer">#7AC9FA</color>
 </resources>

@@ -2,27 +2,35 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Your_space" parent="Theme.Material3.DayNight.NoActionBar">
         <!--         Customize your light theme here.-->
-<!--        <item name="colorPrimary">@color/my_light_primary</item>-->
-        <!--        <item name="colorAccent">@color/colorAccent</item>-->
-<!--        <item name="colorSecondaryContainer">@color/colorAccent</item>-->
-        <!--        <item name="colorOnSecondaryContainer">@color/black</item>-->
-        <!--        <item name="colorOnSurfaceVariant">@android:color/darker_gray</item>-->
-        <!--        <item name="colorSecondary">@color/black</item>-->
-        <item name="android:navigationBarColor">@color/design_default_color_surface</item>
+<!--        <item name="colorPrimary">#0E577C</item>-->
+<!--        <item name="colorAccent">#6ab343</item>-->
+
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+
+<!--        <item name="colorOnSecondaryContainer">@color/white</item>-->
+<!--        <item name="colorOnSurfaceVariant">#D8D6D6</item>-->
+<!--        <item name="colorOnSurface">@color/white</item>-->
+
+
+<!--        <item name="colorSecondary">@color/black</item>-->
+<!--        <item name="android:navigationBarColor">#0E577C</item>-->
     </style>
 
     <style name="Theme.Your_space" parent="Base.Theme.Your_space" />
 
-<!--    <color name="my_light_primary">#03A9F4</color>-->
-<!--    <color name="colorAccent">#95DDFD</color>-->
-<!--    <color name="colorPrimary">#6ab343</color>-->
-<!--    <color name="colorPrimaryDark">#1f691e</color>-->
-<!--    <color name="colorLightGreen">#43b354</color>-->
-<!--    <color name="colorDarkGreen">#258135</color>-->
+    <!--    <color name="my_light_primary">#03A9F4</color>-->
+    <color name="colorAccent">#4dabda</color>
+    <color name="colorPrimary">#6ab343</color>
+    <!--    <color name="colorPrimaryDark">#1f691e</color>-->
+    <!--    <color name="colorLightGreen">#43b354</color>-->
+    <!--    <color name="colorDarkGreen">#258135</color>-->
     <style name="Theme.Your_space.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="Theme.Your_space.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.Your_space.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
