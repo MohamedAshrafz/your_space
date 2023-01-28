@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSpaceDetailsBinding
 import com.example.your_space.ui.SpaceDetailsFragmentArgs.Companion.fromBundle
@@ -27,6 +28,14 @@ class SpaceDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val spaceItem = SpaceDetailsFragmentArgs.fromBundle(requireArguments()).selectedSpaceItem
+
+        binding.bookButton.setOnClickListener {
+            findNavController().navigate(
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToAddNewBookingFromWS2(
+                    spaceItem
+                )
+            )
+        }
 
         binding.spaceItem = spaceItem
 

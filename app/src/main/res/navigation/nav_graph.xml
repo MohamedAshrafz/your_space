@@ -47,6 +47,9 @@
         <argument
             android:name="selectedSpaceItem"
             app:argType="com.example.your_space.ui.ourspaces.SpaceItem" />
+        <action
+            android:id="@+id/action_spaceDetailsFragment_to_addNewBookingFromWS2"
+            app:destination="@id/addNewBookingFromWS" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -94,4 +97,18 @@
         android:name="com.example.your_space.ui.map.MapsFragment"
         android:label="@string/onMap"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/addNewBookingFromWS"
+        android:name="com.example.your_space.ui.booking.addnewbook_ws.AddNewBookingFromWS"
+        android:label="New booking"
+        tools:layout="@layout/fragment_add_new_booking_from_w_s">
+        <argument
+            android:name="selectedSpace"
+            app:argType="com.example.your_space.ui.ourspaces.SpaceItem" />
+        <action
+            android:id="@+id/action_addNewBookingFromWS_to_bookingFragment"
+            app:destination="@id/bookingFragment"
+            app:popUpTo="@id/SecondFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
