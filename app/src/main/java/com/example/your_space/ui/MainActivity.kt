@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.forEach
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     //    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var navController: NavController
+    lateinit var toggle: ActionBarDrawerToggle
+
     // for saving the state of error_snackbar to dismiss it later when the location is enabled
     var locationErrorSnackbar: Snackbar? = null
 
@@ -39,17 +45,39 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
 
         // setting the drawer navigation with the navController
         binding.navView.setupWithNavController(navController)
         // setting the bottom navigation with the navController
         binding.bottomNavigation.setupWithNavController(navController)
 
+//        // getting the app bar configuration
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, binding.drawerLayout)
+
         val listOfMenuItems = mutableListOf<MenuItem>()
         binding.bottomNavigation.menu.forEach { item ->
             listOfMenuItems.add(item)
         }
+
+        val actionBar = (this as AppCompatActivity).supportActionBar
+
+        val drawerLayout = binding.drawerLayout
+        val navigationView = binding.navView
+        val toolbar = binding.toolbar
+
+        toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.Bookings_text,
+            R.string.Bookings_label
+        )
+
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
@@ -58,26 +86,28 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.bottomNavigation.visibility = View.GONE
             }
-
-            val item: MenuItem? = binding.toolbar.menu.findItem(R.id.logout)
-
-            if (item != null) {
-                item.isVisible = listOfMenuItems.any { it.itemId == destination.id }
-            }
-            // equal expression but more complicated
-//            binding.toolbar.menu.findItem(R.id.logout)?.isVisible = destination.id != R.id.profileFragment
         }
-
-//        // getting the app bar configuration
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        setupActionBarWithNavController(navController, binding.drawerLayout)
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        val listOfMenuItems = mutableListOf<MenuItem>()
+        binding.bottomNavigation.menu.forEach { item ->
+            listOfMenuItems.add(item)
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+            val item: MenuItem? = binding.toolbar.menu.findItem(R.id.logout)
+
+            if (item != null) {
+                item.isVisible = listOfMenuItems.any { it.itemId == destination.id }
+            }
+        }
+
         return true
     }
 
