@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                     // finishing the current activity
                     finish()
 
+                    
                     // launch the sign-in activity
                     val authenticationActivityIntent =
                         Intent(
