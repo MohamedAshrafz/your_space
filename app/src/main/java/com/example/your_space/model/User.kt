@@ -10,7 +10,6 @@ data class User (
         val password : String,
         val mobileNo : String,
         val address : String,
-        val birthDate : Date,
         val bio : String,
         val points : Int,
         val picture : String,

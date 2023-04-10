@@ -2,16 +2,9 @@ package com.example.your_space.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.your_space.model.Booking
-import com.example.your_space.model.Request
-import com.example.your_space.model.Room
-import com.example.your_space.model.User
-import java.sql.Time
-import java.time.LocalDate
-import java.util.*
 
 @Entity(tableName = "SpaceItems_table")
-data class DatabaseSpaceItem(
+data class SpaceItemDB(
     @PrimaryKey
     var id: Int,
     var spaceName: String,
@@ -23,8 +16,8 @@ data class DatabaseSpaceItem(
     val img: String
 )
 
-@Entity(tableName = "user_table")
-data class User(
+@Entity(tableName = "users_table")
+data class UserDB(
     @PrimaryKey
     val userId : Int,
     val email : String,
@@ -33,16 +26,13 @@ data class User(
     val password : String,
     val mobileNo : String,
     val address : String,
-    val birthDate : Date,
     val bio : String,
     val points : Int,
-    val picture : String,
-    val requests : List<Request>,
-    val bookings : List<Booking>
+    val picture : String
 )
 
-@Entity(tableName = "request_table")
-data class Request(
+@Entity(tableName = "requests_table")
+data class RequestDB(
     @PrimaryKey
     val requestId : Int,
     val name : String,
@@ -51,8 +41,8 @@ data class Request(
     val noOfRooms : Int
 )
 
-@Entity(tableName = "SpaceRoom_table")
-data class SpaceRoom(
+@Entity(tableName = "spaceRooms_table")
+data class SpaceRoomDB(
     @PrimaryKey
     val roomId : Int,
     val number : Int,
@@ -60,12 +50,11 @@ data class SpaceRoom(
     val activity : String,
     val type : String,
     val price : Float,
-    val image : String,
-    val bookings : List<Booking>
+    val image : String
 )
 
-@Entity(tableName = "space_table")
-data class Space(
+@Entity(tableName = "workingSpaces_table")
+data class WorkingSpaceDB(
     @PrimaryKey
     val spaceId : Int,
     val address : String,
@@ -78,22 +67,15 @@ data class Space(
     val contactNumber : String,
     val minPrice : Double,
     val maxPrice : Double,
-    val startTime : Time,
-    val endTime : Time,
     val drinks : Boolean,
     val owner : String,
     val outdoors : Boolean
 )
 
 @Entity(tableName = "booking_table")
-data class Booking(
+data class BookingDB(
     @PrimaryKey
     val id : Int,
-    val startTime : Time,
-    val endTime : Time,
-    val date : LocalDate,
-    val room : Room,
-    val user : User
 )
 
 

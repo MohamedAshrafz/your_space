@@ -1,14 +1,14 @@
 package com.example.your_space.database
 
 import android.content.Context
-import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
 @Database(
-    entities = [DatabaseSpaceItem::class, User::class, Request::class, Room::class, Space::class, Booking::class, SpaceRoom::class],
+    entities = [SpaceItemDB::class, UserDB::class, RequestDB::class,
+        WorkingSpaceDB::class, BookingDB::class, SpaceRoomDB::class],
     version = 1,
     exportSchema = false
 )

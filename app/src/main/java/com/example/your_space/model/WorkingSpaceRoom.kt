@@ -1,6 +1,6 @@
 package com.example.your_space.model
 
-data class Room (
+data class WorkingSpaceRoom (
     val roomId : Int,
     val number : Int,
     val name : String,

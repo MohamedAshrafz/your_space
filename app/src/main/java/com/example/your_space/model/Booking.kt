@@ -7,7 +7,6 @@ data class Booking (
     val id : Int,
     val startTime : Time,
     val endTime : Time,
-    val date : LocalDate,
-    val room : Room,
+    val room : WorkingSpaceRoom,
     val user : User
         )
