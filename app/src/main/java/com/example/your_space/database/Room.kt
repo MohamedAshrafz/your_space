@@ -7,7 +7,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [DatabaseSpaceItem::class], version = 1, exportSchema = false)
+@Database(
+    entities = [DatabaseSpaceItem::class, User::class, Request::class, Room::class, Space::class, Booking::class, SpaceRoom::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: AppDao
 

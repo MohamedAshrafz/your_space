@@ -23,7 +23,7 @@ data class DatabaseSpaceItem(
     val img: String
 )
 
-@Entity(tableName = "user")
+@Entity(tableName = "user_table")
 data class User(
     @PrimaryKey
     val userId : Int,
@@ -41,7 +41,7 @@ data class User(
     val bookings : List<Booking>
 )
 
-@Entity(tableName = "request")
+@Entity(tableName = "request_table")
 data class Request(
     @PrimaryKey
     val requestId : Int,
@@ -51,8 +51,8 @@ data class Request(
     val noOfRooms : Int
 )
 
-@Entity(tableName = "room")
-data class Room(
+@Entity(tableName = "SpaceRoom_table")
+data class SpaceRoom(
     @PrimaryKey
     val roomId : Int,
     val number : Int,
@@ -64,7 +64,7 @@ data class Room(
     val bookings : List<Booking>
 )
 
-@Entity(tableName = "space")
+@Entity(tableName = "space_table")
 data class Space(
     @PrimaryKey
     val spaceId : Int,
@@ -85,7 +85,7 @@ data class Space(
     val outdoors : Boolean
 )
 
-@Entity(tableName = "booking")
+@Entity(tableName = "booking_table")
 data class Booking(
     @PrimaryKey
     val id : Int,
