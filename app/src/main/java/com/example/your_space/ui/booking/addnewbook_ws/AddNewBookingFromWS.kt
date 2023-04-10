@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentAddNewBookingFromWSBinding
-import com.example.your_space.ui.SpaceDetailsFragmentArgs
-import com.example.your_space.ui.ViewModel
+import com.example.your_space.ui.AppViewModel
 import com.example.your_space.ui.booking.BookItem
-import com.example.your_space.ui.booking.addnewbook.AddNewBookFragmentDirections
 
 class AddNewBookingFromWS : Fragment() {
     lateinit var _binding: FragmentAddNewBookingFromWSBinding
@@ -33,7 +31,7 @@ class AddNewBookingFromWS : Fragment() {
 
         _binding.bookNameEditText.text = spaceItem.spaceName
 
-        val addNewBookViewModel by activityViewModels<ViewModel>()
+        val addNewBookAppViewModel by activityViewModels<AppViewModel>()
 
         _binding.btnAddNewBook.setOnClickListener {
             val newBook = BookItem(
@@ -42,8 +40,8 @@ class AddNewBookingFromWS : Fragment() {
                 _binding.bookTimeEditText.text.toString()
             )
 
-            if (!addNewBookViewModel.isEmptyBook(newBook)){
-                addNewBookViewModel.addNewBook(newBook)
+            if (!addNewBookAppViewModel.isEmptyBook(newBook)){
+                addNewBookAppViewModel.addNewBook(newBook)
                 findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
             } else{
                 Toast.makeText(context,"Please Fill All Data", Toast.LENGTH_SHORT).show()

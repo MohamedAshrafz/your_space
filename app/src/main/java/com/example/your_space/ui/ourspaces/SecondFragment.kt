@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSecondBinding
-import com.example.your_space.ui.ViewModel
+import com.example.your_space.ui.AppViewModel
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -29,24 +29,24 @@ class SecondFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
-        val spaceViewModel by activityViewModels<ViewModel>()
-        binding.viewModel = spaceViewModel
+        val spaceAppViewModel by activityViewModels<AppViewModel>()
+        binding.viewModel = spaceAppViewModel
         val adaptor =
             OurSpacesAdabter{ spaceItem ->
-                spaceViewModel.onSelectSpaceItem(spaceItem)
+                spaceAppViewModel.onSelectSpaceItem(spaceItem)
             }
 
         binding.lifecycleOwner = this
         binding.spaceItemsRecyclerView.adapter = adaptor
 
-        spaceViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->
+        spaceAppViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->
             if (selectedSpaceItem != null) {
                 requireView().findNavController()
                     .navigate(SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(selectedSpaceItem))
-                spaceViewModel.clearSelectedItem()
+                spaceAppViewModel.clearSelectedItem()
             }
         })
 

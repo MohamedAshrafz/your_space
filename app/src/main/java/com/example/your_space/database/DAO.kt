@@ -11,4 +11,7 @@ interface AppDao {
 
     @Query("SELECT * FROM workingSpaces_table")
     fun gelAllWorkingSpaces(): LiveData<List<WorkingSpaceDB>>
+
+    @Query("DELETE FROM workingSpaces_table")
+    fun deleteAllWorkingSpaces()
 }

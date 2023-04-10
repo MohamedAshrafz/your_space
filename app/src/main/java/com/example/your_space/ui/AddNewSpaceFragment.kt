@@ -18,7 +18,7 @@ class AddNewSpaceFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 //        activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)?.let {
 //            it.visibility = View.GONE
@@ -27,25 +27,26 @@ class AddNewSpaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-
-        val viewModel by activityViewModels<ViewModel>()
+        val appViewModel by activityViewModels<AppViewModel>()
 
         binding.btnAddNewSpace.setOnClickListener {
 
-            val spaceItem = SpaceItem(binding.etSpaceName.text.toString(),
-                binding.etSpaceLocation.text.toString(),
-                binding.etSpacePhone.text.toString(),
-                "4.5",
-                "20-30 per hour",
-                binding.etSpaceDescription.text.toString(),
-                "drawable-v24/coworking.jpg")
-            if (!viewModel.isEmptySpace(spaceItem)){
-                viewModel.spacesList.value?.apply {
-                    add(spaceItem)
-                }
-                findNavController().navigate(AddNewSpaceFragmentDirections.actionAddNewSpaceFragmentToSecondFragment())
-            }
-            else Toast.makeText(context,"Plaese Fill All Data",Toast.LENGTH_SHORT).show()
+            val spaceItem = SpaceItem(
+                spaceName = binding.etSpaceName.text.toString(),
+                location = binding.etSpaceLocation.text.toString(),
+                mobile = binding.etSpacePhone.text.toString(),
+                rating = "4.5",
+                price = "20-30 per hour",
+                description = binding.etSpaceDescription.text.toString(),
+                img = "drawable-v24/coworking.jpg"
+            )
+//            if (!appViewModel.isEmptySpace(spaceItem)){
+//                appViewModel.spacesList.value?.apply {
+//                    add(spaceItem)
+//                }
+//                findNavController().navigate(AddNewSpaceFragmentDirections.actionAddNewSpaceFragmentToSecondFragment())
+//            }
+//            else Toast.makeText(context,"Plaese Fill All Data",Toast.LENGTH_SHORT).show()
 
         }
 

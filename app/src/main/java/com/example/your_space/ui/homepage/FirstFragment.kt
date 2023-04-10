@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentFirstBinding
 import com.example.your_space.databinding.ItemBinding
-import com.example.your_space.ui.ViewModel
+import com.example.your_space.ui.AppViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
@@ -63,9 +63,9 @@ class FirstFragment : Fragment() {
         }
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        val homeViewModel by activityViewModels<ViewModel>()
+        val homeAppViewModel by activityViewModels<AppViewModel>()
 
-        homeViewModel.homeList.observe(viewLifecycleOwner) { list ->
+        homeAppViewModel.homeList.observe(viewLifecycleOwner) { list ->
             for (item in list) {
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 

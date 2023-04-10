@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentBookingBinding
-import com.example.your_space.ui.ViewModel
+import com.example.your_space.ui.AppViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 
@@ -36,22 +36,22 @@ class BookingFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBookingBinding.inflate(inflater, container, false)
 
-        val bookingViewModel by activityViewModels<ViewModel>()
+        val bookingAppViewModel by activityViewModels<AppViewModel>()
 
         val adaptorBooking = BookingRecyclerViewAdaptor(
-            { bookItem -> bookingViewModel.onCancelBookedItem(bookItem) },
+            { bookItem -> bookingAppViewModel.onCancelBookedItem(bookItem) },
             "Cancel"
         )
 
         val adaptorHistory = BookingRecyclerViewAdaptor(
-            { bookItem -> bookingViewModel.onDeleteBookedItem(bookItem) },
+            { bookItem -> bookingAppViewModel.onDeleteBookedItem(bookItem) },
             "Delete"
         )
 
         _binding.lifecycleOwner = this
 
-        adaptorBooking.submitList(bookingViewModel.bookedList.value)
-        adaptorHistory.submitList(bookingViewModel.bookedHistoryList.value)
+        adaptorBooking.submitList(bookingAppViewModel.bookedList.value)
+        adaptorHistory.submitList(bookingAppViewModel.bookedHistoryList.value)
 
         _binding.bookingRecyclerView.adapter = adaptorBooking
 
@@ -84,10 +84,10 @@ class BookingFragment : Fragment() {
 
         })
 
-        bookingViewModel.showDelete.observe(viewLifecycleOwner, Observer { value ->
+        bookingAppViewModel.showDelete.observe(viewLifecycleOwner, Observer { value ->
             if (value == true) {
                 _binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
-                bookingViewModel.clearDeleteBookedItem()
+                bookingAppViewModel.clearDeleteBookedItem()
                 Snackbar.make(
                     requireView(),
                     "The item was successfully deleted",
@@ -96,10 +96,10 @@ class BookingFragment : Fragment() {
             }
         })
 
-        bookingViewModel.showCancel.observe(viewLifecycleOwner, Observer { value ->
+        bookingAppViewModel.showCancel.observe(viewLifecycleOwner, Observer { value ->
             if (value == true) {
                 _binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
-                bookingViewModel.clearCancelBookedItem()
+                bookingAppViewModel.clearCancelBookedItem()
                 Snackbar.make(
                     requireView(),
                     "The book was successfully cancelled",

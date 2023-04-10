@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.your_space.R
 import com.example.your_space.databinding.FragmentAddNewBookBinding
-import com.example.your_space.databinding.FragmentBookingBinding
-import com.example.your_space.ui.AddNewSpaceFragmentDirections
-import com.example.your_space.ui.ViewModel
+import com.example.your_space.ui.AppViewModel
 import com.example.your_space.ui.booking.BookItem
 
 class AddNewBookFragment : Fragment() {
@@ -26,11 +23,11 @@ class AddNewBookFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddNewBookBinding.inflate(inflater, container, false)
 
-        val addNewBookViewModel by activityViewModels<ViewModel>()
+        val addNewBookAppViewModel by activityViewModels<AppViewModel>()
 
         _binding.btnAddNewBook.setOnClickListener {
             val newBook = BookItem(
@@ -39,8 +36,8 @@ class AddNewBookFragment : Fragment() {
                 _binding.bookTimeEditText.text.toString()
             )
 
-            if (!addNewBookViewModel.isEmptyBook(newBook)){
-                addNewBookViewModel.addNewBook(newBook)
+            if (!addNewBookAppViewModel.isEmptyBook(newBook)){
+                addNewBookAppViewModel.addNewBook(newBook)
                 findNavController().navigate(AddNewBookFragmentDirections.actionAddNewBookFragmentToBookingFragment())
             } else{
                 Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
