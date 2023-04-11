@@ -21,7 +21,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val homeList: LiveData<MutableList<HomeItem>>
         get() = _homeList
 
-    private var _spacesList = repository.workingSpacesRepo.map { it.toDomainModel() }
+    private var _spacesList = repository.workingSpacesRepo
     val spacesList: LiveData<List<SpaceItem>>
         get() = _spacesList
 
