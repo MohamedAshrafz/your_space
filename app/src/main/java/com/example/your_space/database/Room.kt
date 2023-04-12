@@ -1,17 +1,16 @@
 package com.example.your_space.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 
 @Database(
-    entities = [SpaceItemDB::class, UserDB::class, RequestDB::class,
-        WorkingSpaceDB::class, BookingDB::class, SpaceRoomDB::class],
-    version = 1,
+    entities = [UserDB::class, RequestDB::class, WorkingSpaceDB::class,
+        BookingDB::class, SpaceRoomDB::class],
+    version = 2,
     exportSchema = false
 )
+@TypeConverters(DBConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: AppDao
 
@@ -33,7 +32,9 @@ abstract class AppDatabase : RoomDatabase() {
                             context,
                             AppDatabase::class.java,
                             "AppDatabase"
-                        ).build()
+                        )
+                            .fallbackToDestructiveMigration()
+                            .build()
                     // and then assign it to the global one
                     // and if it has been instantiated before -> return the existing one
                     databaseINSTANCE = localInstance

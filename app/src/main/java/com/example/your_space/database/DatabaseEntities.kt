@@ -3,20 +3,9 @@ package com.example.your_space.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.your_space.ui.ourspaces.SpaceItem
+import java.sql.Time
+import java.sql.Date
 import java.util.*
-
-@Entity(tableName = "SpaceItems_table")
-data class SpaceItemDB(
-    @PrimaryKey
-    var id: String,
-    var spaceName: String,
-    var location: String,
-    var mobile: String,
-    var rating: String,
-    var price: String,
-    var description: String,
-    val img: String
-)
 
 @Entity(tableName = "users_table")
 data class UserDB(
@@ -71,7 +60,10 @@ data class WorkingSpaceDB(
     val maxPrice: Double = 100.0,
     val drinks: Boolean = false,
     val owner: String = "",
-    val outdoors: Boolean = false
+    val outdoors: Boolean = false,
+
+    val time: Time = Time(50L),
+    val date: Date = Date(50L)
 )
 
 @Entity(tableName = "booking_table")
