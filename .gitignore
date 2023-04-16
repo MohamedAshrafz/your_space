@@ -14,3 +14,4 @@
 .cxx
 local.properties
 app/src/main/AndroidManifest.xml
+com.example.your_space.network.Constants
