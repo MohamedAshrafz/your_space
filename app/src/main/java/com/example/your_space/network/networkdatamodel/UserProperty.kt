@@ -1,8 +1,6 @@
-package com.example.your_space.model
+package com.example.your_space.network.networkdatamodel
 
-import java.util.*
-
-data class User (
+data class UserProperty (
         val userId : Int,
         val email : String,
         val firstName : String,
@@ -13,6 +11,6 @@ data class User (
         val bio : String,
         val points : Int,
         val picture : String,
-        val requests : List<Request>,
-        val bookings : List<Booking>
+        val requests : List<RequestProperty>,
+        val bookings : List<BookingProperty>
         )

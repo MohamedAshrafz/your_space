@@ -33,7 +33,7 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val listCL = mutableListOf<ClassListener>()
 
@@ -77,8 +77,8 @@ class FirstFragment : Fragment() {
                 binding.linearLayoutList.addView(homeItemBinding.itemLayout)
             }
         }
-        return binding.root
 
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

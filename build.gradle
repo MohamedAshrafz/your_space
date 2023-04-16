@@ -29,4 +29,7 @@ ext {
     recyclerViewVersion = '1.2.1'
     playServicesVersion = '17.0.0'
     firebaseVersion = '5.0.0'
+    retrofit = '2.9.0'
+    moshi = '1.9.3'
+    scalarconverter = '2.5.0'
 }

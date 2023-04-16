@@ -1,6 +1,6 @@
-package com.example.your_space.model
+package com.example.your_space.network.networkdatamodel
 
-data class Request (
+data class RequestProperty (
     val requestId : Int,
     val name : String,
     val status : String,

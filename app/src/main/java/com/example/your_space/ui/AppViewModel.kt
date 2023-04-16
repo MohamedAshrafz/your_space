@@ -4,14 +4,15 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.your_space.database.AppDatabase
 import com.example.your_space.database.WorkingSpaceDB
-import com.example.your_space.database.toDomainModel
+import com.example.your_space.network.Network
+import com.example.your_space.network.networkdatamodel.SpaceItemProperty
+import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.homepage.HomeItem
 import com.example.your_space.ui.ourspaces.SpaceItem
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val database = AppDatabase.getInstance(app).dao
@@ -77,8 +78,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val showDelete: LiveData<Boolean>
         get() = _showDelete
 
+    private var _spacesPropertyList = MutableLiveData<List<SpaceItemProperty>>()
+    val spacesPropertyList: LiveData<List<SpaceItemProperty>>
+        get() = _spacesPropertyList
 
     init {
+        viewModelScope.launch {
+            try {
+                repository.deleteAll()
+                val workingSpacesList = Network.NetworkServices.getAllWorkingSpaces()
+                if (workingSpacesList.isNotEmpty()) {
+                    repository.refreshWorkingSpaces(workingSpacesList.propertyModelToDatabaseModel())
+                }
+            } catch (e: HttpException) {
+
+            }
+        }
+
         val newList = mutableListOf<WorkingSpaceDB>()
         newList.apply {
             add(
@@ -137,11 +153,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 )
             )
         }
-        viewModelScope.launch {
-            repository.deleteAll()
-            repository.refreshWorkingSpaces(newList)
-
-        }
+//        viewModelScope.launch {
+//            repository.deleteAll()
+//            repository.refreshWorkingSpaces(newList)
+//
+//        }
         fillList()
     }
 

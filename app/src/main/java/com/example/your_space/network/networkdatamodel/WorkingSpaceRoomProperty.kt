@@ -1,6 +1,6 @@
-package com.example.your_space.model
+package com.example.your_space.network.networkdatamodel
 
-data class WorkingSpaceRoom (
+data class WorkingSpaceRoomProperty (
     val roomId : Int,
     val number : Int,
     val name : String,
@@ -8,5 +8,5 @@ data class WorkingSpaceRoom (
     val type : String,
     val price : Float,
     val image : String,
-    val bookings : List<Booking>
+    val bookings : List<BookingProperty>
         )
