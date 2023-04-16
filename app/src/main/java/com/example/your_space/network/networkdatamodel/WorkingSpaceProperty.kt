@@ -9,49 +9,44 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-class SpaceItemProperty(
+data class SpaceItemProperty(
     @Json(name = "spaceId")
     val spaceId: Int,
     @Json(name = "address")
-    val address: String,
+    val address: String = "",
     @Json(name = "district")
-    val district: String,
+    val district: String = "",
     @Json(name = "images")
-    val images: String,
+    val images: String = "",
     @Json(name = "roomNumbers")
-    val roomNumbers: Int,
+    val roomNumbers: Int = 5,
     @Json(name = "description")
-    val description: String,
+    val description: String = "",
     @Json(name = "name")
     val name: String,
     @Json(name = "contactNumber")
-    val contactNumber: String,
+    val contactNumber: String = "",
     @Json(name = "minPrice")
-    val minPrice: Int,
+    val minPrice: Int = 4,
     @Json(name = "maxPrice")
-    val maxPrice: Int,
+    val maxPrice: Int = 5,
     @Json(name = "startTime")
-    val startTime: String,
+    val startTime: String = "",
     @Json(name = "endTime")
-    val endTime: String,
+    val endTime: String = "",
     @Json(name = "drinks")
-    val drinks: Boolean,
+    val drinks: Boolean = false,
     @Json(name = "owner")
-    val owner: String,
+    val owner: String = "",
     @Json(name = "outdoors")
-    val outdoors: Boolean,
+    val outdoors: Boolean = false,
     @Json(name = "ratingAverage")
-    val ratingAverage: Double,
+    val ratingAverage: Double = 3.5,
     @Json(name = "ratingList")
-    val ratingList: List<Int>?
+    val ratingList: List<Int>? = null
 ) : Parcelable
-{
-    override fun toString(): String {
-        return this.spaceId.toString()
-    }
-}
 
-fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): List<WorkingSpaceDB> {
+fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): Array<WorkingSpaceDB> {
     return map {
         WorkingSpaceDB(
             spaceId = it.spaceId.toString(),
@@ -63,7 +58,7 @@ fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): List<WorkingSpaceDB>
             description = it.description,
             images = it.images
         )
-    }
+    }.toTypedArray()
 }
 
 // "spaceId": 3,
@@ -84,46 +79,3 @@ fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): List<WorkingSpaceDB>
 // "ratingAverage": 4.0,
 // "ratingList": []
 
-//@Parcelize
-//@JsonClass(generateAdapter = true)
-//class SpaceItemProperty(
-//    @Json(name = "spaceId")
-//    val spaceId: Int = 3,
-//    @Json(name = "address")
-//    val address: String = "",
-//    @Json(name = "district")
-//    val district: String = "",
-//    @Json(name = "images")
-//    val images: String = "",
-//    @Json(name = "roomNumbers")
-//    val roomNumbers: Int = 5,
-//    @Json(name = "description")
-//    val description: String = "",
-//    @Json(name = "name")
-//    val name: String = "",
-//    @Json(name = "contactNumber")
-//    val contactNumber: String = "",
-//    @Json(name = "minPrice")
-//    val minPrice: Int = 4,
-//    @Json(name = "maxPrice")
-//    val maxPrice: Int = 5,
-//    @Json(name = "startTime")
-//    val startTime: String = "",
-//    @Json(name = "endTime")
-//    val endTime: String = "",
-//    @Json(name = "drinks")
-//    val drinks: Boolean = false,
-//    @Json(name = "owner")
-//    val owner: String = "",
-//    @Json(name = "outdoors")
-//    val outdoors: Boolean = false,
-//    @Json(name = "ratingAverage")
-//    val ratingAverage: Double = 3.5,
-//    @Json(name = "ratingList")
-//    val ratingList: List<Int>? = null
-//) : Parcelable
-//{
-//    override fun toString(): String {
-//        return this.spaceId.toString()
-//    }
-//}

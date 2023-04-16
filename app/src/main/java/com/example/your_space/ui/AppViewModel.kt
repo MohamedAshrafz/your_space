@@ -84,15 +84,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            try {
-                repository.deleteAll()
-                val workingSpacesList = Network.NetworkServices.getAllWorkingSpaces()
-                if (workingSpacesList.isNotEmpty()) {
-                    repository.refreshWorkingSpaces(workingSpacesList.propertyModelToDatabaseModel())
-                }
-            } catch (e: HttpException) {
-
-            }
+            repository.refreshWorkingSpaces()
         }
 
         val newList = mutableListOf<WorkingSpaceDB>()

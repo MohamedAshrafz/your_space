@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -21,10 +22,13 @@ private val retrofit = Retrofit.Builder()
 interface YourAppApiInterface {
     @GET("spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
+
+    @GET("spaces/allspaces/{page}")
+    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: String): List<SpaceItemProperty>
 }
 
-object Network{
-    val NetworkServices: YourAppApiInterface by lazy{
+object Network {
+    val NetworkServices: YourAppApiInterface by lazy {
         retrofit.create(YourAppApiInterface::class.java)
     }
 }
