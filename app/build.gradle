@@ -97,6 +97,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
     implementation "com.squareup.retrofit2:converter-scalars:$scalarconverter"
 
+    // for swipe refresh layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
     // for solving multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
