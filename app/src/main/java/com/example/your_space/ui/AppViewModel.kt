@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.your_space.database.AppDatabase
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.Network
+import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 import com.example.your_space.repository.AppRepository
@@ -26,8 +27,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val spacesList: LiveData<List<SpaceItem>>
         get() = _spacesList
 
-    private var _bookedList = MutableLiveData(mutableListOf<BookItem>())
-    val bookedList: LiveData<MutableList<BookItem>>
+    private var _bookedList = repository.BookingsRepo
+    val bookedList: LiveData<List<BookItem>>
         get() = _bookedList
 
     private var _bookHistoryList = MutableLiveData(mutableListOf<BookItem>())
@@ -53,8 +54,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun onCancelBookedItem(bookItem: BookItem) {
-        _bookedList.value!!.remove(bookItem)
-        _showCancel.value = true
+//        _bookedList.value!!.remove(bookItem)
+//        _showCancel.value = true
+//        repository.deleteBooking(bookItem.id)
     }
 
     fun clearCancelBookedItem() {
@@ -82,9 +84,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val spacesPropertyList: LiveData<List<SpaceItemProperty>>
         get() = _spacesPropertyList
 
+    private var _bookingsPropertyList = MutableLiveData<List<BookingProperty>>()
+    val bookingsPropertyList: LiveData<List<BookingProperty>>
+        get() = _bookingsPropertyList
+
     init {
         viewModelScope.launch {
             repository.refreshWorkingSpaces()
+            repository.refreshBookings()
         }
 
         val newList = mutableListOf<WorkingSpaceDB>()
@@ -146,12 +153,98 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             )
         }
 //        viewModelScope.launch {
-//            repository.deleteAll()
-//            repository.refreshWorkingSpaces(newList)
+//            repository.deleteAllWorkingSpaces()
+//            repository.refreshWorkingSpaces()
+//            repository.refreshBookings()
 //
 //        }
         fillList()
+
+
+        _bookHistoryList.value?.apply{
+            add(
+                BookItem(
+                    "History booked 1",
+                    "11/11/1111",
+                    "11:11"
+                )
+            )
+            add(
+                BookItem(
+                    "History booked 2",
+                    "22/22/2211",
+                    "22:22"
+                )
+            )
+            add(
+                BookItem(
+                    "History booked 3",
+                    "33/33/3311",
+                    "33:33"
+                )
+            )
+            add(
+                BookItem(
+                    "History booked 4",
+                    "44/44/4411",
+                    "44:44"
+                )
+            )
+            add(
+                BookItem(
+                    "History booked 5",
+                    "55/55/5511",
+                    "55:55"
+                )
+            )
+        }
+
+//        _bookedList.value ?.apply{
+//
+//            add(
+//                BookItem(
+//                   "11/11/1111",
+//                    "11:11",
+//                     "20:00"
+//                )
+//            )
+//            add(
+//                BookItem(
+//                    "Booked 2",
+//                    "22/22/2211",
+//                    "22:22",
+//                    "20:00"
+//                )
+//            )
+//            add(
+//                BookItem(
+//                    "Booked 3",
+//                    "33/33/3311",
+//                    "33:33",
+//                    "20:00"
+//                )
+//            )
+//            add(
+//                BookItem(
+//                    "Booked 4",
+//                    "44/44/4411",
+//                    "44:44",
+//                    "20:00"
+//                )
+//            )
+//            add(
+//                BookItem(
+//                    "Booked 5",
+//                    "55/55/5511",
+//                    "55:55"
+//                )
+//            )
+//
+//        }
+
+
     }
+
 
     private fun fillList() {
 
@@ -160,6 +253,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             add(HomeItem("Check your bookings", "@drawable/coworking"))
             add(HomeItem("Found the nearest Co-working spaces now", "@drawable/coworking"))
         }
+    }
 //        _spacesList.value?.apply {
 //            add(
 //                SpaceItem(
@@ -219,84 +313,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 //        }
 
 
-        _bookedList.value?.apply {
-            add(
-                BookItem(
-                    "Booked 1",
-                    "11/11/1111",
-                    "11:11"
-                )
-            )
-            add(
-                BookItem(
-                    "Booked 2",
-                    "22/22/2211",
-                    "22:22"
-                )
-            )
-            add(
-                BookItem(
-                    "Booked 3",
-                    "33/33/3311",
-                    "33:33"
-                )
-            )
-            add(
-                BookItem(
-                    "Booked 4",
-                    "44/44/4411",
-                    "44:44"
-                )
-            )
-            add(
-                BookItem(
-                    "Booked 5",
-                    "55/55/5511",
-                    "55:55"
-                )
-            )
 
-        }
 
-        _bookHistoryList.value?.apply {
-            add(
-                BookItem(
-                    "History booked 1",
-                    "11/11/1111",
-                    "11:11"
-                )
-            )
-            add(
-                BookItem(
-                    "History booked 2",
-                    "22/22/2211",
-                    "22:22"
-                )
-            )
-            add(
-                BookItem(
-                    "History booked 3",
-                    "33/33/3311",
-                    "33:33"
-                )
-            )
-            add(
-                BookItem(
-                    "History booked 4",
-                    "44/44/4411",
-                    "44:44"
-                )
-            )
-            add(
-                BookItem(
-                    "History booked 5",
-                    "55/55/5511",
-                    "55:55"
-                )
-            )
-        }
 
-    }
 
     fun isEmptySpace(spaceItem: SpaceItem): Boolean {
         if (spaceItem.spaceName.isEmpty() ||
@@ -319,8 +338,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return false
     }
 
+
     fun addNewBook(bookItem: BookItem) {
-        _bookedList.value?.add(
+        _bookedList.value?.toMutableList()?.add(
             bookItem
         )
     }
