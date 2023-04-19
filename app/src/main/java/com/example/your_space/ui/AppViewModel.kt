@@ -167,37 +167,37 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         _bookHistoryList.value?.apply{
             add(
                 BookItem(
-                    "History booked 1",
-                    "11/11/1111",
-                    "11:11"
+                    bookName = "History booked 1",
+                    date = "11/11/1111",
+                    time = "11:11"
                 )
             )
             add(
                 BookItem(
-                    "History booked 2",
-                    "22/22/2211",
-                    "22:22"
+                    bookName = "History booked 2",
+                    date = "22/22/2211",
+                    time = "22:22"
                 )
             )
             add(
                 BookItem(
-                    "History booked 3",
-                    "33/33/3311",
-                    "33:33"
+                    bookName = "History booked 3",
+                    date = "33/33/3311",
+                    time = "33:33"
                 )
             )
             add(
                 BookItem(
-                    "History booked 4",
-                    "44/44/4411",
-                    "44:44"
+                    bookName = "History booked 4",
+                    date = "44/44/4411",
+                    time = "44:44"
                 )
             )
             add(
                 BookItem(
-                    "History booked 5",
-                    "55/55/5511",
-                    "55:55"
+                    bookName = "History booked 5",
+                    date = "55/55/5511",
+                    time = "55:55"
                 )
             )
         }

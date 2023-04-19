@@ -19,8 +19,8 @@ private val moshi = Moshi.Builder()
 
 private val retrofit = Retrofit.Builder()
     .baseUrl(Constants.BASE_URL)
-    // .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
 interface YourAppApiInterface {
