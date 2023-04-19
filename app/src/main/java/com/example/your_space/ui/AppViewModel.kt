@@ -33,7 +33,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val bookedList: LiveData<List<BookItem>>
         get() = _bookedList
 
-    private var _bookedString = MutableLiveData<String>()
+    private var _bookedString = repository.BookingsRepo.map { it.toString() }
     val bookedString: LiveData<String>
         get() = _bookedString
 
@@ -94,7 +94,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO){
                 stringVal = repository.refreshAllBookingString()
             }
-            _bookedString.value = stringVal
+//            _bookedString.value = stringVal
         }
 
         val newList = mutableListOf<WorkingSpaceDB>()
