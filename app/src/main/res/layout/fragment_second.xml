@@ -23,6 +23,7 @@
             android:layout_marginEnd="16dp"
             android:scaleType="fitXY"
             android:src="@drawable/yourspace"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +50,15 @@
             app:spaceItemsList="@{viewModel.spacesList}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/testing_TV"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:text="@{viewModel.bookedString}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

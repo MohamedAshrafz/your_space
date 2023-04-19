@@ -1,5 +1,7 @@
 package com.example.your_space.network
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.squareup.moshi.Moshi
@@ -17,7 +19,7 @@ private val moshi = Moshi.Builder()
 
 private val retrofit = Retrofit.Builder()
     .baseUrl(Constants.BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    // .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addConverterFactory(ScalarsConverterFactory.create())
     .build()
 
@@ -30,6 +32,9 @@ interface YourAppApiInterface {
 
     @GET("bookings")
     suspend fun getAllBookings(): List<BookingProperty>
+
+    @GET("bookings")
+    suspend fun getAllBookingsAsString(): String
 }
 
 object Network {

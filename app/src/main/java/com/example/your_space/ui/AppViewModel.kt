@@ -12,7 +12,9 @@ import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.homepage.HomeItem
 import com.example.your_space.ui.ourspaces.SpaceItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
@@ -30,6 +32,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private var _bookedList = repository.BookingsRepo
     val bookedList: LiveData<List<BookItem>>
         get() = _bookedList
+
+    private var _bookedString = MutableLiveData<String>()
+    val bookedString: LiveData<String>
+        get() = _bookedString
 
     private var _bookHistoryList = MutableLiveData(mutableListOf<BookItem>())
     val bookedHistoryList: LiveData<MutableList<BookItem>>
@@ -80,18 +86,15 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val showDelete: LiveData<Boolean>
         get() = _showDelete
 
-    private var _spacesPropertyList = MutableLiveData<List<SpaceItemProperty>>()
-    val spacesPropertyList: LiveData<List<SpaceItemProperty>>
-        get() = _spacesPropertyList
-
-    private var _bookingsPropertyList = MutableLiveData<List<BookingProperty>>()
-    val bookingsPropertyList: LiveData<List<BookingProperty>>
-        get() = _bookingsPropertyList
-
     init {
         viewModelScope.launch {
             repository.refreshWorkingSpaces()
             repository.refreshBookings()
+            var stringVal = ""
+            withContext(Dispatchers.IO){
+                stringVal = repository.refreshAllBookingString()
+            }
+            _bookedString.value = stringVal
         }
 
         val newList = mutableListOf<WorkingSpaceDB>()

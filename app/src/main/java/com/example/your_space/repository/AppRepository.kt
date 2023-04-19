@@ -1,6 +1,8 @@
 package com.example.your_space.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.example.your_space.database.AppDao
 import com.example.your_space.database.bookingToDomainModel
@@ -15,15 +17,16 @@ import kotlinx.coroutines.withContext
 
 class AppRepository(private val database: AppDao) {
 
-    val workingSpacesRepo: LiveData<List<SpaceItem>> = getWorkingSpaces()
-    val BookingsRepo: LiveData<List<BookItem>> = getBookings()
+    val workingSpacesRepo: LiveData<List<SpaceItem>> =
+        database.gelAllWorkingSpaces().map { it.spaceToDomainModel() }
 
-    private fun getWorkingSpaces(): LiveData<List<SpaceItem>> {
-        return database.gelAllWorkingSpaces().map { it.spaceToDomainModel() }
-    }
+    val BookingsRepo: LiveData<List<BookItem>> =
+        database.gelAllBookings().map { it.bookingToDomainModel() }
 
-    private fun getBookings(): LiveData<List<BookItem>> {
-        return database.gelAllBookings().map { it.bookingToDomainModel() }
+
+
+     suspend fun refreshAllBookingString(): String {
+        return Network.NetworkServices.getAllBookingsAsString()
     }
 
     suspend fun refreshWorkingSpaces() {
