@@ -15,16 +15,12 @@ import kotlinx.coroutines.withContext
 
 class AppRepository(private val database: AppDao) {
 
-    val workingSpacesRepo: LiveData<List<SpaceItem>> = getWorkingSpaces()
-    val BookingsRepo: LiveData<List<BookItem>> = getBookings()
+    val workingSpacesRepo: LiveData<List<SpaceItem>> =
+        database.gelAllWorkingSpaces().map { it.spaceToDomainModel() }
 
-    private fun getWorkingSpaces(): LiveData<List<SpaceItem>> {
-        return database.gelAllWorkingSpaces().map { it.spaceToDomainModel() }
-    }
+    val BookingsRepo: LiveData<List<BookItem>> =
+        database.gelAllBookings().map { it.bookingToDomainModel() }
 
-    private fun getBookings(): LiveData<List<BookItem>> {
-        return database.gelAllBookings().map { it.bookingToDomainModel() }
-    }
 
     suspend fun refreshWorkingSpaces() {
         try {

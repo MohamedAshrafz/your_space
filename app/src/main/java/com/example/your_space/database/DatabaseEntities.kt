@@ -2,8 +2,6 @@ package com.example.your_space.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.your_space.database.DBConverters.toDBDate
-import com.example.your_space.database.DBConverters.toDBTime
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.ourspaces.SpaceItem
 import java.sql.Time
@@ -74,8 +72,8 @@ data class BookingDB(
     @PrimaryKey
     val bookingId: String = UUID.randomUUID().toString(),
     val userId: String = "",
-    val roomId: String,
-    val time: Time ,
+    val roomId: String = "",
+    val time: Time,
     val date: Date
 )
 
@@ -112,17 +110,19 @@ fun List<WorkingSpaceDB>.spaceToDomainModel(): List<SpaceItem> {
 fun List<BookItem>.bookingToDatabaseModel(): Array<BookingDB> {
     return map {
 
-                BookingDB(
-                    roomId = it.bookName,
-                    date = Date(31/4/2023),
-                    time = Time(20,29,29)
-                )
+        BookingDB(
+            bookingId = it.bookId,
+            roomId = it.bookName,
+            date = Date(31/4/2023),
+            time = Time(20,29,29)
+        )
     }.toTypedArray()
 }
 
 fun List<BookingDB>.bookingToDomainModel(): List<BookItem> {
     return map {
         BookItem(
+            bookId = it.bookingId,
             bookName = it.roomId,
             date = it.date.toString(),
             time = it.time.toString()

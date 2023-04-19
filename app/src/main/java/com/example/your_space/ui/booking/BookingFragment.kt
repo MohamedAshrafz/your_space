@@ -49,6 +49,7 @@ class BookingFragment : Fragment() {
             "Delete"
         )
 
+        _binding.viewModel = bookingAppViewModel
         _binding.lifecycleOwner = this
 
         adaptorBooking.submitList(bookingAppViewModel.bookedList.value)

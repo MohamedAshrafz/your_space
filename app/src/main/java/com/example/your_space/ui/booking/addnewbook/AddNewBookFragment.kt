@@ -31,9 +31,9 @@ class AddNewBookFragment : Fragment() {
 
         _binding.btnAddNewBook.setOnClickListener {
             val newBook = BookItem(
-                _binding.bookNameEditText.text.toString(),
-                _binding.bookDateEditText.text.toString(),
-                _binding.bookTimeEditText.text.toString()
+                bookName = _binding.bookNameEditText.text.toString(),
+                date = _binding.bookDateEditText.text.toString(),
+                time = _binding.bookTimeEditText.text.toString()
             )
 
             if (!addNewBookAppViewModel.isEmptyBook(newBook)){
