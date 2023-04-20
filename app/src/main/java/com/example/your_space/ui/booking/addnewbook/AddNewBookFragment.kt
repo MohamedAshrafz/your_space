@@ -36,12 +36,12 @@ class AddNewBookFragment : Fragment() {
                 time = _binding.bookTimeEditText.text.toString()
             )
 
-            if (!addNewBookAppViewModel.isEmptyBook(newBook)){
-                addNewBookAppViewModel.addNewBook(newBook)
-                findNavController().navigate(AddNewBookFragmentDirections.actionAddNewBookFragmentToBookingFragment())
-            } else{
-                Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
-            }
+//            if (!addNewBookAppViewModel.isEmptyBook(newBook)){
+//                addNewBookAppViewModel.addNewBook(newBook)
+//                findNavController().navigate(AddNewBookFragmentDirections.actionAddNewBookFragmentToBookingFragment())
+//            } else{
+//                Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
+//            }
         }
 
         return _binding.root

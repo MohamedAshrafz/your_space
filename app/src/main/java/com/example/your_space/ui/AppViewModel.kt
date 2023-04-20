@@ -4,16 +4,16 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.your_space.database.AppDatabase
 import com.example.your_space.database.WorkingSpaceDB
-import com.example.your_space.network.Network
-import com.example.your_space.network.networkdatamodel.BookingProperty
-import com.example.your_space.network.networkdatamodel.SpaceItemProperty
-import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.homepage.HomeItem
 import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+
+enum class RecyclerType(s: String) {
+    CURRENT("CURRENT"),
+    HISTORY("HISTORY")
+}
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val database = AppDatabase.getInstance(app).dao
@@ -31,9 +31,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val bookedList: LiveData<List<BookItem>>
         get() = _bookedList
 
-    private var _bookHistoryList = MutableLiveData(mutableListOf<BookItem>())
+    private var _bookedHistoryList = MutableLiveData(mutableListOf<BookItem>())
     val bookedHistoryList: LiveData<MutableList<BookItem>>
-        get() = _bookHistoryList
+        get() = _bookedHistoryList
 
     val textTV = MutableLiveData<String>()
 
@@ -54,9 +54,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun onCancelBookedItem(bookItem: BookItem) {
-//        _bookedList.value!!.remove(bookItem)
-//        _showCancel.value = true
-//        repository.deleteBooking(bookItem.id)
+        viewModelScope.launch {
+            repository.deleteBooking(bookItem)
+        }
     }
 
     fun clearCancelBookedItem() {
@@ -64,12 +64,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun onDeleteBookedItem(bookItem: BookItem) {
-        _bookHistoryList.value!!.remove(bookItem)
+        _bookedHistoryList.value!!.remove(bookItem)
         _showDelete.value = true
     }
 
     fun clearDeleteBookedItem() {
         _showDelete.value = false
+    }
+
+    fun getAppropriateRecyclerView(recyclerType: String): LiveData<MutableList<BookItem>> {
+        return when (recyclerType) {
+            RecyclerType.CURRENT.name -> bookedList.map { it.toMutableList() }
+            else -> bookedHistoryList
+        }
     }
 
     private val _showCancel = MutableLiveData(false)
@@ -153,7 +160,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         fillList()
 
 
-        _bookHistoryList.value?.apply{
+        _bookedHistoryList.value?.apply {
             add(
                 BookItem(
                     bookName = "History booked 1",

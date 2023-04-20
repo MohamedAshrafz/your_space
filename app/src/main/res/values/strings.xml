@@ -24,8 +24,8 @@
     <string name="about_us">About us</string>
     <string name="date_text">Date:</string>
     <string name="time_text">Time:</string>
-    <string name="Bookings_text">Bookings</string>
-    <string name="history_text">History</string>
+    <string name="onGoing_text">On-Going</string>
+    <string name="History_text">History</string>
     <string name="aboutUs_label">About us</string>
     <string name="yourProfile_label">Your Profile</string>
     <string name="WorkSpaceDetails_label">Details</string>
