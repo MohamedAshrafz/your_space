@@ -24,6 +24,9 @@ interface AppDao {
     @Query("SELECT * FROM booking_table")
     fun gelAllBookings(): LiveData<List<BookingDB>>
 
+    @Query("DELETE FROM booking_table")
+    fun deleteAllBookings()
+
 //    @Query("DELETE FROM booking_table WHERE bookingId = :bookId")
 //    fun deleteBooking(bookId: String)
 }

@@ -54,10 +54,10 @@ class AppRepository(private val database: AppDao) {
         }
     }
 
-//    suspend fun deleteBooking(bookItem: BookItem) {
-//        withContext(Dispatchers.IO) {
-//            database.deleteBooking(bookItem.id)
-//        }
-//    }
+    suspend fun deleteBooking() {
+        withContext(Dispatchers.IO) {
+            database.deleteAllBookings()
+        }
+    }
 
 }

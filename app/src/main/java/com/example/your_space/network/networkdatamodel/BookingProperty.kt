@@ -35,7 +35,7 @@ fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB>
     return map {
         BookingDB(
             roomId = it.room.name,
-            date = Date(17 / 3 / 2222),
+            date = Date(123,4,1),
             time = Time(20, 20, 22),
             bookingId = it.bookingId
         )

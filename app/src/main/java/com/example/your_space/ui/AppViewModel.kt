@@ -82,6 +82,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
+            //repository.deleteBooking()
             repository.refreshWorkingSpaces()
             repository.refreshBookings()
         }
