@@ -9,10 +9,9 @@ import java.sql.Date
 import java.sql.Time
 
 
-
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class BookingProperty (
+data class BookingProperty(
 //    val id : Int,
 //    val startTime : Time,
 //    val endTime : Time,
@@ -27,17 +26,17 @@ data class BookingProperty (
     @Json(name = "date")
     val date: String = "",
     @Json(name = "room")
-    val room: WorkingSpaceRoomProperty ,
+    val room: WorkingSpaceRoomProperty,
     @Json(name = "user")
     val user: UserProperty
-        ) :Parcelable
+) : Parcelable
 
 fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
         BookingDB(
             roomId = it.room.name,
-            date = Date(17/3/2222),
-            time = Time(20,20,22),
+            date = Date(17 / 3 / 2222),
+            time = Time(20, 20, 22),
             bookingId = it.bookingId
         )
     }.toTypedArray()

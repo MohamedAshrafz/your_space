@@ -1,8 +1,6 @@
 package com.example.your_space.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import com.example.your_space.database.AppDao
 import com.example.your_space.database.bookingToDomainModel
@@ -23,11 +21,6 @@ class AppRepository(private val database: AppDao) {
     val BookingsRepo: LiveData<List<BookItem>> =
         database.gelAllBookings().map { it.bookingToDomainModel() }
 
-
-
-     suspend fun refreshAllBookingString(): String {
-        return Network.NetworkServices.getAllBookingsAsString()
-    }
 
     suspend fun refreshWorkingSpaces() {
         try {
@@ -61,10 +54,10 @@ class AppRepository(private val database: AppDao) {
         }
     }
 
-//    suspend fun deleteBooking(bookItem: BookItem) {
-//        withContext(Dispatchers.IO) {
-//            database.deleteBooking(bookItem.id)
-//        }
-//    }
+    suspend fun deleteBooking(bookItem: BookItem) {
+        withContext(Dispatchers.IO) {
+            database.deleteBooking(bookItem.bookId)
+        }
+    }
 
 }

@@ -110,12 +110,13 @@ fun List<WorkingSpaceDB>.spaceToDomainModel(): List<SpaceItem> {
 fun List<BookItem>.bookingToDatabaseModel(): Array<BookingDB> {
     return map {
 
-                BookingDB(
-                    bookingId = it.bookId,
-                    roomId = it.bookName,
-                    date = Date(31/4/2023),
-                    time = Time(20,29,29)
-                )
+
+        BookingDB(
+            bookingId = it.bookId,
+            roomId = it.bookName,
+            date = Date(31 / 4 / 2023),
+            time = Time(20, 29, 29)
+        )
     }.toTypedArray()
 }
 
