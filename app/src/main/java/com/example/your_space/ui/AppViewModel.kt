@@ -55,7 +55,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun onCancelBookedItem(bookItem: BookItem) {
         viewModelScope.launch {
-            repository.deleteBooking(bookItem)
+            repository.deleteBookingWithId(bookItem)
         }
     }
 
@@ -89,6 +89,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
+            //repository.deleteBooking()
             repository.refreshWorkingSpaces()
             repository.refreshBookings()
         }
