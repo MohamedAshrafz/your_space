@@ -22,6 +22,11 @@ class AppRepository(private val database: AppDao) {
         database.gelAllBookings().map { it.bookingToDomainModel() }
 
 
+
+     suspend fun refreshAllBookingString(): String {
+        return Network.NetworkServices.getAllBookingsAsString()
+    }
+
     suspend fun refreshWorkingSpaces() {
         try {
             val workingSpacesList = Network.NetworkServices.getAllWorkingSpaces()
