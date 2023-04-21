@@ -1,16 +1,15 @@
 package com.example.your_space.ui.ourspaces
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.your_space.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentSecondBinding
 import com.example.your_space.ui.AppViewModel
 
@@ -19,12 +18,13 @@ import com.example.your_space.ui.AppViewModel
  */
 class SecondFragment : Fragment() {
 
-
     private var _binding: FragmentSecondBinding? = null
+    private val binding
+        get() = _binding!!
 
+    private val spaceAppViewModel by activityViewModels<AppViewModel>()
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,32 +32,68 @@ class SecondFragment : Fragment() {
     ): View {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
-        val spaceAppViewModel by activityViewModels<AppViewModel>()
+
         binding.viewModel = spaceAppViewModel
         val adaptor =
-            OurSpacesAdabter{ spaceItem ->
+            OurSpacesAdabter { spaceItem ->
                 spaceAppViewModel.onSelectSpaceItem(spaceItem)
             }
+
+        val recyclerViewLayoutManager = LinearLayoutManager(this.context)
+
+        val recyclerViewScrollListener = EndlessScrollListener(recyclerViewLayoutManager) {
+            spaceAppViewModel.loadMoreWorkingSpaces()
+        }
+
+        binding.spaceItemsRecyclerView.addOnScrollListener(recyclerViewScrollListener)
+        binding.spaceItemsRecyclerView.layoutManager = recyclerViewLayoutManager
+
+        spaceAppViewModel.isWorkingSpacesPageLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (!isLoading) {
+                binding.spaceItemsRecyclerView.adapter?.notifyDataSetChanged()
+                recyclerViewScrollListener.setLoading(false)
+            }
+        }
 
         binding.lifecycleOwner = this
         binding.spaceItemsRecyclerView.adapter = adaptor
 
-        spaceAppViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->
+        spaceAppViewModel.selectedSpaceItem.observe(viewLifecycleOwner) { selectedSpaceItem ->
             if (selectedSpaceItem != null) {
                 requireView().findNavController()
-                    .navigate(SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(selectedSpaceItem))
+                    .navigate(
+                        SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(
+                            selectedSpaceItem
+                        )
+                    )
                 spaceAppViewModel.clearSelectedItem()
             }
-        })
+        }
 
         return binding.root
-
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    class EndlessScrollListener(
+        private val layoutManager: LinearLayoutManager,
+        private val onLoadMoreItems: () -> Unit
+    ) : RecyclerView.OnScrollListener() {
+        private var loading = false
 
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
 
+            val currentItemsCount = layoutManager.itemCount
+            val indexOfLastItem = layoutManager.findLastVisibleItemPosition()
+
+            if (!loading && (indexOfLastItem + 1 >= currentItemsCount)) {
+                loading = true
+                onLoadMoreItems()
+            }
+        }
+
+        fun setLoading(loading: Boolean) {
+            this.loading = loading
+        }
     }
 
     override fun onDestroyView() {

@@ -26,7 +26,7 @@ interface YourAppApiInterface {
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
     @GET("spaces/allspaces/{page}")
-    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: String): List<SpaceItemProperty>
+    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
 
     @GET("bookings")
     suspend fun getAllBookings(): List<BookingProperty>

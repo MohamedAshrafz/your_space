@@ -10,9 +10,9 @@ import com.example.your_space.ui.homepage.HomeItem
 import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.coroutines.launch
 
-enum class RecyclerType(s: String) {
-    CURRENT("CURRENT"),
-    HISTORY("HISTORY")
+enum class RecyclerType {
+    CURRENT,
+    HISTORY
 }
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
@@ -26,6 +26,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private var _spacesList = repository.workingSpacesRepo
     val spacesList: LiveData<List<SpaceItem>>
         get() = _spacesList
+
+    private var _spacesPageNumber = MutableLiveData(0)
+    private val spacesPageNumber: LiveData<Int>
+        get() = _spacesPageNumber
+
+    private var _isWorkingSpacesPageLoading = MutableLiveData(false)
+    val isWorkingSpacesPageLoading: LiveData<Boolean>
+        get() = _isWorkingSpacesPageLoading
+
+    fun loadMoreWorkingSpaces() {
+        viewModelScope.launch {
+            _isWorkingSpacesPageLoading.value = true
+            spacesPageNumber.value?.let { repository.loadWorkingSpacesOfPage(it) }
+            _spacesList.value?.let { _spacesPageNumber.value = it.size /3 }
+            _isWorkingSpacesPageLoading.value = false
+        }
+    }
 
     private var _bookedList = repository.BookingsRepo
     val bookedList: LiveData<List<BookItem>>
@@ -90,7 +107,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     init {
         viewModelScope.launch {
             //repository.deleteBooking()
-            repository.refreshWorkingSpaces()
+
+            repository.deleteAllWorkingSpaces()
+            repository.loadWorkingSpacesOfPage(0)
+
             repository.refreshBookings()
         }
 

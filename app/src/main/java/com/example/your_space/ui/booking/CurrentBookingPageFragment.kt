@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentCurrentBookingPageBinding
 import com.example.your_space.ui.AppViewModel
@@ -21,10 +20,7 @@ class CurrentBookingPageFragment : Fragment() {
     private val binding
         get() = _binding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private val bookingAppViewModel by activityViewModels<AppViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,28 +29,19 @@ class CurrentBookingPageFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCurrentBookingPageBinding.inflate(inflater, container, true)
 
-        val bookingAppViewModel by activityViewModels<AppViewModel>()
-
         var recyclerViewType: String? = ""
         arguments?.takeIf { it.containsKey(CURRENT_OR_HISTORY_KEY) }?.apply {
             recyclerViewType = getString(CURRENT_OR_HISTORY_KEY)
         }
 
-        var adaptorBooking = BookingRecyclerViewAdaptor(
-            { bookItem ->
-                bookingAppViewModel.onCancelBookedItem(
-                    bookItem
-                )
-            },
-            "Cancel"
-        )
+        val rvAdaptor: BookingRecyclerViewAdaptor
 
         if (recyclerViewType == RecyclerType.CURRENT.name) {
-            adaptorBooking = BookingRecyclerViewAdaptor(
+            rvAdaptor = BookingRecyclerViewAdaptor(
                 { bookItem -> bookingAppViewModel.onCancelBookedItem(bookItem) },
                 "Cancel"
             )
-            bookingAppViewModel.showCancel.observe(viewLifecycleOwner, Observer { value ->
+            bookingAppViewModel.showCancel.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
                     binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
                     bookingAppViewModel.clearCancelBookedItem()
@@ -64,7 +51,7 @@ class CurrentBookingPageFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            })
+            }
 
             binding.addBookFab.visibility = View.VISIBLE
             binding.bookingRecyclerView.addOnScrollListener(object :
@@ -80,13 +67,13 @@ class CurrentBookingPageFragment : Fragment() {
                 findNavController().navigate(BookingFragmentDirections.actionBookingFragmentToAddNewBookFragment())
             }
         } else {
-            adaptorBooking = BookingRecyclerViewAdaptor(
+            rvAdaptor = BookingRecyclerViewAdaptor(
                 { bookItem -> bookingAppViewModel.onDeleteBookedItem(bookItem) },
                 "Delete"
             )
-            bookingAppViewModel.showDelete.observe(viewLifecycleOwner, Observer { value ->
+            bookingAppViewModel.showDelete.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
-                    _binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
+                    binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
                     bookingAppViewModel.clearDeleteBookedItem()
                     Snackbar.make(
                         requireView(),
@@ -94,7 +81,7 @@ class CurrentBookingPageFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            })
+            }
             binding.addBookFab.visibility = View.INVISIBLE
         }
 
@@ -104,7 +91,7 @@ class CurrentBookingPageFragment : Fragment() {
         binding.viewModel = bookingAppViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.bookingRecyclerView.adapter = adaptorBooking
+        binding.bookingRecyclerView.adapter = rvAdaptor
 
 
         return binding.root

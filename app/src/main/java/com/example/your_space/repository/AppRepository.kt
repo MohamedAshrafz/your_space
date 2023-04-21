@@ -35,6 +35,19 @@ class AppRepository(private val database: AppDao) {
         }
     }
 
+    suspend fun loadWorkingSpacesOfPage(pageNumber: Int) {
+        try {
+            val workingSpacesList = Network.NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
+            if (workingSpacesList.isNotEmpty()) {
+                withContext(Dispatchers.IO) {
+                    database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
     suspend fun refreshBookings() {
         try {
             val bookingsList = Network.NetworkServices.getAllBookings()

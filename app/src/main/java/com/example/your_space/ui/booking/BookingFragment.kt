@@ -15,26 +15,21 @@ import com.example.your_space.ui.RecyclerType
 import com.google.android.material.tabs.TabLayoutMediator
 
 const val CURRENT_OR_HISTORY_KEY = "RecyclerViewIndex"
+
 class BookingFragment : Fragment() {
     private lateinit var _binding: FragmentBookingBinding
     val binding
         get() = _binding
-
-    private var inHistoryTab = false
 
     companion object {
         const val bookingTabPosition = 0
         const val historyTabPosition = 1
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBookingBinding.inflate(inflater, container, false)
 
@@ -51,7 +46,7 @@ class BookingFragment : Fragment() {
 
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            when(position){
+            when (position) {
                 bookingTabPosition -> tab.text = resources.getText(R.string.onGoing_text)
                 historyTabPosition -> tab.text = resources.getText(R.string.History_text)
             }
@@ -62,7 +57,7 @@ class BookingFragment : Fragment() {
     }
 
     class BookingViewPagerAdaptor(
-        private val fragments: Fragment,
+        fragments: Fragment,
     ) : FragmentStateAdapter(fragments) {
 
         override fun getItemCount(): Int {
@@ -70,12 +65,21 @@ class BookingFragment : Fragment() {
         }
 
         override fun createFragment(position: Int): Fragment {
+            // you can make any type of fragment for every position
+            // does not need to be of the same type
             val fragment = CurrentBookingPageFragment()
             fragment.arguments = Bundle().apply {
-                // Our object is just an integer :-P
+                // We pass a String to identify which RecyclerView to use for each fragment
+                // this is done using Bundled args
                 when (position) {
-                    0 -> putString(CURRENT_OR_HISTORY_KEY, RecyclerType.CURRENT.name)
-                    else -> putString(CURRENT_OR_HISTORY_KEY, RecyclerType.HISTORY.name)
+                    bookingTabPosition -> putString(
+                        CURRENT_OR_HISTORY_KEY,
+                        RecyclerType.CURRENT.name
+                    )
+                    historyTabPosition -> putString(
+                        CURRENT_OR_HISTORY_KEY,
+                        RecyclerType.HISTORY.name
+                    )
                 }
             }
             return fragment
