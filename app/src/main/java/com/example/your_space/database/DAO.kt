@@ -10,7 +10,7 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllWorkingSpaces(vararg spaces: WorkingSpaceDB)
 
-    @Query("SELECT * FROM workingSpaces_table")
+    @Query("SELECT * FROM workingSpaces_table ORDER BY spaceId")
     fun gelAllWorkingSpaces(): LiveData<List<WorkingSpaceDB>>
 
     @Query("DELETE FROM workingSpaces_table")
@@ -21,7 +21,7 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllBookings(vararg bookings : BookingDB)
 
-    @Query("SELECT * FROM booking_table")
+    @Query("SELECT * FROM booking_table ORDER BY bookingId")
     fun gelAllBookings(): LiveData<List<BookingDB>>
 
     @Query("DELETE FROM booking_table")
