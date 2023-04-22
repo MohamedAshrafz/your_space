@@ -1,17 +1,14 @@
 package com.example.your_space.ui.booking
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentCurrentBookingPageBinding
-import com.example.your_space.ui.AppViewModel
-import com.example.your_space.ui.RecyclerType
 import com.google.android.material.snackbar.Snackbar
 
 class CurrentBookingPageFragment : Fragment() {
@@ -20,7 +17,7 @@ class CurrentBookingPageFragment : Fragment() {
     private val binding
         get() = _binding
 
-    private val bookingAppViewModel by activityViewModels<AppViewModel>()
+    private val bookingAppViewModel by activityViewModels<BookingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +89,6 @@ class CurrentBookingPageFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.bookingRecyclerView.adapter = rvAdaptor
-
 
         return binding.root
     }

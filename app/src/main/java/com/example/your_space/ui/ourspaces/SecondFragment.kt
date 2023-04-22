@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.FragmentSecondBinding
-import com.example.your_space.ui.AppViewModel
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -22,7 +20,7 @@ class SecondFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val spaceAppViewModel by activityViewModels<AppViewModel>()
+    private val spaceAppViewModel by activityViewModels<OurSpacesViewModel>()
     // This property is only valid between onCreateView and
     // onDestroyView.
 

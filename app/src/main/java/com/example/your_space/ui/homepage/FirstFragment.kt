@@ -1,18 +1,17 @@
 package com.example.your_space.ui.homepage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentFirstBinding
 import com.example.your_space.databinding.ItemBinding
-import com.example.your_space.ui.AppViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
@@ -25,10 +24,13 @@ class ClassListener(val clickLL: () -> Unit) {
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
+    private val binding get() = _binding!!
+
+
+    private val homeAppViewModel by activityViewModels<HomeViewModel>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +65,6 @@ class FirstFragment : Fragment() {
         }
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        val homeAppViewModel by activityViewModels<AppViewModel>()
 
         homeAppViewModel.homeList.observe(viewLifecycleOwner) { list ->
             for (item in list) {
@@ -79,11 +80,6 @@ class FirstFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroyView() {

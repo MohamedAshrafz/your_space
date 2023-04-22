@@ -27,7 +27,7 @@ class AddNewSpaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        val appViewModel by activityViewModels<AppViewModel>()
+//        val appViewModel by activityViewModels<AppViewModel>()
 
         binding.btnAddNewSpace.setOnClickListener {
 

@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.*
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentBookingBinding
-import com.example.your_space.ui.AppViewModel
-import com.example.your_space.ui.RecyclerType
 import com.google.android.material.tabs.TabLayoutMediator
 
 const val CURRENT_OR_HISTORY_KEY = "RecyclerViewIndex"
@@ -20,6 +18,8 @@ class BookingFragment : Fragment() {
     private lateinit var _binding: FragmentBookingBinding
     val binding
         get() = _binding
+
+    val bookingAppViewModel by activityViewModels<BookingViewModel>()
 
     companion object {
         const val bookingTabPosition = 0
@@ -32,8 +32,6 @@ class BookingFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBookingBinding.inflate(inflater, container, false)
-
-        val bookingAppViewModel by activityViewModels<AppViewModel>()
 
         val viewPagerAdaptor = BookingViewPagerAdaptor(this)
 

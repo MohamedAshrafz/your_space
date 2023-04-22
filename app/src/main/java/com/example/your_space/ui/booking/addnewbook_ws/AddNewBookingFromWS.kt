@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentAddNewBookingFromWSBinding
-import com.example.your_space.ui.AppViewModel
 import com.example.your_space.ui.booking.BookItem
+import com.example.your_space.ui.booking.BookingViewModel
 
 class AddNewBookingFromWS : Fragment() {
     lateinit var _binding: FragmentAddNewBookingFromWSBinding
@@ -31,7 +31,7 @@ class AddNewBookingFromWS : Fragment() {
 
         _binding.bookNameEditText.text = spaceItem.spaceName
 
-        val addNewBookAppViewModel by activityViewModels<AppViewModel>()
+        val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 
         _binding.btnAddNewBook.setOnClickListener {
             val newBook = BookItem(

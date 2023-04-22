@@ -1,8 +1,10 @@
 package com.example.your_space.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.your_space.database.AppDao
+import com.example.your_space.database.AppDatabase
 import com.example.your_space.database.bookingToDomainModel
 import com.example.your_space.database.spaceToDomainModel
 import com.example.your_space.network.Network
@@ -13,7 +15,7 @@ import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AppRepository(private val database: AppDao) {
+class AppRepository private constructor(private val database: AppDao) {
 
     val workingSpacesRepo: LiveData<List<SpaceItem>> =
         database.gelAllWorkingSpaces().map { it.spaceToDomainModel() }
@@ -79,4 +81,22 @@ class AppRepository(private val database: AppDao) {
         }
     }
 
+    companion object {
+        @Volatile
+        private var repositoryINSTANCE: AppRepository? = null
+
+        fun getInstance(context: Context): AppRepository {
+            synchronized(this) {
+                var localInstance = repositoryINSTANCE
+
+                if (localInstance == null) {
+                    val appDao = AppDatabase.getInstance(context).dao
+                    localInstance = AppRepository(appDao)
+
+                    repositoryINSTANCE = localInstance
+                }
+                return localInstance
+            }
+        }
+    }
 }
