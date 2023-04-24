@@ -55,7 +55,7 @@ class BookingRecyclerViewAdaptor(
 object DiffCallback : DiffUtil.ItemCallback<BookItem>() {
 
     override fun areItemsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
-        return oldItem === newItem
+        return oldItem.bookId == newItem.bookId
     }
 
     override fun areContentsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
