@@ -7,6 +7,8 @@ import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import java.sql.Date
 import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @JsonClass(generateAdapter = true)
@@ -33,10 +35,17 @@ data class BookingProperty(
 
 fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        // Date type
+        val parsedDate = dateFormat.parse(it.date)
+
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        // Date type
+        val parsedTime = timeFormat.parse(it.startTime)
         BookingDB(
             roomId = it.room.name,
-            date = Date(123,4,1),
-            time = Time(20, 20, 22),
+            date = Date(parsedDate.time),
+            time = Time(parsedTime.time),
             bookingId = it.bookingId
         )
     }.toTypedArray()
