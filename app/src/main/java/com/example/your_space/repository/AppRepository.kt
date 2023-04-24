@@ -79,8 +79,6 @@ class AppRepository private constructor(private val database: AppDao) {
     }
 
     suspend fun deleteBookingWithId(bookItem: BookItem) {
-        CoroutineScope(Dispatchers.IO).launch {
-
             // Do the DELETE request and get response
             val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
             withContext(Dispatchers.IO) {
@@ -94,7 +92,6 @@ class AppRepository private constructor(private val database: AppDao) {
 
                 }
             }
-        }
     }
 
     suspend fun deleteAllBookings() {
