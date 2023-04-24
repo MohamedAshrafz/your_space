@@ -83,7 +83,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
             // Do the DELETE request and get response
             val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     database.deleteBooking(bookItem.bookId)
                     refreshBookings()
