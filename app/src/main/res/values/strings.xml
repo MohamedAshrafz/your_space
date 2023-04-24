@@ -37,7 +37,9 @@
     <string name="google_maps_key">AIzaSyB4BQaboRt9fl4_IlmDPUwAV_BS3VeWTmw</string>
     <string name="error_permission_needed">You need to grant location permission in order to for this app to work normally.</string>
     <string name="Asking_to_enable_the_location">App cannot work without getting the location, please enable it</string>
-    <string name="goals">Our goal to help all student to find a quiet place to study and doing thier projects in an easy way</string>
+    <string name="goals">Our goal to help all student to find a quiet place to study and doing their projects in an easy way</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_opened_content_desc">Drawer layout opened</string>
+    <string name="drawer_closed_content_desc">Drawer layout closed</string>
 </resources>
