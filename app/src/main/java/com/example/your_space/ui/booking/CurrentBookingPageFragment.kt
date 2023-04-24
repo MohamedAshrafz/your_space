@@ -40,7 +40,7 @@ class CurrentBookingPageFragment : Fragment() {
             )
             bookingAppViewModel.showCancel.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
-                    binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
+//                    binding.bookingRecyclerView.adapter?.notifyItemRemoved(0)
                     bookingAppViewModel.clearCancelBookedItem()
                     Snackbar.make(
                         requireView(),
@@ -70,7 +70,7 @@ class CurrentBookingPageFragment : Fragment() {
             )
             bookingAppViewModel.showDelete.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
-                    binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
+//                    binding.bookingRecyclerView.adapter?.notifyDataSetChanged()
                     bookingAppViewModel.clearDeleteBookedItem()
                     Snackbar.make(
                         requireView(),
