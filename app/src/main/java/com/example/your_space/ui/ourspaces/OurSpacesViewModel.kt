@@ -7,8 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.WorkingSpaceDB
+import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.repository.AppRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -30,8 +33,25 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     val selectedSpaceItem: LiveData<WorkingSpaceDB?>
         get() = _selectedSpaceItem
 
+    private var _testingString = MutableLiveData<String>()
+    val testingString: LiveData<String>
+        get() = _testingString
+
+
     init {
         viewModelScope.launch {
+
+            repository.deleteAllBookings()
+            repository.deleteAllWorkingSpaces()
+            repository.refreshWorkingSpaces()
+            repository.refreshBookings()
+            repository.refreshAllWorkingSpacesString()
+            var stringVal: List<BookingProperty>
+            withContext(Dispatchers.IO) {
+                stringVal = repository.refreshAllBookingString()
+            }
+            _testingString.value = stringVal.toString()
+
 
             repository.loadWorkingSpacesOfPage(0)
         }
@@ -51,7 +71,7 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             _isWorkingSpacesPageLoading.value = true
             spacesPageNumber.value?.let { repository.loadWorkingSpacesOfPage(it) }
-            _spacesList.value?.let { _spacesPageNumber.value = it.size /3 }
+            _spacesList.value?.let { _spacesPageNumber.value = it.size / 3 }
             _isWorkingSpacesPageLoading.value = false
         }
     }
