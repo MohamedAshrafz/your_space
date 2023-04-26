@@ -16,6 +16,8 @@ import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+const val REPOSITORY_ERROR_STRING = "Error in repository"
+
 class AppRepository private constructor(private val database: AppDao) {
 
     val workingSpacesRepo: LiveData<List<SpaceItem>> =
@@ -34,7 +36,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
         }
     }
 
@@ -47,7 +49,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
         }
     }
 
@@ -60,7 +62,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
         }
     }
 
@@ -82,8 +84,8 @@ class AppRepository private constructor(private val database: AppDao) {
                     Log.e("RETROFIT_ERROR", response.code().toString())
                 }
             }
-        }catch (e: Exception){
-
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
         }
 
     }
