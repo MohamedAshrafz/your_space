@@ -48,12 +48,12 @@ class SecondFragment : Fragment() {
 
         spaceAppViewModel.isWorkingSpacesPageLoading.observe(viewLifecycleOwner) { isLoading ->
             if (!isLoading) {
-                binding.spaceItemsRecyclerView.adapter?.notifyDataSetChanged()
+//                binding.spaceItemsRecyclerView.adapter?.notifyDataSetChanged()
                 recyclerViewScrollListener.setLoading(false)
             }
         }
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.spaceItemsRecyclerView.adapter = adaptor
 
         spaceAppViewModel.selectedSpaceItem.observe(viewLifecycleOwner) { selectedSpaceItem ->

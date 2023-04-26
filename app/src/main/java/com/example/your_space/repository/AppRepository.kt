@@ -25,9 +25,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun refreshWorkingSpaces() {
         try {
-            val workingSpacesList = NetworkServices.getAllWorkingSpaces()
-            if (workingSpacesList.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                val workingSpacesList = NetworkServices.getAllWorkingSpaces()
+                if (workingSpacesList.isNotEmpty()) {
                     database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
                 }
             }
@@ -38,9 +38,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun loadWorkingSpacesOfPage(pageNumber: Int) {
         try {
-            val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
-            if (workingSpacesList.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
+                if (workingSpacesList.isNotEmpty()) {
                     database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
                 }
             }
@@ -51,9 +51,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun refreshBookings() {
         try {
-            val bookingsList = NetworkServices.getAllBookings()
-            if (bookingsList.isNotEmpty()) {
                 withContext(Dispatchers.IO) {
+                    val bookingsList = NetworkServices.getAllBookings()
+                    if (bookingsList.isNotEmpty()) {
                     database.insertAllBookings(*(bookingsList.bookingProertyModelToDatabaseModel()))
                 }
             }
@@ -70,9 +70,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun deleteBookingWithId(bookItem: BookItem) {
         try {
-            // Do the DELETE request and get response
-            val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
             withContext(Dispatchers.IO) {
+                // Do the DELETE request and get response
+                val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
                 if (response.isSuccessful) {
                     database.deleteBooking(bookItem.bookId)
 
