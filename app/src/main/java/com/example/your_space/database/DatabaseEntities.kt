@@ -52,7 +52,7 @@ data class WorkingSpaceDB(
     val address: String,
     val district: String = "",
     val rating: Double,
-    val images: String,
+    val images: String = "",
     val roomNumbers: Int = 0,
     val description: String,
     val name: String,
@@ -123,7 +123,7 @@ fun List<BookingDB>.bookingToDomainModel(): List<BookItem> {
     return map {
         BookItem(
             bookId = it.bookingId,
-            bookName = it.roomId,
+            bookName = "Book: " + it.bookingId,
             date = it.date.toString(),
             time = it.time.toString()
         )

@@ -5,8 +5,6 @@ import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -30,7 +28,7 @@ interface YourAppApiInterface {
     @GET("spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
-    @GET("spaces/allspaces/{page}")
+    @GET("spaces/alldata/{page}/3")
     suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
 
     @GET("bookings")
