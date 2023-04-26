@@ -11,6 +11,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -22,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-    //    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
@@ -38,48 +39,62 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
+        // getting the main layout components
         navController = findNavController(R.id.nav_host_fragment_content_main)
-
-        // setting the drawer navigation with the navController
-        binding.navView.setupWithNavController(navController)
-        // setting the bottom navigation with the navController
-        binding.bottomNavigation.setupWithNavController(navController)
-
-//        // getting the app bar configuration
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        setupActionBarWithNavController(navController, binding.drawerLayout)
+        val bindingDrawerLayout = binding.drawerLayout
+        val bindingNavigationView = binding.navView
+        val bindingToolbar = binding.toolbar
+        val bindingBottomNavigation = binding.bottomNavigation
 
         val listOfMenuItems = mutableListOf<MenuItem>()
         binding.bottomNavigation.menu.forEach { item ->
             listOfMenuItems.add(item)
         }
 
-        val actionBar = (this as AppCompatActivity).supportActionBar
+        setSupportActionBar(bindingToolbar)
 
-        val drawerLayout = binding.drawerLayout
-        val navigationView = binding.navView
-        val toolbar = binding.toolbar
+        // setting the drawer navigation with the navController
+        bindingNavigationView.setupWithNavController(navController)
+
+        // setting the bottom navigation with the navController
+        bindingBottomNavigation.setupWithNavController(navController)
+
+        // getting the app bar configuration
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.Home,
+                R.id.SecondFragment,
+                R.id.bookingFragment,
+                R.id.mapsFragment
+            )
+        )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         toggle = ActionBarDrawerToggle(
             this,
-            drawerLayout,
-            toolbar,
-            R.string.onGoing_text,
-            R.string.Bookings_label
+            bindingDrawerLayout,
+            bindingToolbar,
+            R.string.drawer_opened_content_desc,
+            R.string.drawer_closed_content_desc
         )
 
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        bindingDrawerLayout.addDrawerListener(toggle)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             if (listOfMenuItems.any { it.itemId == destination.id }) {
                 binding.bottomNavigation.visibility = View.VISIBLE
+                // Set the drawer icon to appear on the "home" button
+                toggle.isDrawerIndicatorEnabled = true
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                toggle.syncState()
             } else {
                 binding.bottomNavigation.visibility = View.GONE
+                // Set navigate up button to visible
+                toggle.isDrawerIndicatorEnabled = false
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                toggle.syncState()
             }
         }
 
@@ -89,6 +104,9 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
 
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val currentDestination = navController.currentDestination
+
         val listOfMenuItems = mutableListOf<MenuItem>()
         binding.bottomNavigation.menu.forEach { item ->
             listOfMenuItems.add(item)
@@ -96,11 +114,9 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            val item: MenuItem? = binding.toolbar.menu.findItem(R.id.logout)
+            val item: MenuItem = binding.toolbar.menu.findItem(R.id.logout)
 
-            if (item != null) {
-                item.isVisible = listOfMenuItems.any { it.itemId == destination.id }
-            }
+            item.isVisible = listOfMenuItems.any { it.itemId == destination.id }
         }
 
         return true
@@ -120,7 +136,7 @@ class MainActivity : AppCompatActivity() {
                     // finishing the current activity
                     finish()
 
-                    
+
                     // launch the sign-in activity
                     val authenticationActivityIntent =
                         Intent(

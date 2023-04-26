@@ -9,16 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentAddNewBookBinding
-import com.example.your_space.ui.AppViewModel
 import com.example.your_space.ui.booking.BookItem
+import com.example.your_space.ui.booking.BookingViewModel
 
 class AddNewBookFragment : Fragment() {
 
     lateinit var _binding: FragmentAddNewBookBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +23,7 @@ class AddNewBookFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentAddNewBookBinding.inflate(inflater, container, false)
 
-        val addNewBookAppViewModel by activityViewModels<AppViewModel>()
+        val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 
         _binding.btnAddNewBook.setOnClickListener {
             val newBook = BookItem(

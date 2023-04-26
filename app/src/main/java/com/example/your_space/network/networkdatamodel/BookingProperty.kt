@@ -4,19 +4,16 @@ import android.os.Parcelable
 import com.example.your_space.database.BookingDB
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import java.sql.Date
 import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class BookingProperty(
-//    val id : Int,
-//    val startTime : Time,
-//    val endTime : Time,
-//    val room : WorkingSpaceRoomProperty,
-//    val user : UserProperty,
     @Json(name = "id")
     val bookingId: String,
     @Json(name = "startTime")
@@ -31,10 +28,17 @@ data class BookingProperty(
 
 fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        // Date type
+        val parsedDate = dateFormat.parse(it.date)
+
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        // Date type
+        val parsedTime = timeFormat.parse(it.startTime)
         BookingDB(
             bookingId = it.bookingId,
-            date = Date(123,4,1),
-            time = Time(20, 20, 22),
+            date = Date(parsedDate.time),
+            time = Time(parsedTime.time),
             roomId = it.roomId,
         )
     }.toTypedArray()

@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.databinding.FragmentAddNewSpaceBinding
-import com.example.your_space.ui.ourspaces.SpaceItem
 
 
 class AddNewSpaceFragment : Fragment() {
@@ -27,18 +27,17 @@ class AddNewSpaceFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        val appViewModel by activityViewModels<AppViewModel>()
+//        val appViewModel by activityViewModels<AppViewModel>()
 
         binding.btnAddNewSpace.setOnClickListener {
 
-            val spaceItem = SpaceItem(
-                spaceName = binding.etSpaceName.text.toString(),
-                location = binding.etSpaceLocation.text.toString(),
-                mobile = binding.etSpacePhone.text.toString(),
-                rating = "4.5",
-                price = "20-30 per hour",
+            val spaceItem = WorkingSpaceDB(
+                name = binding.etSpaceName.text.toString(),
+                address = binding.etSpaceLocation.text.toString(),
+                contactNumber = binding.etSpacePhone.text.toString(),
+                rating = 4.5,
+                minPrice = 20.0,
                 description = binding.etSpaceDescription.text.toString(),
-                img = "drawable-v24/coworking.jpg"
             )
 //            if (!appViewModel.isEmptySpace(spaceItem)){
 //                appViewModel.spacesList.value?.apply {

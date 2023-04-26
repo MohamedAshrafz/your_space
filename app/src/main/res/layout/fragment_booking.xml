@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.your_space.ui.AppViewModel" />
+            type="com.example.your_space.ui.booking.BookingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

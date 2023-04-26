@@ -46,7 +46,7 @@
             app:destination="@id/SecondFragment" />
         <argument
             android:name="selectedSpaceItem"
-            app:argType="com.example.your_space.ui.ourspaces.SpaceItem" />
+            app:argType="com.example.your_space.database.WorkingSpaceDB" />
         <action
             android:id="@+id/action_spaceDetailsFragment_to_addNewBookingFromWS2"
             app:destination="@id/addNewBookingFromWS" />
@@ -104,7 +104,7 @@
         tools:layout="@layout/fragment_add_new_booking_from_w_s">
         <argument
             android:name="selectedSpace"
-            app:argType="com.example.your_space.ui.ourspaces.SpaceItem" />
+            app:argType="com.example.your_space.database.WorkingSpaceDB" />
         <action
             android:id="@+id/action_addNewBookingFromWS_to_bookingFragment"
             app:destination="@id/bookingFragment"

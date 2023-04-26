@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.BookItemBinding
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
 import com.example.your_space.ui.ourspaces.OurSpacesAdabter
-import com.example.your_space.ui.ourspaces.SpaceItem
 
 class BookingRecyclerViewAdaptor(
     private val clickListener: (bookItem: BookItem) -> Unit,
@@ -55,7 +54,7 @@ class BookingRecyclerViewAdaptor(
 object DiffCallback : DiffUtil.ItemCallback<BookItem>() {
 
     override fun areItemsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
-        return oldItem === newItem
+        return oldItem.bookId == newItem.bookId
     }
 
     override fun areContentsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {

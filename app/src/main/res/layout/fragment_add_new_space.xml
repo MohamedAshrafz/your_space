@@ -8,7 +8,7 @@
 
         <variable
             name="spaceItem"
-            type="com.example.your_space.ui.ourspaces.SpaceItem" />
+            type="com.example.your_space.database.WorkingSpaceDB" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

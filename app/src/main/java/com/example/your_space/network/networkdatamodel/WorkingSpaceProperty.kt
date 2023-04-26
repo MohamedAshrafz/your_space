@@ -2,13 +2,12 @@ package com.example.your_space.network.networkdatamodel
 
 import android.os.Parcelable
 import com.example.your_space.database.WorkingSpaceDB
-import com.example.your_space.ui.ourspaces.SpaceItem
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class SpaceItemProperty(
     @Json(name = "spaceId")
     val spaceId: Int,
@@ -57,22 +56,4 @@ fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): Array<WorkingSpaceDB
         )
     }.toTypedArray()
 }
-
-// "spaceId": 3,
-// "address": "nasrcity",
-// "district": "cairo",
-// "images": "test123",
-// "roomNumbers": 4,
-// "description": "test123",
-// "name": "test",
-// "contactNumber": "123",
-// "minPrice": 10.0,
-// "maxPrice": 20.0,
-// "startTime": "10:00:00",
-// "endTime": "12:00:00",
-// "drinks": true,
-// "owner": "weza",
-// "outdoors": false,
-// "ratingAverage": 4.0,
-// "ratingList": []
 

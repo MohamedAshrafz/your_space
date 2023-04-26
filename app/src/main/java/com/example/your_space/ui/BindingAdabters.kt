@@ -2,13 +2,14 @@ package com.example.your_space.ui
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.booking.BookingRecyclerViewAdaptor
 import com.example.your_space.ui.ourspaces.OurSpacesAdabter
-import com.example.your_space.ui.ourspaces.SpaceItem
+
 
 @BindingAdapter("spaceItemsList")
-fun bindSpacesList(recyclerView: RecyclerView, list: List<SpaceItem>?) {
+fun bindSpacesList(recyclerView: RecyclerView, list: List<WorkingSpaceDB>?) {
 
     val adapter = recyclerView.adapter as OurSpacesAdabter
     adapter.submitList(list)

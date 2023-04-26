@@ -1,14 +1,17 @@
 package com.example.your_space.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.your_space.ui.booking.BookItem
-import com.example.your_space.ui.ourspaces.SpaceItem
+//import com.example.your_space.ui.ourspaces.SpaceItem
+import kotlinx.parcelize.Parcelize
 import java.sql.Time
 import java.sql.Date
 import java.util.*
 
 @Entity(tableName = "users_table")
+@Parcelize
 data class UserDB(
     @PrimaryKey
     val userId: Int,
@@ -21,9 +24,10 @@ data class UserDB(
     val bio: String,
     val points: Int,
     val picture: String
-)
+) : Parcelable
 
 @Entity(tableName = "requests_table")
+@Parcelize
 data class RequestDB(
     @PrimaryKey
     val requestId: Int,
@@ -31,9 +35,10 @@ data class RequestDB(
     val status: String,
     val address: String,
     val noOfRooms: Int
-)
+) : Parcelable
 
 @Entity(tableName = "spaceRooms_table")
+@Parcelize
 data class SpaceRoomDB(
     @PrimaryKey
     val roomId: Int,
@@ -43,9 +48,10 @@ data class SpaceRoomDB(
     val type: String,
     val price: Float,
     val image: String
-)
+) : Parcelable
 
 @Entity(tableName = "workingSpaces_table")
+@Parcelize
 data class WorkingSpaceDB(
     @PrimaryKey
     val spaceId: String = UUID.randomUUID().toString(),
@@ -65,9 +71,10 @@ data class WorkingSpaceDB(
 
     val time: Time = Time(50L),
     val date: Date = Date(50L)
-)
+) : Parcelable
 
 @Entity(tableName = "booking_table")
+@Parcelize
 data class BookingDB(
     @PrimaryKey
     val bookingId: String = UUID.randomUUID().toString(),
@@ -75,41 +82,40 @@ data class BookingDB(
     val roomId: String = "",
     val time: Time,
     val date: Date
-)
+) : Parcelable
 
-fun List<SpaceItem>.spaceToDatabaseModel(): Array<WorkingSpaceDB> {
-    return map {
-        WorkingSpaceDB(
-            spaceId = it.id,
-            name = it.spaceName,
-            address = it.location,
-            contactNumber = it.mobile,
-            rating = it.rating.toDouble(),
-            minPrice = it.price.toDouble(),
-            description = it.description,
-            images = it.img
-        )
-    }.toTypedArray()
-}
-
-fun List<WorkingSpaceDB>.spaceToDomainModel(): List<SpaceItem> {
-    return map {
-        SpaceItem(
-            id = it.spaceId,
-            spaceName = it.name,
-            location = it.address,
-            mobile = it.contactNumber,
-            rating = it.rating.toString(),
-            price = it.minPrice.toString(),
-            description = it.description,
-            img = it.images
-        )
-    }
-}
+//fun List<SpaceItem>.spaceToDatabaseModel(): Array<WorkingSpaceDB> {
+//    return map {
+//        WorkingSpaceDB(
+//            spaceId = it.id,
+//            name = it.spaceName,
+//            address = it.location,
+//            contactNumber = it.mobile,
+//            rating = it.rating.toDouble(),
+//            minPrice = it.price.toDouble(),
+//            description = it.description,
+//            images = it.img
+//        )
+//    }.toTypedArray()
+//}
+//
+//fun List<WorkingSpaceDB>.spaceToDomainModel(): List<SpaceItem> {
+//    return map {
+//        SpaceItem(
+//            id = it.spaceId,
+//            spaceName = it.name,
+//            location = it.address,
+//            mobile = it.contactNumber,
+//            rating = it.rating.toString(),
+//            price = it.minPrice.toString(),
+//            description = it.description,
+//            img = it.images
+//        )
+//    }
+//}
 
 fun List<BookItem>.bookingToDatabaseModel(): Array<BookingDB> {
     return map {
-
 
         BookingDB(
             bookingId = it.bookId,
@@ -124,7 +130,7 @@ fun List<BookingDB>.bookingToDomainModel(): List<BookItem> {
     return map {
         BookItem(
             bookId = it.bookingId,
-            bookName = "Book " + it.bookingId,
+            bookName = "Book: " + it.bookingId,
             date = it.date.toString(),
             time = it.time.toString()
         )

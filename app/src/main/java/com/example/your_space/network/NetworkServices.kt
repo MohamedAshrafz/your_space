@@ -1,14 +1,15 @@
 package com.example.your_space.network
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -27,11 +28,14 @@ interface YourAppApiInterface {
     @GET("spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
-    @GET("spaces/allspaces/{page}")
-    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: String): List<SpaceItemProperty>
+    @GET("spaces/alldata/{page}/3")
+    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
 
     @GET("bookings")
     suspend fun getAllBookings(): List<BookingProperty>
+
+    @DELETE("bookings/{id}")
+    suspend fun cancelBooking(@Path("id") id : Int): Response<ResponseBody>
 
 
     // for testing purposes (returns raw string of the above calls)
