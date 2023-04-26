@@ -29,7 +29,7 @@ class AddNewBookingFromWS : Fragment() {
         // provide argument to the function
         val spaceItem = AddNewBookingFromWSArgs.fromBundle(requireArguments()).selectedSpace
 
-        _binding.bookNameEditText.text = spaceItem.spaceName
+        _binding.bookNameEditText.text = spaceItem.name
 
         val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 

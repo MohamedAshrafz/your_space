@@ -1,10 +1,12 @@
 package com.example.your_space.ui.ourspaces
 
+
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -13,7 +15,7 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     private val repository = AppRepository.getInstance(app.applicationContext)
 
     private var _spacesList = repository.workingSpacesRepo
-    val spacesList: LiveData<List<SpaceItem>>
+    val spacesList: LiveData<List<WorkingSpaceDB>>
         get() = _spacesList
 
     private var _spacesPageNumber = MutableLiveData(0)
@@ -24,8 +26,8 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     val isWorkingSpacesPageLoading: LiveData<Boolean>
         get() = _isWorkingSpacesPageLoading
 
-    private val _selectedSpaceItem = MutableLiveData<SpaceItem?>()
-    val selectedSpaceItem: LiveData<SpaceItem?>
+    private val _selectedSpaceItem = MutableLiveData<WorkingSpaceDB?>()
+    val selectedSpaceItem: LiveData<WorkingSpaceDB?>
         get() = _selectedSpaceItem
 
     init {
@@ -35,7 +37,7 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun onSelectSpaceItem(spaceItem: SpaceItem) {
+    fun onSelectSpaceItem(spaceItem: WorkingSpaceDB) {
         _selectedSpaceItem.value = spaceItem
         //_navigateOnSelectedItem.value = true
     }
@@ -54,11 +56,11 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun isEmptySpace(spaceItem: SpaceItem): Boolean {
-        if (spaceItem.spaceName.isEmpty() ||
-            spaceItem.mobile.isEmpty() ||
+    fun isEmptySpace(spaceItem: WorkingSpaceDB): Boolean {
+        if (spaceItem.name.isEmpty() ||
+            spaceItem.contactNumber.isEmpty() ||
             spaceItem.description.isEmpty() ||
-            spaceItem.location.isEmpty()
+            spaceItem.address.isEmpty()
         ) {
             return true
         }

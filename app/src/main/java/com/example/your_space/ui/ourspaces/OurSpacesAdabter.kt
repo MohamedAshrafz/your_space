@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
 import javax.xml.transform.Source
 
-class OurSpacesAdabter(private val clickListener: (spaceItem: SpaceItem) -> Unit):
-    ListAdapter<SpaceItem,OurSpacesAdabter.SpaceItemViewHolder>(DiffCallback){
+class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) -> Unit) :
+    ListAdapter<WorkingSpaceDB, OurSpacesAdabter.SpaceItemViewHolder>(DiffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpaceItemViewHolder {
@@ -25,7 +26,7 @@ class OurSpacesAdabter(private val clickListener: (spaceItem: SpaceItem) -> Unit
 
     class SpaceItemViewHolder private constructor(private val binding: CoworkingSpaceItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SpaceItem, clickListener: (spaceItem: SpaceItem) -> Unit) {
+        fun bind(item: WorkingSpaceDB, clickListener: (spaceItem: WorkingSpaceDB) -> Unit) {
 //            binding.clickListener = clickListener
             binding.spaceItem = item
             binding.constraintLayoutSpaceItem.setOnClickListener { clickListener(item) }
@@ -47,17 +48,17 @@ class OurSpacesAdabter(private val clickListener: (spaceItem: SpaceItem) -> Unit
 
     }
 
-    object DiffCallback : DiffUtil.ItemCallback<SpaceItem>(){
-        override fun areItemsTheSame(oldItem: SpaceItem, newItem: SpaceItem): Boolean {
+    object DiffCallback : DiffUtil.ItemCallback<WorkingSpaceDB>() {
+        override fun areItemsTheSame(oldItem: WorkingSpaceDB, newItem: WorkingSpaceDB): Boolean {
+            return oldItem.spaceId == newItem.spaceId
+        }
+
+        override fun areContentsTheSame(oldItem: WorkingSpaceDB, newItem: WorkingSpaceDB): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: SpaceItem, newItem: SpaceItem): Boolean {
-            return oldItem.spaceName == newItem.spaceName
-        }
-
     }
 
 
-    }
+}
 

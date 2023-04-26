@@ -7,7 +7,7 @@
 
         <variable
             name="spaceItem"
-            type="com.example.your_space.ui.ourspaces.SpaceItem" />
+            type="com.example.your_space.database.WorkingSpaceDB" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.spaceName}"
+            android:text="@{spaceItem.name}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -54,7 +54,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@={spaceItem.description}"
+            android:text="@{spaceItem.description}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

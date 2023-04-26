@@ -6,7 +6,7 @@
     <data>
         <variable
             name="spaceItem"
-            type="com.example.your_space.ui.ourspaces.SpaceItem" />
+            type="com.example.your_space.database.WorkingSpaceDB" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@={spaceItem.spaceName}"
+            android:text="@{spaceItem.name}"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.description}"
+            android:text="@{spaceItem.description}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
@@ -59,7 +59,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.location}"
+            android:text="@{spaceItem.address}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -95,7 +95,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.mobile}"
+            android:text="@{spaceItem.contactNumber}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView16"
@@ -130,7 +130,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.rating}"
+            android:text="@{String.valueOf(spaceItem.rating)}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView17"
@@ -199,7 +199,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@={spaceItem.price}"
+            android:text="@{String.valueOf(spaceItem.minPrice)}"
             android:textSize="@dimen/spaceDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView24"

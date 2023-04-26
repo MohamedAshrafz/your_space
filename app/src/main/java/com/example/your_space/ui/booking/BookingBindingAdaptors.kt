@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.your_space.databinding.BookItemBinding
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
 import com.example.your_space.ui.ourspaces.OurSpacesAdabter
-import com.example.your_space.ui.ourspaces.SpaceItem
 
 class BookingRecyclerViewAdaptor(
     private val clickListener: (bookItem: BookItem) -> Unit,
