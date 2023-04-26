@@ -39,7 +39,7 @@ class SecondFragment : Fragment() {
                 spaceAppViewModel.onSelectSpaceItem(spaceItem)
             }
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.spaceItemsRecyclerView.adapter = adaptor
 
         spaceAppViewModel.selectedSpaceItem.observe(viewLifecycleOwner, Observer { selectedSpaceItem ->

@@ -25,19 +25,17 @@ data class BookingProperty(
     val endTime: String = "",
     @Json(name = "date")
     val date: String = "",
-    @Json(name = "room")
-    val room: WorkingSpaceRoomProperty,
-    @Json(name = "user")
-    val user: UserProperty
+    @Json(name = "roomId")
+    val roomId: String
 ) : Parcelable
 
 fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
         BookingDB(
-            roomId = it.room.name,
+            bookingId = it.bookingId,
             date = Date(123,4,1),
             time = Time(20, 20, 22),
-            bookingId = it.bookingId
+            roomId = it.roomId,
         )
     }.toTypedArray()
 }

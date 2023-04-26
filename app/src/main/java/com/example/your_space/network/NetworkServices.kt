@@ -33,8 +33,13 @@ interface YourAppApiInterface {
     @GET("bookings")
     suspend fun getAllBookings(): List<BookingProperty>
 
+
+    // for testing purposes (returns raw string of the above calls)
     @GET("bookings")
     suspend fun getAllBookingsAsString(): String
+
+    @GET("spaces")
+    suspend fun getAllWorkingSpacesAsString(): String
 }
 
 object Network {

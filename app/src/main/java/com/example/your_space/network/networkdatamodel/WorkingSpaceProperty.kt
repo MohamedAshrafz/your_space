@@ -16,8 +16,6 @@ data class SpaceItemProperty(
     val address: String = "",
     @Json(name = "district")
     val district: String = "",
-    @Json(name = "images")
-    val images: String = "",
     @Json(name = "roomNumbers")
     val roomNumbers: Int = 5,
     @Json(name = "description")
@@ -56,7 +54,6 @@ fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): Array<WorkingSpaceDB
             rating = it.ratingAverage,
             minPrice = it.minPrice.toDouble(),
             description = it.description,
-            images = it.images
         )
     }.toTypedArray()
 }

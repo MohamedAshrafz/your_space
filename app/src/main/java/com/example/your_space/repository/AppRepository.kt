@@ -6,6 +6,8 @@ import com.example.your_space.database.AppDao
 import com.example.your_space.database.bookingToDomainModel
 import com.example.your_space.database.spaceToDomainModel
 import com.example.your_space.network.Network
+import com.example.your_space.network.networkdatamodel.BookingProperty
+import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.example.your_space.network.networkdatamodel.bookingProertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 import com.example.your_space.ui.booking.BookItem
@@ -22,9 +24,12 @@ class AppRepository(private val database: AppDao) {
         database.gelAllBookings().map { it.bookingToDomainModel() }
 
 
+    suspend fun refreshAllBookingString(): List<BookingProperty> {
+        return Network.NetworkServices.getAllBookings()
+    }
 
-     suspend fun refreshAllBookingString(): String {
-        return Network.NetworkServices.getAllBookingsAsString()
+    suspend fun refreshAllWorkingSpacesString(): List<SpaceItemProperty> {
+        return Network.NetworkServices.getAllWorkingSpaces()
     }
 
     suspend fun refreshWorkingSpaces() {

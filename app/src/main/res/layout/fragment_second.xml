@@ -68,7 +68,7 @@
                     android:id="@+id/testing_TV"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@{viewModel.bookedString}" />
+                    android:text="@{viewModel.testingString}" />
             </LinearLayout>
         </ScrollView>
 

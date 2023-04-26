@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.your_space.database.AppDatabase
 import com.example.your_space.database.WorkingSpaceDB
+import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.homepage.HomeItem
@@ -11,7 +12,6 @@ import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 enum class RecyclerType(s: String) {
     CURRENT("CURRENT"),
@@ -35,9 +35,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         get() = _bookedList
 
     private var _bookedHistoryList = MutableLiveData(mutableListOf<BookItem>())
-    private var _bookedString = repository.BookingsRepo.map { it.toString() }
-    val bookedString: LiveData<String>
-        get() = _bookedString
+    private var _testingString = MutableLiveData<String>()
+    val testingString: LiveData<String>
+        get() = _testingString
 
     private var _bookHistoryList = MutableLiveData(mutableListOf<BookItem>())
     val bookedHistoryList: LiveData<MutableList<BookItem>>
@@ -97,14 +97,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            //repository.deleteBooking()
+            repository.deleteAllBookings()
+            repository.deleteAllWorkingSpaces()
             repository.refreshWorkingSpaces()
             repository.refreshBookings()
-            var stringVal = ""
-            withContext(Dispatchers.IO){
+            repository.refreshAllWorkingSpacesString()
+            var stringVal: List<BookingProperty>
+            withContext(Dispatchers.IO) {
                 stringVal = repository.refreshAllBookingString()
             }
-//            _bookedString.value = stringVal
+            _testingString.value = stringVal.toString()
         }
 
         val newList = mutableListOf<WorkingSpaceDB>()
@@ -324,10 +326,6 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 //                )
 //            )
 //        }
-
-
-
-
 
 
     fun isEmptySpace(spaceItem: SpaceItem): Boolean {
