@@ -26,7 +26,7 @@ data class BookingProperty(
     val roomId: String
 ) : Parcelable
 
-fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB> {
+fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         // Date type
@@ -37,9 +37,10 @@ fun List<BookingProperty>.bookingProertyModelToDatabaseModel(): Array<BookingDB>
         val parsedTime = timeFormat.parse(it.startTime)
         BookingDB(
             bookingId = it.bookingId,
-            date = Date(parsedDate.time),
-            time = Time(parsedTime.time),
-            roomId = it.roomId,
+            date = it.date,
+            startTime = it.startTime,
+            endTime = it.endTime,
+            roomId = it.roomId
         )
     }.toTypedArray()
 }

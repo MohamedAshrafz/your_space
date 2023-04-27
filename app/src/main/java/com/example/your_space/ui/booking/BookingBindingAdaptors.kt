@@ -6,15 +6,14 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.your_space.database.BookingDB
 import com.example.your_space.databinding.BookItemBinding
-import com.example.your_space.databinding.CoworkingSpaceItemBinding
-import com.example.your_space.ui.ourspaces.OurSpacesAdabter
 
 class BookingRecyclerViewAdaptor(
-    private val clickListener: (bookItem: BookItem) -> Unit,
+    private val clickListener: (bookItem: BookingDB) -> Unit,
     private val type: String
 ) :
-    ListAdapter<BookItem, BookingRecyclerViewAdaptor.BookItemViewHolder>(DiffCallback) {
+    ListAdapter<BookingDB, BookingRecyclerViewAdaptor.BookItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookItemViewHolder {
         return BookItemViewHolder.from(parent)
@@ -27,7 +26,7 @@ class BookingRecyclerViewAdaptor(
 
     class BookItemViewHolder(private val binding: BookItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: BookItem, clickListener: (bookItem: BookItem) -> Unit, type: String) {
+        fun bind(item: BookingDB, clickListener: (bookItem: BookingDB) -> Unit, type: String) {
             binding.funcButton.setOnClickListener { clickListener(item) }
             binding.funcButton.text = type
             binding.bookItem = item
@@ -51,19 +50,19 @@ class BookingRecyclerViewAdaptor(
 
 }
 
-object DiffCallback : DiffUtil.ItemCallback<BookItem>() {
+object DiffCallback : DiffUtil.ItemCallback<BookingDB>() {
 
-    override fun areItemsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
-        return oldItem.bookId == newItem.bookId
+    override fun areItemsTheSame(oldItem: BookingDB, newItem: BookingDB): Boolean {
+        return oldItem.bookingId == newItem.bookingId
     }
 
-    override fun areContentsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
+    override fun areContentsTheSame(oldItem: BookingDB, newItem: BookingDB): Boolean {
         return oldItem == newItem
     }
 }
 
 @BindingAdapter("bookList")
-fun bindAsteroidsList(recyclerView: RecyclerView, list: List<BookItem>?) {
+fun bindAsteroidsList(recyclerView: RecyclerView, list: List<BookingDB>?) {
     val adapter = recyclerView.adapter as BookingRecyclerViewAdaptor
     adapter.submitList(list)
 }

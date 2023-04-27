@@ -3,7 +3,8 @@ package com.example.your_space.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.your_space.ui.booking.BookItem
+import com.squareup.moshi.Json
+//import com.example.your_space.ui.booking.BookItem
 //import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.parcelize.Parcelize
 import java.sql.Time
@@ -78,11 +79,19 @@ data class WorkingSpaceDB(
 data class BookingDB(
     @PrimaryKey
     val bookingId: String = UUID.randomUUID().toString(),
-    val userId: String = "",
-    val roomId: String = "",
-    val time: Time,
-    val date: Date
-) : Parcelable
+    val startTime: String = "",
+    val endTime: String = "",
+    val date: String = "",
+    val roomId: String = ""
+) : Parcelable {
+    fun namingFunction(): String {
+        return "Book: $bookingId"
+    }
+
+    fun timingFromTo(): String {
+        return "${startTime.subSequence(0, 5)} : ${endTime.subSequence(0, 5)}"
+    }
+}
 
 //fun List<SpaceItem>.spaceToDatabaseModel(): Array<WorkingSpaceDB> {
 //    return map {
@@ -114,28 +123,28 @@ data class BookingDB(
 //    }
 //}
 
-fun List<BookItem>.bookingToDatabaseModel(): Array<BookingDB> {
-    return map {
-
-        BookingDB(
-            bookingId = it.bookId,
-            roomId = it.bookName,
-            date = Date(31 / 4 / 2023),
-            time = Time(20, 29, 29)
-        )
-    }.toTypedArray()
-}
-
-fun List<BookingDB>.bookingToDomainModel(): List<BookItem> {
-    return map {
-        BookItem(
-            bookId = it.bookingId,
-            bookName = "Book: " + it.bookingId,
-            date = it.date.toString(),
-            time = it.time.toString()
-        )
-    }
-}
+//fun List<BookItem>.bookingToDatabaseModel(): Array<BookingDB> {
+//    return map {
+//
+//        BookingDB(
+//            bookingId = it.bookId,
+//            roomId = it.bookName,
+//            date = Date(31 / 4 / 2023),
+//            time = Time(20, 29, 29)
+//        )
+//    }.toTypedArray()
+//}
+//
+//fun List<BookingDB>.bookingToDomainModel(): List<BookItem> {
+//    return map {
+//        BookItem(
+//            bookId = it.bookingId,
+//            bookName = "Book: " + it.bookingId,
+//            date = it.date.toString(),
+//            time = it.time.toString()
+//        )
+//    }
+//}
 
 
 

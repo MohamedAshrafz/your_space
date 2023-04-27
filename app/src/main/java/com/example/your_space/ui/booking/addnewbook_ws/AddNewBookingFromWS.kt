@@ -9,11 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentAddNewBookingFromWSBinding
-import com.example.your_space.ui.booking.BookItem
+//import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.booking.BookingViewModel
 
 class AddNewBookingFromWS : Fragment() {
     lateinit var _binding: FragmentAddNewBookingFromWSBinding
+    private val binding
+        get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +31,16 @@ class AddNewBookingFromWS : Fragment() {
         // provide argument to the function
         val spaceItem = AddNewBookingFromWSArgs.fromBundle(requireArguments()).selectedSpace
 
-        _binding.bookNameEditText.text = spaceItem.name
+        binding.bookNameEditText.text = spaceItem.name
 
         val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 
-        _binding.btnAddNewBook.setOnClickListener {
-            val newBook = BookItem(
-                bookName = _binding.bookNameEditText.text.toString(),
-                date = _binding.bookDateEditText.text.toString(),
-                time = _binding.bookTimeEditText.text.toString()
-            )
+//        _binding.btnAddNewBook.setOnClickListener {
+//            val newBook = BookItem(
+//                bookName = _binding.bookNameEditText.text.toString(),
+//                date = _binding.bookDateEditText.text.toString(),
+//                time = _binding.bookTimeEditText.text.toString()
+//            )
 
 //            if (!addNewBookAppViewModel.isEmptyBook(newBook)) {
 //                addNewBookAppViewModel.addNewBook(newBook)
@@ -46,7 +48,7 @@ class AddNewBookingFromWS : Fragment() {
 //            } else {
 //                Toast.makeText(context, "Please Fill All Data", Toast.LENGTH_SHORT).show()
 //            }
-        }
+//        }
 
         return _binding.root
     }

@@ -3,15 +3,11 @@ package com.example.your_space.repository
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
-import com.example.your_space.database.AppDao
-import com.example.your_space.database.AppDatabase
-import com.example.your_space.database.WorkingSpaceDB
-import com.example.your_space.database.bookingToDomainModel
+import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
-import com.example.your_space.network.networkdatamodel.bookingProertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
-import com.example.your_space.ui.booking.BookItem
+//import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,8 +18,7 @@ class AppRepository private constructor(private val database: AppDao) {
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> =
         database.gelAllWorkingSpaces()
 
-    val BookingsRepo: LiveData<List<BookItem>> =
-        database.gelAllBookings().map { it.bookingToDomainModel() }
+    val BookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 
 
     suspend fun refreshWorkingSpaces() {
@@ -62,7 +57,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 withContext(Dispatchers.IO) {
                     val bookingsList = NetworkServices.getAllBookings()
                     if (bookingsList.isNotEmpty()) {
-                    database.insertAllBookings(*(bookingsList.bookingProertyModelToDatabaseModel()))
+                    database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
                 }
             }
         } catch (e: Exception) {
@@ -76,13 +71,13 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun deleteBookingWithId(bookItem: BookItem) {
+    suspend fun deleteBookingWithId(bookItem: BookingDB) {
         try {
             withContext(Dispatchers.IO) {
                 // Do the DELETE request and get response
-                val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
+                val response = NetworkServices.cancelBooking(bookItem.bookingId.toInt())
                 if (response.isSuccessful) {
-                    database.deleteBooking(bookItem.bookId)
+                    database.deleteBooking(bookItem.bookingId)
 
                 } else {
                     Log.e("RETROFIT_ERROR", response.code().toString())
