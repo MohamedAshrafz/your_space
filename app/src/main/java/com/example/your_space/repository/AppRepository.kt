@@ -15,10 +15,9 @@ const val REPOSITORY_ERROR_STRING = "Error in repository"
 
 class AppRepository private constructor(private val database: AppDao) {
 
-    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> =
-        database.gelAllWorkingSpaces()
+    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
-    val BookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
+    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 
 
     suspend fun refreshWorkingSpaces() {
@@ -40,12 +39,10 @@ class AppRepository private constructor(private val database: AppDao) {
         try {
             withContext(Dispatchers.IO) {
                 val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
-                if (workingSpacesList.isNotEmpty()) {
-                    if (initialize){
-                        database.deleteAllWorkingSpaces()
-                    }
-                    database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
+                if (initialize) {
+                    database.deleteAllWorkingSpaces()
                 }
+                database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -54,11 +51,10 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun refreshBookings() {
         try {
-                withContext(Dispatchers.IO) {
-                    val bookingsList = NetworkServices.getAllBookings()
-                    if (bookingsList.isNotEmpty()) {
-                    database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
-                }
+            withContext(Dispatchers.IO) {
+                val bookingsList = NetworkServices.getAllBookings()
+                database.deleteAllBookings()
+                database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
