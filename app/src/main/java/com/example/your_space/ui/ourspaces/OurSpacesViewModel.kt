@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.WorkingSpaceDB
+import com.example.your_space.network.PAGE_SIZE
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -22,9 +23,13 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     private val spacesPageNumber: LiveData<Int>
         get() = _spacesPageNumber
 
-    private var _isWorkingSpacesPageLoading = MutableLiveData(false)
-    val isWorkingSpacesPageLoading: LiveData<Boolean>
-        get() = _isWorkingSpacesPageLoading
+    private var _isPageLoading = MutableLiveData(false)
+    val isPageLoading: LiveData<Boolean>
+        get() = _isPageLoading
+
+    private var _isSwipeRefreshing = MutableLiveData(false)
+    val isSwipeRefreshing: LiveData<Boolean>
+        get() = _isSwipeRefreshing
 
     private val _selectedSpaceItem = MutableLiveData<WorkingSpaceDB?>()
     val selectedSpaceItem: LiveData<WorkingSpaceDB?>
@@ -33,7 +38,7 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     init {
         viewModelScope.launch {
 
-            repository.loadWorkingSpacesOfPage(0)
+            repository.loadWorkingSpacesOfPage(0, true)
         }
     }
 
@@ -49,10 +54,19 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
 
     fun loadMoreWorkingSpaces() {
         viewModelScope.launch {
-            _isWorkingSpacesPageLoading.value = true
-            spacesPageNumber.value?.let { repository.loadWorkingSpacesOfPage(it) }
-            _spacesList.value?.let { _spacesPageNumber.value = it.size /3 }
-            _isWorkingSpacesPageLoading.value = false
+            _isPageLoading.value = true
+            spacesPageNumber.value?.let { repository.loadWorkingSpacesOfPage(it, false) }
+            _spacesList.value?.let { _spacesPageNumber.value = it.size / PAGE_SIZE }
+            _isPageLoading.value = false
+        }
+    }
+
+    fun refreshOnSwipe() {
+        viewModelScope.launch {
+            _isSwipeRefreshing.value = true
+            _spacesPageNumber.value = 0
+            spacesPageNumber.value?.let { repository.loadWorkingSpacesOfPage(it, true) }
+            _isSwipeRefreshing.value = false
         }
     }
 

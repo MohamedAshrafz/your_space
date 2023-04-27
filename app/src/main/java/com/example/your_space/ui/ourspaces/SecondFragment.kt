@@ -46,11 +46,10 @@ class SecondFragment : Fragment() {
         binding.spaceItemsRecyclerView.addOnScrollListener(recyclerViewScrollListener)
         binding.spaceItemsRecyclerView.layoutManager = recyclerViewLayoutManager
 
-        spaceAppViewModel.isWorkingSpacesPageLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (!isLoading) {
+        spaceAppViewModel.isPageLoading.observe(viewLifecycleOwner) { isLoading ->
+
 //                binding.spaceItemsRecyclerView.adapter?.notifyDataSetChanged()
-                recyclerViewScrollListener.setLoading(false)
-            }
+            recyclerViewScrollListener.setLoading(isLoading)
         }
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -66,6 +65,15 @@ class SecondFragment : Fragment() {
                     )
                 spaceAppViewModel.clearSelectedItem()
             }
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            adaptor.notifyDataSetChanged()
+            spaceAppViewModel.refreshOnSwipe()
+        }
+
+        spaceAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+            binding.swipeRefreshLayout.isRefreshing = isRefreshing
         }
 
         return binding.root

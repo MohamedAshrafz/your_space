@@ -4,7 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.your_space.database.*
+import com.example.your_space.database.AppDao
+import com.example.your_space.database.AppDatabase
+import com.example.your_space.database.WorkingSpaceDB
+import com.example.your_space.database.bookingToDomainModel
 import com.example.your_space.network.Network.NetworkServices
 import com.example.your_space.network.networkdatamodel.bookingProertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
@@ -36,11 +39,16 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun loadWorkingSpacesOfPage(pageNumber: Int) {
+    suspend fun loadWorkingSpacesOfPage(pageNumber: Int, initialize: Boolean) {
+//        val start = pageNumber * PAGE_SIZE
+//        val end = start + PAGE_SIZE
         try {
             withContext(Dispatchers.IO) {
                 val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
                 if (workingSpacesList.isNotEmpty()) {
+                    if (initialize){
+                        database.deleteAllWorkingSpaces()
+                    }
                     database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
                 }
             }

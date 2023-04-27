@@ -16,10 +16,13 @@ interface AppDao {
     @Query("DELETE FROM workingSpaces_table")
     fun deleteAllWorkingSpaces()
 
+    @Query("DELETE FROM WORKINGSPACES_TABLE WHERE (spaceId >= :start AND spaceId < :end)")
+    fun deleteWorkingSpacesWithLimit(start: Int, end: Int)
+
     ///////////////////Bookings/////////////////////////
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllBookings(vararg bookings : BookingDB)
+    fun insertAllBookings(vararg bookings: BookingDB)
 
     @Query("SELECT * FROM booking_table ORDER BY bookingId")
     fun gelAllBookings(): LiveData<List<BookingDB>>

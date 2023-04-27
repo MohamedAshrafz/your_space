@@ -1,4 +1,4 @@
-package com.example.your_space.ui
+package com.example.your_space.ui.ourspaces
 
 
 import android.os.Bundle
@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSpaceDetailsBinding
-import com.example.your_space.ui.SpaceDetailsFragmentArgs.Companion.fromBundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class SpaceDetailsFragment : Fragment() {
@@ -19,13 +16,10 @@ class SpaceDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-//        activity?.findViewById<BottomNavigationView>(R.id.bottom_navigation)?.let {
-//            it.visibility = View.GONE
-//        }
+    ): View {
+
         val binding = FragmentSpaceDetailsBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val spaceItem = SpaceDetailsFragmentArgs.fromBundle(requireArguments()).selectedSpaceItem
 
@@ -43,7 +37,4 @@ class SpaceDetailsFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }
