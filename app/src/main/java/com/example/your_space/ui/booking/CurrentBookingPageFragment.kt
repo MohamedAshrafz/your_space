@@ -90,6 +90,18 @@ class CurrentBookingPageFragment : Fragment() {
 
         binding.bookingRecyclerView.adapter = rvAdaptor
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            bookingAppViewModel.refreshOnSwipe()
+        }
+
+        bookingAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+            binding.swipeRefreshLayout.isRefreshing = isRefreshing
+            if (!isRefreshing){
+                rvAdaptor.notifyDataSetChanged()
+                binding.bookingRecyclerView.scrollToPosition(0)
+            }
+        }
+
         return binding.root
     }
 }

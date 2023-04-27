@@ -68,12 +68,15 @@ class SecondFragment : Fragment() {
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            adaptor.notifyDataSetChanged()
             spaceAppViewModel.refreshOnSwipe()
         }
 
         spaceAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
             binding.swipeRefreshLayout.isRefreshing = isRefreshing
+            if (!isRefreshing){
+                adaptor.notifyDataSetChanged()
+                binding.spaceItemsRecyclerView.scrollToPosition(0)
+            }
         }
 
         return binding.root

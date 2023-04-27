@@ -5,8 +5,6 @@ import androidx.lifecycle.*
 import com.example.your_space.database.BookingDB
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
-import java.sql.Date
-import java.sql.Time
 
 enum class RecyclerType {
     CURRENT,
@@ -17,7 +15,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    private val _bookedList = repository.BookingsRepo
+    private val _bookedList = repository.bookingsRepo
     val bookedList: LiveData<List<BookingDB>>
         get() = _bookedList
 
@@ -66,6 +64,10 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     val showDelete: LiveData<Boolean>
         get() = _showDelete
 
+    private var _isSwipeRefreshing = MutableLiveData(false)
+    val isSwipeRefreshing: LiveData<Boolean>
+        get() = _isSwipeRefreshing
+
     init {
         fillHistoryList()
 
@@ -100,6 +102,14 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         return when (recyclerType) {
             RecyclerType.CURRENT.name -> bookedList
             else -> bookedHistoryList
+        }
+    }
+
+    fun refreshOnSwipe() {
+        viewModelScope.launch {
+            _isSwipeRefreshing.value = true
+            repository.refreshBookings()
+            _isSwipeRefreshing.value = false
         }
     }
 
