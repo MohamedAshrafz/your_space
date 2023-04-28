@@ -14,6 +14,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 const val PAGE_SIZE = 4
+const val IMAGE_VS_SPACEID_ENDPOINT = "images/space/"
+const val DEFAULT_IMAGE_INDEX = "0"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
