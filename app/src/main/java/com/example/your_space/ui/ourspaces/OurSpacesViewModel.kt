@@ -35,6 +35,10 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
     val selectedSpaceItem: LiveData<WorkingSpaceDB?>
         get() = _selectedSpaceItem
 
+    private val _imageString = MutableLiveData("http://192.168.1.12:8080/api/images/1")
+    val imageString: LiveData<String>
+        get() = _imageString
+
     init {
         viewModelScope.launch {
 
