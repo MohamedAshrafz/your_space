@@ -1,6 +1,7 @@
 package com.example.your_space.network
 
 import com.example.your_space.network.networkdatamodel.BookingProperty
+import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -9,9 +10,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 const val PAGE_SIZE = 4
 const val IMAGE_VS_SPACEID_ENDPOINT = "images/space/"
@@ -40,6 +39,17 @@ interface YourAppApiInterface {
 
     @DELETE("bookings/{id}")
     suspend fun cancelBooking(@Path("id") id : Int): Response<ResponseBody>
+
+    @POST("bookings")
+    suspend fun postBookingRequest(
+        @Body item: BookingPropertyPost = BookingPropertyPost(
+            startTime = "15:00:00",
+            endTime = "16:00:00",
+            date = "15-03-2035",
+            roomId = "1",
+            userId = "1"
+        )
+    ): Response<String>
 }
 
 object Network {

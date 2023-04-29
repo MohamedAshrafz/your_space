@@ -91,6 +91,11 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
+    suspend fun postBooking(){
+        withContext(Dispatchers.IO){
+            NetworkServices.postBookingRequest()
+        }
+    }
     companion object {
         @Volatile
         private var repositoryINSTANCE: AppRepository? = null

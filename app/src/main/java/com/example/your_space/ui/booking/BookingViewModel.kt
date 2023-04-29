@@ -75,6 +75,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
             //repository.deleteBooking()
 
             repository.refreshBookings()
+            repository.postBooking()
         }
     }
 
