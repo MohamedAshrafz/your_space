@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.WorkingSpaceDB
+import com.example.your_space.network.PAGE_SIZE
 import com.example.your_space.network.networkdatamodel.BookingProperty
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
@@ -47,8 +48,7 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
 
             repository.refreshBookings()
             repository.refreshAllWorkingSpacesString()
-            var stringVal: List<BookingProperty>
-            stringVal = repository.refreshAllBookingString()
+            val stringVal: List<BookingProperty> = repository.refreshAllBookingString()
 
             _testingString.value = stringVal.toString()
 

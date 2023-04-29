@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
+import com.example.your_space.network.networkdatamodel.BookingProperty
+import com.example.your_space.network.networkdatamodel.SpaceItemProperty
 import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 //import com.example.your_space.ui.booking.BookItem
