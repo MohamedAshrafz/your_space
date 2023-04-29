@@ -3,14 +3,11 @@ package com.example.your_space.repository
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
-import com.example.your_space.network.networkdatamodel.BookingProperty
-import com.example.your_space.network.networkdatamodel.SpaceItemProperty
-import com.example.your_space.network.networkdatamodel.bookingProertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
-import com.example.your_space.ui.booking.BookItem
+//import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -18,11 +15,9 @@ const val REPOSITORY_ERROR_STRING = "Error in repository"
 
 class AppRepository private constructor(private val database: AppDao) {
 
-    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> =
-        database.gelAllWorkingSpaces()
+    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
-    val BookingsRepo: LiveData<List<BookItem>> =
-        database.gelAllBookings().map { it.bookingToDomainModel() }
+    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 
 
     suspend fun refreshAllBookingString(): List<BookingProperty> {
@@ -35,9 +30,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun refreshWorkingSpaces() {
         try {
-            val workingSpacesList = NetworkServices.getAllWorkingSpaces()
-            if (workingSpacesList.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                val workingSpacesList = NetworkServices.getAllWorkingSpaces()
+                if (workingSpacesList.isNotEmpty()) {
                     database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
                 }
             }
@@ -46,13 +41,16 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun loadWorkingSpacesOfPage(pageNumber: Int) {
+    suspend fun loadWorkingSpacesOfPage(pageNumber: Int, initialize: Boolean) {
+//        val start = pageNumber * PAGE_SIZE
+//        val end = start + PAGE_SIZE
         try {
-            val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
-            if (workingSpacesList.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
-                    database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
+            withContext(Dispatchers.IO) {
+                val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
+                if (initialize) {
+                    database.deleteAllWorkingSpaces()
                 }
+                database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -61,11 +59,10 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun refreshBookings() {
         try {
-            val bookingsList = NetworkServices.getAllBookings()
-            if (bookingsList.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
-                    database.insertAllBookings(*(bookingsList.bookingProertyModelToDatabaseModel()))
-                }
+            withContext(Dispatchers.IO) {
+                val bookingsList = NetworkServices.getAllBookings()
+                database.deleteAllBookings()
+                database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -78,13 +75,13 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun deleteBookingWithId(bookItem: BookItem) {
+    suspend fun deleteBookingWithId(bookItem: BookingDB) {
         try {
-            // Do the DELETE request and get response
-            val response = NetworkServices.cancelBooking(bookItem.bookId.toInt())
             withContext(Dispatchers.IO) {
+                // Do the DELETE request and get response
+                val response = NetworkServices.cancelBooking(bookItem.bookingId.toInt())
                 if (response.isSuccessful) {
-                    database.deleteBooking(bookItem.bookId)
+                    database.deleteBooking(bookItem.bookingId)
 
                 } else {
                     Log.e("RETROFIT_ERROR", response.code().toString())

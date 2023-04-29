@@ -96,7 +96,7 @@ class FirstFragment : Fragment() {
                 // has to but a function not a reference to a function
                 homeItemBinding.itemLayout.setOnClickListener { listCL[list.indexOf(item)].getListener() }
 
-                homeItemBinding.lifecycleOwner = this
+                homeItemBinding.lifecycleOwner = viewLifecycleOwner
 
                 binding.linearLayoutList.addView(homeItemBinding.itemLayout)
             }

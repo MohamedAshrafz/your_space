@@ -100,6 +100,9 @@ dependencies {
     // for swipe refresh layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$version_glide"
+
     // for solving multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 

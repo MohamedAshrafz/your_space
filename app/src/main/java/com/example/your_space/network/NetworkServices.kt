@@ -13,6 +13,10 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+const val PAGE_SIZE = 4
+const val IMAGE_VS_SPACEID_ENDPOINT = "images/space/"
+const val DEFAULT_IMAGE_INDEX = "0"
+
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -28,7 +32,7 @@ interface YourAppApiInterface {
     @GET("spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
-    @GET("spaces/alldata/{page}/3")
+    @GET("spaces/alldata/{page}/$PAGE_SIZE")
     suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
 
     @GET("bookings")

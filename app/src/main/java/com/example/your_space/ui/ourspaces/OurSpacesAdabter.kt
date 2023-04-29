@@ -1,15 +1,22 @@
 package com.example.your_space.ui.ourspaces
 
-import android.media.SoundPool
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.net.toUri
+import androidx.databinding.BindingAdapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.your_space.R
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
-import javax.xml.transform.Source
+import com.example.your_space.network.Constants.BASE_URL
+import com.example.your_space.network.DEFAULT_IMAGE_INDEX
+import com.example.your_space.network.IMAGE_VS_SPACEID_ENDPOINT
 
 class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) -> Unit) :
     ListAdapter<WorkingSpaceDB, OurSpacesAdabter.SpaceItemViewHolder>(DiffCallback) {
@@ -62,3 +69,45 @@ class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) ->
 
 }
 
+// take care of the nullable String
+// (after opening the app the imageUrl will be null till getting the value,
+// after fetching the data from the remote server)
+@BindingAdapter("imageUrl")
+fun bindImage(imageView: ImageView, imageUrl: String?) {
+    imageUrl?.let {
+        val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
+        Glide.with(imageView.context)
+            .load(imageUri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imageView)
+    }
+}
+
+// take care of the nullable String
+// (after opening the app the imageUrl will be null till getting the value,
+// after fetching the data from the remote server)
+// you cannot set the default value for any parameter instead check for the nullability manually
+// check for more in https://developer.android.com/topic/libraries/data-binding/binding-adapters
+@BindingAdapter(value = ["spaceId", "index"], requireAll = false)
+fun bindImage(imageView: ImageView, spaceId: String?, index: String?) {
+
+    val imageUrl = if (index == null){
+        "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$DEFAULT_IMAGE_INDEX"
+    }else{
+        "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$index"
+    }
+
+    val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
+    Glide.with(imageView.context)
+        .load(imageUri)
+        .apply(
+            RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image)
+        )
+        .into(imageView)
+}

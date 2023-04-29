@@ -5,13 +5,15 @@
       <map>
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable-anydpi/background_shape.xml" value="0.2265" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable-v24/ic_baseline_add_a_photo_48.xml" value="0.124" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable-v24/loading_img.xml" value="0.1205" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/home_pin_48px.xml" value="0.2265" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.2265" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/ic_baseline_monetization_on_24.xml" value="0.1955" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/drawable/ic_broken_image.xml" value="0.1" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/activity_authentication.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/background_shape.xml" value="0.22826086956521738" />
-        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/book_item.xml" value="0.4" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/book_item.xml" value="0.264" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/booking_fragment.xml" value="0.2427536231884058" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/coworking_space_item.xml" value="0.22826086956521738" />

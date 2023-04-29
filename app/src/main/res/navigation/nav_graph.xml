@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/spaceDetailsFragment"
-        android:name="com.example.your_space.ui.SpaceDetailsFragment"
+        android:name="com.example.your_space.ui.ourspaces.SpaceDetailsFragment"
         android:label="@string/WorkSpaceDetails_label"
         tools:layout="@layout/fragment_space_details" >
         <action
