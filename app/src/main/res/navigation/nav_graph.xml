@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_spaceDetailsFragment_to_addNewBookingFromWS2"
             app:destination="@id/addNewBookingFromWS" />
+        <action
+            android:id="@+id/action_spaceDetailsFragment_to_roomsFragment"
+            app:destination="@id/roomsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -110,5 +113,14 @@
             app:destination="@id/bookingFragment"
             app:popUpTo="@id/SecondFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomsFragment"
+        android:name="com.example.your_space.ui.rooms.RoomsFragment"
+        android:label="fragment_rooms"
+        tools:layout="@layout/fragment_rooms" >
+        <argument
+            android:name="selectedRoom"
+            app:argType="com.example.your_space.database.SpaceRoomDB" />
     </fragment>
 </navigation>

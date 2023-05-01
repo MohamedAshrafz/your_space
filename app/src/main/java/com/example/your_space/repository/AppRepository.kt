@@ -7,6 +7,7 @@ import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
 import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.roomPropertyModelToDatabaseModel
 //import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,6 +19,8 @@ class AppRepository private constructor(private val database: AppDao) {
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
+
+    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.gelAllRooms()
 
 
     suspend fun refreshWorkingSpaces() {
@@ -55,6 +58,18 @@ class AppRepository private constructor(private val database: AppDao) {
                 val bookingsList = NetworkServices.getAllBookings()
                 database.deleteAllBookings()
                 database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+    }
+
+    suspend fun refreshRooms() {
+        try {
+            withContext(Dispatchers.IO) {
+                val roomsList = NetworkServices.getAllRooms()
+                database.deleteAllRooms()
+                database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())

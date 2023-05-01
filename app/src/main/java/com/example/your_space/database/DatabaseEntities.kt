@@ -48,7 +48,7 @@ data class SpaceRoomDB(
     val activity: String,
     val type: String,
     val price: Float,
-    val image: String
+    val image: String =""
 ) : Parcelable
 
 @Entity(tableName = "workingSpaces_table")

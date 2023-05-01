@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.your_space.database.SpaceRoomDB
 import com.example.your_space.databinding.FragmentSpaceDetailsBinding
+import com.example.your_space.ui.rooms.RoomsFragmentArgs
 
 
 class SpaceDetailsFragment : Fragment() {
@@ -27,6 +29,18 @@ class SpaceDetailsFragment : Fragment() {
             findNavController().navigate(
                 SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToAddNewBookingFromWS2(
                     spaceItem
+                )
+            )
+        }
+
+        binding.roomBtn.setOnClickListener {
+            findNavController().navigate(
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRoomsFragment(
+//                    roomItem
+                SpaceRoomDB(
+                    roomId = 1,
+                    2,"ssss","asxdfkajn asdfla ","asdfn" , 22.22.toFloat(),"askdkasl"
+                )
                 )
             )
         }
