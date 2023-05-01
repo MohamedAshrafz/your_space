@@ -43,6 +43,18 @@ class RoomsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.roomItemsRecyclerView.adapter = adaptor
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            roomViewModel.refreshOnSwipe()
+        }
+
+        roomViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+            binding.swipeRefreshLayout.isRefreshing = isRefreshing
+            if (!isRefreshing){
+                adaptor.notifyDataSetChanged()
+                binding.roomItemsRecyclerView.scrollToPosition(0)
+            }
+        }
+
         return binding.root
     }
 

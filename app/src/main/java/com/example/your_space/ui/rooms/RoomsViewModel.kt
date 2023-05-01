@@ -25,6 +25,11 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
         get() = _imageString
 
 
+    private var _isSwipeRefreshing = MutableLiveData(false)
+    val isSwipeRefreshing: LiveData<Boolean>
+        get() = _isSwipeRefreshing
+
+
 
     init {
         viewModelScope.launch {
@@ -41,6 +46,14 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
     fun clearSelectedItem() {
         // _navigateOnSelectedItem.value = false
         _selectedRoomItem.value = null
+    }
+
+    fun refreshOnSwipe() {
+        viewModelScope.launch {
+            _isSwipeRefreshing.value = true
+            repository.refreshRooms()
+            _isSwipeRefreshing.value = false
+        }
     }
 
 
