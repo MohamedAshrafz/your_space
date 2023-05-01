@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.database.SpaceRoomDB
 import com.example.your_space.databinding.FragmentSpaceDetailsBinding
-import com.example.your_space.ui.rooms.RoomsFragmentArgs
+
 
 
 class SpaceDetailsFragment : Fragment() {
@@ -25,23 +25,10 @@ class SpaceDetailsFragment : Fragment() {
 
         val spaceItem = SpaceDetailsFragmentArgs.fromBundle(requireArguments()).selectedSpaceItem
 
-        binding.bookButton.setOnClickListener {
-            findNavController().navigate(
-                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToAddNewBookingFromWS2(
-                    spaceItem
-                )
-            )
-        }
 
         binding.roomBtn.setOnClickListener {
             findNavController().navigate(
-                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRoomsFragment(
-//                    roomItem
-                SpaceRoomDB(
-                    roomId = 1,
-                    2,"ssss","asxdfkajn asdfla ","asdfn" , 22.22.toFloat(),"askdkasl"
-                )
-                )
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRoomsFragment()
             )
         }
 

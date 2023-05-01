@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentRoomsBinding
 import com.example.your_space.ui.ourspaces.SecondFragmentDirections
+import com.example.your_space.ui.ourspaces.SpaceDetailsFragmentDirections
 
 
 class RoomsFragment : Fragment() {
@@ -42,6 +44,19 @@ class RoomsFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.roomItemsRecyclerView.adapter = adaptor
+
+
+        roomViewModel.selectedRoomItem.observe(viewLifecycleOwner) { selectedRoomItem ->
+            if (selectedRoomItem != null) {
+                requireView().findNavController()
+                    .navigate(
+                        RoomsFragmentDirections.actionRoomsFragmentToAddNewBookingFromWS(selectedRoomItem)
+                    )
+                roomViewModel.clearSelectedItem()
+            }
+        }
+
+        roomViewModel.selectedRoomItem
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             roomViewModel.refreshOnSwipe()

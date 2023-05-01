@@ -29,9 +29,9 @@ class AddNewBookingFromWS : Fragment() {
         _binding = FragmentAddNewBookingFromWSBinding.inflate(inflater, container, false)
 
         // provide argument to the function
-        val spaceItem = AddNewBookingFromWSArgs.fromBundle(requireArguments()).selectedSpace
+        val roomItem = AddNewBookingFromWSArgs.fromBundle(requireArguments()).selectedRoom
 
-        binding.bookNameEditText.text = spaceItem.name
+        binding.bookNameEditText.text = roomItem.name
 
         val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 

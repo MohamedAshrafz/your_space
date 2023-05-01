@@ -205,31 +205,21 @@
             app:layout_constraintStart_toEndOf="@+id/imageView24"
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
-        <Button
-            android:id="@+id/book_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:backgroundTint="@color/button_color"
-            android:text="Book now"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView24"
-            app:layout_constraintVertical_bias="0.513" />
 
         <Button
             android:id="@+id/roomBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="16dp"
             android:text="Go To Rooms"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/book_button"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPriceSpaceDetails"
-            app:layout_constraintVertical_bias="0.51" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

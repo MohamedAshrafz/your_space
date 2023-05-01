@@ -105,22 +105,22 @@
         android:name="com.example.your_space.ui.booking.addnewbook_ws.AddNewBookingFromWS"
         android:label="New booking"
         tools:layout="@layout/fragment_add_new_booking_from_w_s">
-        <argument
-            android:name="selectedSpace"
-            app:argType="com.example.your_space.database.WorkingSpaceDB" />
         <action
             android:id="@+id/action_addNewBookingFromWS_to_bookingFragment"
             app:destination="@id/bookingFragment"
             app:popUpTo="@id/SecondFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="selectedRoom"
+            app:argType="com.example.your_space.database.SpaceRoomDB" />
     </fragment>
     <fragment
         android:id="@+id/roomsFragment"
         android:name="com.example.your_space.ui.rooms.RoomsFragment"
         android:label="fragment_rooms"
         tools:layout="@layout/fragment_rooms" >
-        <argument
-            android:name="selectedRoom"
-            app:argType="com.example.your_space.database.SpaceRoomDB" />
+        <action
+            android:id="@+id/action_roomsFragment_to_addNewBookingFromWS"
+            app:destination="@id/addNewBookingFromWS" />
     </fragment>
 </navigation>
