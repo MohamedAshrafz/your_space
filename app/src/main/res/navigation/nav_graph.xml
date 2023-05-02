@@ -122,5 +122,8 @@
         <action
             android:id="@+id/action_roomsFragment_to_addNewBookingFromWS"
             app:destination="@id/addNewBookingFromWS" />
+        <argument
+            android:name="spaceId"
+            app:argType="string" />
     </fragment>
 </navigation>

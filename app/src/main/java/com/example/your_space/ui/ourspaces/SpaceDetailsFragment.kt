@@ -24,11 +24,11 @@ class SpaceDetailsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         val spaceItem = SpaceDetailsFragmentArgs.fromBundle(requireArguments()).selectedSpaceItem
-
+        val spaceId = spaceItem.spaceId
 
         binding.roomBtn.setOnClickListener {
             findNavController().navigate(
-                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRoomsFragment()
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRoomsFragment(spaceId)
             )
         }
 

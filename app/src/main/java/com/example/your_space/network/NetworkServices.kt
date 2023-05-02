@@ -39,8 +39,8 @@ interface YourAppApiInterface {
     @GET("bookings")
     suspend fun getAllBookings(): List<BookingProperty>
 
-    @GET("room/allrooms")
-    suspend fun getAllRooms(): List<WorkingSpaceRoomProperty>
+    @GET("room/getBySpace/{spaceId}")
+    suspend fun getRoomsBySpaceId(@Path("spaceId") spaceId : String): List<WorkingSpaceRoomProperty>
 
     @DELETE("bookings/{id}")
     suspend fun cancelBooking(@Path("id") id : Int): Response<ResponseBody>

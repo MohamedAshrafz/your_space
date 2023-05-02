@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.SpaceRoomDB
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -29,13 +30,24 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
     val isSwipeRefreshing: LiveData<Boolean>
         get() = _isSwipeRefreshing
 
+    private var _spaceId = MutableLiveData("")
+    val spaceId: LiveData<String>
+        get() = _spaceId
+
+    fun selectedItem(item: String) {
+        _spaceId.value = item
+    }
 
 
     init {
-        viewModelScope.launch {
 
-            repository.refreshRooms()
+        viewModelScope.launch {
+            _spaceId.value?.let { repository.getRoomsBySpaceId(it) }
         }
+    }
+
+    suspend fun refresh(){
+        spaceId.value?.let { repository.getRoomsBySpaceId(it) }
     }
 
     fun onSelectRoomItem(roomItem: SpaceRoomDB) {
@@ -51,7 +63,7 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
     fun refreshOnSwipe() {
         viewModelScope.launch {
             _isSwipeRefreshing.value = true
-            repository.refreshRooms()
+            _spaceId.value?.let { repository.getRoomsBySpaceId(it) }
             _isSwipeRefreshing.value = false
         }
     }

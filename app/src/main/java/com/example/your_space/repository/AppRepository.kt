@@ -64,10 +64,10 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun refreshRooms() {
+    suspend fun getRoomsBySpaceId(spaceId : String) {
         try {
             withContext(Dispatchers.IO) {
-                val roomsList = NetworkServices.getAllRooms()
+                val roomsList = NetworkServices.getRoomsBySpaceId(spaceId)
                 database.deleteAllRooms()
                 database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
             }
@@ -103,6 +103,12 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun deleteAllBookings() {
         withContext(Dispatchers.IO) {
             database.deleteAllBookings()
+        }
+    }
+
+    suspend fun deleteAllRooms() {
+        withContext(Dispatchers.IO) {
+            database.deleteAllRooms()
         }
     }
 
