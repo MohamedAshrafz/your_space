@@ -1,22 +1,13 @@
 package com.example.your_space.ui.rooms
 
-import android.app.Application
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentRoomsBinding
-import com.example.your_space.ui.ourspaces.SecondFragmentDirections
-import com.example.your_space.ui.ourspaces.SpaceDetailsFragmentDirections
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class RoomsFragment : Fragment() {
@@ -26,37 +17,29 @@ class RoomsFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val roomViewModel by activityViewModels<RoomsViewModel>()
+    private lateinit var roomViewModel: RoomsViewModel
     // This property is only valid between onCreateView and
     // onDestroyView.
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentRoomsBinding.inflate(inflater, container, false)
         val spaceId = RoomsFragmentArgs.fromBundle(requireArguments()).spaceId
 
+        roomViewModel = ViewModelProvider(
+            this,
+            RoomsViewModelFactory(requireActivity().application, spaceId)
+        )[RoomsViewModel::class.java]
 
         binding.viewModel = roomViewModel
-
-        roomViewModel.selectedItem(spaceId)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            if (spaceId != null) {
-                    roomViewModel.refresh()
-                }
-        }
-
 
         val adaptor =
             RoomsAdapter { roomItem ->
                 roomViewModel.onSelectRoomItem(roomItem)
             }
-
-        binding.lifecycleOwner = viewLifecycleOwner
-
 
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -67,30 +50,23 @@ class RoomsFragment : Fragment() {
             if (selectedRoomItem != null) {
                 requireView().findNavController()
                     .navigate(
-                        RoomsFragmentDirections.actionRoomsFragmentToAddNewBookingFromWS(selectedRoomItem)
+                        RoomsFragmentDirections.actionRoomsFragmentToAddNewBookingFromWS(
+                            selectedRoomItem
+                        )
                     )
                 roomViewModel.clearSelectedItem()
             }
         }
 
-//        roomViewModel.selectedRoomItem
-//
         binding.swipeRefreshLayout.setOnRefreshListener {
             roomViewModel.refreshOnSwipe()
         }
-//        roomViewModel.spaceId.observe(viewLifecycleOwner) { spaceId ->
-//            if (spaceId != null) {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    roomViewModel.refresh()
-//                }
-//            }
-//        }
 
-        roomViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+        roomViewModel.isSwipeRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
             binding.swipeRefreshLayout.isRefreshing = isRefreshing
-            if (!isRefreshing){
+            if (!isRefreshing) {
                 adaptor.notifyDataSetChanged()
-                binding.roomItemsRecyclerView.scrollToPosition(0)
+//                binding.roomItemsRecyclerView.scrollToPosition(0)
             }
         }
 

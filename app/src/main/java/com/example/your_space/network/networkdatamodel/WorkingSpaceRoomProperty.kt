@@ -37,6 +37,7 @@ fun List<WorkingSpaceRoomProperty>.roomPropertyModelToDatabaseModel(): Array<Spa
             activity = it.activity,
             type = it.type,
             price = it.price,
+            spaceId = it.space
         )
     }.toTypedArray()
 }

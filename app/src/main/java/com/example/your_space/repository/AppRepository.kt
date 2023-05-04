@@ -20,7 +20,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 
-    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.gelAllRooms()
+//    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
 
     suspend fun refreshWorkingSpaces() {
@@ -64,15 +64,21 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun getRoomsBySpaceId(spaceId : String) {
+    suspend fun getRoomsBySpaceIdFromNetwork(spaceId: String) {
         try {
             withContext(Dispatchers.IO) {
                 val roomsList = NetworkServices.getRoomsBySpaceId(spaceId)
-                database.deleteAllRooms()
+                database.deleteAllRoomsWithSpaceId(spaceId)
                 database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+    }
+
+    suspend fun getRoomsBySpaceIdFromDB(spaceId: String): LiveData<List<SpaceRoomDB>> {
+        return withContext(Dispatchers.IO) {
+            database.getAllRoomsWithSpaceId(spaceId)
         }
     }
 

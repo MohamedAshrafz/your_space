@@ -1,19 +1,30 @@
 package com.example.your_space.ui.rooms
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.your_space.database.SpaceRoomDB
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
-class RoomsViewModel(app: Application) : AndroidViewModel(app) {
+class RoomsViewModelFactory(
+    private val application: Application,
+    private val spaceId: String
+) : ViewModelProvider.Factory {
+    @Suppress("unchecked_cast")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(RoomsViewModel::class.java)) {
+            return RoomsViewModel(application, spaceId) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+class RoomsViewModel(app: Application, private val spaceIdString: String) : AndroidViewModel(app) {
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    private var _roomsList = repository.roomsRepo
+    private var _roomsList = liveData { emitSource(repository.getRoomsBySpaceIdFromDB(spaceIdString)) }
+
     val roomsList: LiveData<List<SpaceRoomDB>>
         get() = _roomsList
 
@@ -30,25 +41,6 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
     val isSwipeRefreshing: LiveData<Boolean>
         get() = _isSwipeRefreshing
 
-    private var _spaceId = MutableLiveData("")
-    val spaceId: LiveData<String>
-        get() = _spaceId
-
-    fun selectedItem(item: String) {
-        _spaceId.value = item
-    }
-
-
-    init {
-
-        viewModelScope.launch {
-            _spaceId.value?.let { repository.getRoomsBySpaceId(it) }
-        }
-    }
-
-    suspend fun refresh(){
-        spaceId.value?.let { repository.getRoomsBySpaceId(it) }
-    }
 
     fun onSelectRoomItem(roomItem: SpaceRoomDB) {
         _selectedRoomItem.value = roomItem
@@ -63,10 +55,9 @@ class RoomsViewModel(app: Application) : AndroidViewModel(app) {
     fun refreshOnSwipe() {
         viewModelScope.launch {
             _isSwipeRefreshing.value = true
-            _spaceId.value?.let { repository.getRoomsBySpaceId(it) }
+            repository.getRoomsBySpaceIdFromNetwork(spaceIdString)
             _isSwipeRefreshing.value = false
         }
     }
-
 
 }

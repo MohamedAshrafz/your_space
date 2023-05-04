@@ -41,9 +41,15 @@ interface AppDao {
     fun insertAllRooms(vararg spaces: SpaceRoomDB)
 
     @Query("SELECT * FROM spaceRooms_table ORDER BY roomId")
-    fun gelAllRooms(): LiveData<List<SpaceRoomDB>>
+    fun getAllRooms(): LiveData<List<SpaceRoomDB>>
+
+    @Query("SELECT * FROM spaceRooms_table WHERE spaceId = :spaceId ORDER BY roomId")
+    fun getAllRoomsWithSpaceId(spaceId: String): LiveData<List<SpaceRoomDB>>
 
     @Query("DELETE FROM spaceRooms_table")
     fun deleteAllRooms()
+
+    @Query("DELETE FROM spaceRooms_table WHERE spaceId = :spaceId")
+    fun deleteAllRoomsWithSpaceId(spaceId: String)
 
 }
