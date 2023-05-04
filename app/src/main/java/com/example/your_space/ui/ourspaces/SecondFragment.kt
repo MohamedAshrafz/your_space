@@ -75,7 +75,7 @@ class SecondFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = isRefreshing
             if (!isRefreshing){
                 adaptor.notifyDataSetChanged()
-                binding.spaceItemsRecyclerView.scrollToPosition(0)
+//                binding.spaceItemsRecyclerView.scrollToPosition(0)
             }
         }
 
