@@ -26,6 +26,21 @@ data class BookingProperty(
     val roomId: String
 ) : Parcelable
 
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class BookingPropertyPost(
+    @Json(name = "startTime")
+    val startTime: String = "",
+    @Json(name = "endTime")
+    val endTime: String = "",
+    @Json(name = "date")
+    val date: String = "",
+    @Json(name = "roomId")
+    val roomId: String,
+    @Json(name = "userId")
+    val userId: String
+) : Parcelable
+
 fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB> {
     return map {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())

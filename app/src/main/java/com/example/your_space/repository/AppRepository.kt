@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
+import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
 import com.example.your_space.network.networkdatamodel.roomPropertyModelToDatabaseModel
@@ -86,6 +87,14 @@ class AppRepository private constructor(private val database: AppDao) {
         withContext(Dispatchers.IO) {
             database.deleteAllWorkingSpaces()
         }
+    }
+
+    suspend fun addNewBooking(newBooking : BookingPropertyPost){
+        val response = NetworkServices.addNewBooking(newBooking)
+        if (response.isSuccessful){
+            refreshBookings()
+        }
+        else Log.e("RETROFIT_ERROR", response.code().toString())
     }
 
     suspend fun deleteBookingWithId(bookItem: BookingDB) {

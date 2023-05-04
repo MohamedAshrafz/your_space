@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.your_space.database.BookingDB
 import com.example.your_space.databinding.FragmentAddNewBookBinding
 //import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.booking.BookingViewModel
@@ -25,12 +26,19 @@ class AddNewBookFragment : Fragment() {
 
         val addNewBookAppViewModel by activityViewModels<BookingViewModel>()
 
-//        _binding.btnAddNewBook.setOnClickListener {
-//            val newBook = BookItem(
-//                bookName = _binding.bookNameEditText.text.toString(),
-//                date = _binding.bookDateEditText.text.toString(),
-//                time = _binding.bookTimeEditText.text.toString()
-//            )
+        val x = _binding.bookTimeEditText.text.toString()
+        _binding.btnAddNewBook.setOnClickListener {
+            val newBook = BookingDB(
+                bookingId = "30",
+                startTime = _binding.bookTimeEditText.text.toString(),
+                endTime = "10:00:00",
+                date = _binding.bookDateEditText.text.toString(),
+                roomId = "1"
+                )
+
+
+            addNewBookAppViewModel.addNewBook(newBook)
+            findNavController().navigate(AddNewBookFragmentDirections.actionAddNewBookFragmentToBookingFragment())
 
 //            if (!addNewBookAppViewModel.isEmptyBook(newBook)){
 //                addNewBookAppViewModel.addNewBook(newBook)
@@ -38,7 +46,7 @@ class AddNewBookFragment : Fragment() {
 //            } else{
 //                Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
 //            }
-//        }
+        }
 
         return _binding.root
     }

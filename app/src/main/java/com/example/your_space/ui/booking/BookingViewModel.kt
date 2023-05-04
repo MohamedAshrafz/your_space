@@ -3,6 +3,7 @@ package com.example.your_space.ui.booking
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.your_space.database.BookingDB
+import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -125,9 +126,16 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
 
     fun addNewBook(bookItem: BookingDB) {
-        _bookedList.value?.toMutableList()?.add(
-            bookItem
-        )
+        viewModelScope.launch {
+            val newBooking = BookingPropertyPost(
+                startTime = bookItem.startTime,
+                endTime = bookItem.endTime,
+                date = bookItem.date,
+                roomId = bookItem.roomId,
+                userId = "5"
+            )
+            repository.addNewBooking(newBooking)
+        }
     }
 
     private fun fillHistoryList() {
