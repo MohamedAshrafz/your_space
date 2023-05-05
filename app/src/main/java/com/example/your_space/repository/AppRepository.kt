@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
-import com.example.your_space.network.networkdatamodel.BookingPropertyPost
-import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
-import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
-import com.example.your_space.network.networkdatamodel.roomPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.*
 //import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,6 +17,8 @@ class AppRepository private constructor(private val database: AppDao) {
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
+
+    val ratingsRepo: LiveData<List<RatingDB>> = database.getAllRatings()
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
@@ -82,6 +81,25 @@ class AppRepository private constructor(private val database: AppDao) {
             database.getAllRoomsWithSpaceId(spaceId)
         }
     }
+
+    suspend fun getRatingsBySpaceIdFromNetwork() {
+        try {
+            withContext(Dispatchers.IO) {
+                val roomsList = NetworkServices.getRatingBySpaceId()
+                database.deleteAllRatings()
+                database.insertAllRatings(*(roomsList.ratingPropertyModelToDatabaseModel()))
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+    }
+
+    suspend fun getRatingsBySpaceIdFromDB(): LiveData<List<RatingDB>> {
+        return withContext(Dispatchers.IO) {
+            database.getAllRatings()
+        }
+    }
+
 
     suspend fun deleteAllWorkingSpaces() {
         withContext(Dispatchers.IO) {
