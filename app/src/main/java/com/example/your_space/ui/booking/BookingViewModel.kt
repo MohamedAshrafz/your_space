@@ -12,7 +12,7 @@ enum class RecyclerType {
     HISTORY
 }
 
-class BookingViewModel(app: Application) : AndroidViewModel(app) {
+class BookingViewModel(app: Application) : AndroidViewModel(app)  {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 

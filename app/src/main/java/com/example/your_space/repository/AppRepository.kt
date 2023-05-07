@@ -18,7 +18,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 
-    val ratingsRepo: LiveData<List<RatingDB>> = database.getAllRatings()
+//    val ratingsRepo: LiveData<List<RatingDB>> = database.getAllRatings()
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
@@ -82,23 +82,23 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun getRatingsBySpaceIdFromNetwork() {
-        try {
-            withContext(Dispatchers.IO) {
-                val roomsList = NetworkServices.getRatingBySpaceId()
-                database.deleteAllRatings()
-                database.insertAllRatings(*(roomsList.ratingPropertyModelToDatabaseModel()))
-            }
-        } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
-        }
-    }
-
-    suspend fun getRatingsBySpaceIdFromDB(): LiveData<List<RatingDB>> {
-        return withContext(Dispatchers.IO) {
-            database.getAllRatings()
-        }
-    }
+//    suspend fun getRatingsBySpaceIdFromNetwork() {
+//        try {
+//            withContext(Dispatchers.IO) {
+//                val roomsList = NetworkServices.getRatingBySpaceId()
+//                database.deleteAllRatings()
+//                database.insertAllRatings(*(roomsList.ratingPropertyModelToDatabaseModel()))
+//            }
+//        } catch (e: Exception) {
+//            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+//        }
+//    }
+//
+//    suspend fun getRatingsBySpaceIdFromDB(): LiveData<List<RatingDB>> {
+//        return withContext(Dispatchers.IO) {
+//            database.getAllRatings()
+//        }
+//    }
 
 
     suspend fun deleteAllWorkingSpaces() {

@@ -2,7 +2,6 @@ package com.example.your_space.network.networkdatamodel
 
 import android.os.Parcelable
 import com.example.your_space.database.RatingDB
-import com.example.your_space.database.SpaceRoomDB
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
