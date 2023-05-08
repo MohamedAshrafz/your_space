@@ -1,24 +1,47 @@
 package com.example.your_space.ui.booking
 
 import android.app.Application
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
+import android.widget.DatePicker
+import android.widget.TimePicker
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import com.example.your_space.database.BookingDB
 import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 enum class RecyclerType {
     CURRENT,
     HISTORY
 }
 
-class BookingViewModel(app: Application) : AndroidViewModel(app)  {
+class BookingViewModel(app: Application) : AndroidViewModel(app)   {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
     private val _bookedList = repository.bookingsRepo
     val bookedList: LiveData<List<BookingDB>>
         get() = _bookedList
+
+    private var posted = MutableLiveData(true)
+
+    var minute = 0
+    var hour = 0
+    var day =0
+    var month = 0
+    var year = 0
+
+    var savedMinute = 0
+    var savedHour = 0
+    var savedDay =0
+    var savedMonth = 0
+    var savedYear = 0
+    var savedCorrectMonth = 0
 
     private var _bookedHistoryList = MutableLiveData(
         listOf(
@@ -114,19 +137,20 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)  {
         }
     }
 
-//    fun isEmptyBook(bookItem: BookingDB): Boolean {
-//        if (bookItem.bookName.isEmpty() ||
-//            bookItem.date.isEmpty() ||
-//            bookItem.time.isEmpty()
-//        ) {
-//            return true
-//        }
-//        return false
-//    }
+    fun isEmptyBook(bookItem: BookingDB): Boolean {
+        if (bookItem.startTime.isEmpty() ||
+            bookItem.date.isEmpty() ||
+            bookItem.endTime.isEmpty()
+        ) {
+            return true
+        }
+        return false
+    }
 
 
     fun addNewBook(bookItem: BookingDB) {
         viewModelScope.launch {
+
             val newBooking = BookingPropertyPost(
                 startTime = bookItem.startTime,
                 endTime = bookItem.endTime,
@@ -134,7 +158,11 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)  {
                 roomId = bookItem.roomId,
                 userId = "5"
             )
-            repository.addNewBooking(newBooking)
+            posted.value =  repository.addNewBooking(newBooking)
+            if(posted.value == true){
+                Toast.makeText(getApplication(),"Booking Added Successfully", Toast.LENGTH_SHORT).show()
+            }
+            else Toast.makeText(getApplication(),"Please Put Valid Data", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -177,4 +205,14 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)  {
 //            )
 //        }
     }
+
+    fun getDateTimeCalender(){
+        val cal = Calendar.getInstance()
+        minute = cal.get(Calendar.MINUTE)
+        hour = cal.get(Calendar.HOUR)
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+    }
+
 }

@@ -1,7 +1,10 @@
 package com.example.your_space.repository
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
@@ -107,12 +110,19 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun addNewBooking(newBooking : BookingPropertyPost){
+    suspend fun addNewBooking(newBooking : BookingPropertyPost) : Boolean{
+        val isPosted : Boolean
         val response = NetworkServices.addNewBooking(newBooking)
         if (response.isSuccessful){
+             isPosted = true
             refreshBookings()
+            return isPosted
         }
-        else Log.e("RETROFIT_ERROR", response.code().toString())
+        else {
+            isPosted = false
+            Log.e("RETROFIT_ERROR", response.code().toString())
+            return isPosted
+        }
     }
 
     suspend fun deleteBookingWithId(bookItem: BookingDB) {
