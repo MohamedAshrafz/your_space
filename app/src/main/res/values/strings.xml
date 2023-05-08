@@ -42,4 +42,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_opened_content_desc">Drawer layout opened</string>
     <string name="drawer_closed_content_desc">Drawer layout closed</string>
+    <string name="delete_text_for_option">Delete</string>
+    <string name="warning_string">Warning!</string>
+    <string name="yes_string">Yes</string>
+    <string name="no_string">No</string>
 </resources>

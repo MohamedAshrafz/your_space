@@ -25,19 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/time_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/coworkingSpaceTitle_textView"
             app:layout_constraintTop_toBottomOf="@+id/date_static_text" />
-
-        <ImageView
-            android:id="@+id/imgSpace"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/coworking" />
 
         <TextView
             android:id="@+id/date_static_text"
@@ -55,12 +47,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:text="@{bookItem.namingFunction()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.024"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgSpace" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/date_textView"
@@ -92,6 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/button_color"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
