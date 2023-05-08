@@ -78,15 +78,17 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/time_static_text" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/func_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:backgroundTint="@color/button_color"
-            android:visibility="gone"
+            android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="27dp"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
