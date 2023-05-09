@@ -23,7 +23,8 @@ class RoomsViewModelFactory(
 class RoomsViewModel(app: Application, private val spaceIdString: String) : AndroidViewModel(app) {
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    private var _roomsList = liveData { emitSource(repository.getRoomsBySpaceIdFromDB(spaceIdString)) }
+    private var _roomsList =
+        liveData { emitSource(repository.getRoomsBySpaceIdFromDB(spaceIdString)) }
 
     val roomsList: LiveData<List<SpaceRoomDB>>
         get() = _roomsList
@@ -41,6 +42,11 @@ class RoomsViewModel(app: Application, private val spaceIdString: String) : Andr
     val isSwipeRefreshing: LiveData<Boolean>
         get() = _isSwipeRefreshing
 
+    init {
+        viewModelScope.launch {
+            repository.getRoomsBySpaceIdFromNetwork(spaceIdString)
+        }
+    }
 
     fun onSelectRoomItem(roomItem: SpaceRoomDB) {
         _selectedRoomItem.value = roomItem

@@ -36,7 +36,7 @@ class CurrentBookingPageFragment : Fragment() {
         if (recyclerViewType == RecyclerType.CURRENT.name) {
             rvAdaptor = BookingRecyclerViewAdaptor(
                 { bookItem -> bookingAppViewModel.onCancelBookedItem(bookItem) },
-                "Cancel"
+                ButtonType.CANCEL.asString
             )
             bookingAppViewModel.showCancel.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
@@ -66,7 +66,7 @@ class CurrentBookingPageFragment : Fragment() {
         } else {
             rvAdaptor = BookingRecyclerViewAdaptor(
                 { bookItem -> bookingAppViewModel.onDeleteBookedItem(bookItem) },
-                "Delete"
+                ButtonType.DELETE.asString
             )
             bookingAppViewModel.showDelete.observe(viewLifecycleOwner) { value ->
                 if (value == true) {
@@ -94,9 +94,9 @@ class CurrentBookingPageFragment : Fragment() {
             bookingAppViewModel.refreshOnSwipe()
         }
 
-        bookingAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+        bookingAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
             binding.swipeRefreshLayout.isRefreshing = isRefreshing
-            if (!isRefreshing){
+            if (!isRefreshing) {
                 rvAdaptor.notifyDataSetChanged()
                 binding.bookingRecyclerView.scrollToPosition(0)
             }
