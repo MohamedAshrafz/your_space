@@ -113,10 +113,10 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
         fun getEndTime(): Pair<Int, Int> {
             val duration = _binding.durationEditText3.text.toString().toInt()
             val cal = Calendar.getInstance()
-            cal.set(Calendar.HOUR, addNewBookAppViewModel.savedHour)
+            cal.set(Calendar.HOUR_OF_DAY, addNewBookAppViewModel.savedHour)
             cal.set(Calendar.MINUTE, addNewBookAppViewModel.savedMinute)
-            cal.add(Calendar.HOUR, duration)
-            val endHour = cal.get(Calendar.HOUR)
+            cal.add(Calendar.HOUR_OF_DAY, duration)
+            val endHour = cal.get(Calendar.HOUR_OF_DAY)
             val endMinute = cal.get(Calendar.MINUTE)
             return Pair(endHour, endMinute)
         }

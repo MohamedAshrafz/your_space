@@ -123,8 +123,8 @@
     <fragment
         android:id="@+id/roomsFragment"
         android:name="com.example.your_space.ui.rooms.RoomsFragment"
-        android:label="fragment_rooms"
-        tools:layout="@layout/fragment_rooms" >
+        android:label="Our rooms"
+        tools:layout="@layout/fragment_rooms">
         <action
             android:id="@+id/action_roomsFragment_to_addNewBookingFromWS"
             app:destination="@id/addNewBookingFromWS" />
