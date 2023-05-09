@@ -36,7 +36,7 @@ class AddNewBookFragment : Fragment() , DatePickerDialog.OnDateSetListener, Time
 
 
 
-        _binding.imgCalendar.setOnClickListener {
+        _binding.bookDateEditText.setOnClickListener {
             if(addNewBookAppViewModel.savedDay == 0){
                 addNewBookAppViewModel.getDateTimeCalender()
                 DatePickerDialog(requireContext(),this,addNewBookAppViewModel.year,addNewBookAppViewModel.month,addNewBookAppViewModel.day).show()
@@ -46,7 +46,7 @@ class AddNewBookFragment : Fragment() , DatePickerDialog.OnDateSetListener, Time
             }
         }
 
-        _binding.imgStartTime.setOnClickListener {
+        _binding.bookTimeEditText.setOnClickListener {
             if(addNewBookAppViewModel.savedHour == 0){
                 addNewBookAppViewModel.getDateTimeCalender()
                 TimePickerDialog(requireContext(), this, addNewBookAppViewModel.hour, addNewBookAppViewModel.minute, false).show()
