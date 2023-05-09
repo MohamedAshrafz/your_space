@@ -32,11 +32,6 @@ class SpaceDetailsFragment : Fragment() {
             )
         }
 
-        binding.tvRatingClickable.setOnClickListener {
-            findNavController().navigate(
-                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRatingsFragment())
-        }
-
         binding.spaceItem = spaceItem
 
         return binding.root

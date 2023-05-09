@@ -52,21 +52,4 @@ interface AppDao {
     @Query("DELETE FROM spaceRooms_table WHERE spaceId = :spaceId")
     fun deleteAllRoomsWithSpaceId(spaceId: String)
 
-    ////////////////////ratings///////////////////////////
-
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    fun insertAllRatings(vararg ratings: RatingDB)
-//
-//    @Query("SELECT * FROM rating_table ORDER BY ratingId")
-//    fun getAllRatings(): LiveData<List<RatingDB>>
-//
-//    @Query("SELECT * FROM rating_table WHERE spaceId = :ratingId ORDER BY ratingId")
-//    fun getAllRatingsWithSpaceId(ratingId: String): LiveData<List<RatingDB>>
-//
-//    @Query("DELETE FROM rating_table")
-//    fun deleteAllRatings()
-//
-//    @Query("DELETE FROM rating_table WHERE ratingId = :ratingId")
-//    fun deleteAllRatingsWithSpaceId(ratingId: String)
-
 }

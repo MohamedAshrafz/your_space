@@ -1,6 +1,9 @@
 package com.example.your_space.network
 
-import com.example.your_space.network.networkdatamodel.*
+import com.example.your_space.network.networkdatamodel.BookingProperty
+import com.example.your_space.network.networkdatamodel.BookingPropertyPost
+import com.example.your_space.network.networkdatamodel.SpaceItemProperty
+import com.example.your_space.network.networkdatamodel.WorkingSpaceRoomProperty
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.ResponseBody
@@ -37,9 +40,6 @@ interface YourAppApiInterface {
 
     @GET("room/getBySpace/{spaceId}")
     suspend fun getRoomsBySpaceId(@Path("spaceId") spaceId : String): List<WorkingSpaceRoomProperty>
-
-    @GET("ratings")
-    suspend fun getRatingBySpaceId() : List<RatingProperty>
 
     @DELETE("bookings/{id}")
     suspend fun cancelBooking(@Path("id") id : Int): Response<ResponseBody>

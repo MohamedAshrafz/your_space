@@ -75,18 +75,6 @@ data class WorkingSpaceDB(
     val date: Date = Date(50L)
 ) : Parcelable
 
-
-@Entity(tableName = "rating_table")
-@Parcelize
-data class RatingDB(
-    @PrimaryKey
-    val ratingId: String = UUID.randomUUID().toString(),
-    val comment : String? = "",
-    val rating : Float ,
-    val userId: String = "",
-    val spaceId: String = ""
-): Parcelable
-
 @Entity(tableName = "booking_table")
 @Parcelize
 data class BookingDB(
