@@ -92,7 +92,7 @@ fun bindImage(imageView: ImageView, imageUrl: String?) {
 // after fetching the data from the remote server)
 // you cannot set the default value for any parameter instead check for the nullability manually
 // check for more in https://developer.android.com/topic/libraries/data-binding/binding-adapters
-@BindingAdapter(value = ["spaceId", "index"], requireAll = false)
+@BindingAdapter(value = ["spaceIdForImage", "index"], requireAll = false)
 fun bindImage(imageView: ImageView, spaceId: String?, index: String?) {
 
     val imageUrl = if (index == null){
