@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -61,7 +62,8 @@ class CurrentBookingPageFragment : Fragment() {
                 }
             })
             binding.addBookFab.setOnClickListener {
-                findNavController().navigate(BookingFragmentDirections.actionBookingFragmentToAddNewBookFragment())
+                findNavController().navigate(BookingFragmentDirections.actionBookingFragmentToSecondFragment())
+                Toast.makeText(requireContext(),"Choose Your Space Now", Toast.LENGTH_SHORT).show()
             }
         } else {
             rvAdaptor = BookingRecyclerViewAdaptor(

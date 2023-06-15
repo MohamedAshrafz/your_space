@@ -72,6 +72,12 @@
         <action
             android:id="@+id/action_bookingFragment_to_addNewBookFragment"
             app:destination="@id/addNewBookFragment" />
+        <action
+            android:id="@+id/action_bookingFragment_to_addNewBookingFromWS"
+            app:destination="@id/addNewBookingFromWS" />
+        <action
+            android:id="@+id/action_bookingFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewSpaceFragment"
@@ -117,8 +123,8 @@
     <fragment
         android:id="@+id/roomsFragment"
         android:name="com.example.your_space.ui.rooms.RoomsFragment"
-        android:label="fragment_rooms"
-        tools:layout="@layout/fragment_rooms" >
+        android:label="Our rooms"
+        tools:layout="@layout/fragment_rooms">
         <action
             android:id="@+id/action_roomsFragment_to_addNewBookingFromWS"
             app:destination="@id/addNewBookingFromWS" />

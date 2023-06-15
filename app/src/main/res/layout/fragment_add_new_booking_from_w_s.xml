@@ -10,6 +10,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/book_date_editText2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Book date"
+            android:inputType="date"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+        <ImageView
+            android:id="@+id/imgCalendar2"
+            android:layout_width="27dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_calendar_today_48"
+            app:layout_constraintBottom_toBottomOf="@+id/book_date_editText2"
+            app:layout_constraintEnd_toEndOf="@+id/book_date_editText2"
+            app:layout_constraintHorizontal_bias="0.968"
+            app:layout_constraintStart_toStartOf="@+id/book_date_editText2"
+            app:layout_constraintTop_toTopOf="@+id/book_date_editText2"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <EditText
+            android:id="@+id/book_time_editText2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Start book time"
+            android:inputType="time"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+        <ImageView
+            android:id="@+id/imgStartTime2"
+            android:layout_width="38dp"
+            android:layout_height="29dp"
+            android:src="@drawable/ic_baseline_access_time_24"
+            app:layout_constraintBottom_toBottomOf="@+id/book_time_editText2"
+            app:layout_constraintEnd_toEndOf="@+id/book_time_editText2"
+            app:layout_constraintHorizontal_bias="0.966"
+            app:layout_constraintStart_toStartOf="@+id/book_time_editText2"
+            app:layout_constraintTop_toTopOf="@+id/book_time_editText2"
+            app:layout_constraintVertical_bias="0.375" />
+
+        <EditText
+            android:id="@+id/durationEditText3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+        <TextView
+            android:id="@+id/textView13"
+            style="@style/add_new_textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:text="Duration:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
         <TextView
             android:id="@+id/textView23"
             style="@style/add_new_textStyle"
@@ -44,32 +122,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-        <EditText
-            android:id="@+id/book_date_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:hint="Book date"
-            android:inputType="date"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline3" />
-
-        <EditText
-            android:id="@+id/book_time_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:hint="Start book time"
-            android:inputType="time"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView25"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline3" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
@@ -103,6 +155,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
