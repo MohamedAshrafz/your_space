@@ -89,18 +89,23 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun addNewBooking(newBooking : BookingPropertyPost) : Boolean{
-        val isPosted : Boolean
+    suspend fun addNewBooking(newBooking: BookingPropertyPost): Boolean {
+        val isPosted: Boolean
         val response = NetworkServices.addNewBooking(newBooking)
-        if (response.isSuccessful){
-             isPosted = true
+        return if (response.isSuccessful) {
+            isPosted = true
             refreshBookings()
-            return isPosted
-        }
-        else {
+            isPosted
+        } else {
             isPosted = false
             Log.e("RETROFIT_ERROR", response.code().toString())
-            return isPosted
+            isPosted
+        }
+    }
+
+    suspend fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB {
+        return withContext(Dispatchers.IO) {
+            database.getSpaceWithSpaceId(spaceId)
         }
     }
 

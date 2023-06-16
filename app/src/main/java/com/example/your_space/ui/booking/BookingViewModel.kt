@@ -1,15 +1,10 @@
 package com.example.your_space.ui.booking
 
 import android.app.Application
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.Context
-import android.widget.DatePicker
-import android.widget.TimePicker
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import com.example.your_space.database.BookingDB
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
@@ -20,7 +15,7 @@ enum class RecyclerType {
     HISTORY
 }
 
-class BookingViewModel(app: Application) : AndroidViewModel(app)   {
+class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
@@ -32,13 +27,13 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)   {
 
     var minute = 0
     var hour = 0
-    var day =0
+    var day = 0
     var month = 0
     var year = 0
 
     var savedMinute = 0
     var savedHour = 0
-    var savedDay =0
+    var savedDay = 0
     var savedMonth = 0
     var savedYear = 0
     var savedCorrectMonth = 0
@@ -156,13 +151,15 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)   {
                 endTime = bookItem.endTime,
                 date = bookItem.date,
                 roomId = bookItem.roomId,
-                userId = "5"
+                userId = "3",
+                spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
             )
-            posted.value =  repository.addNewBooking(newBooking)
-            if(posted.value == true){
-                Toast.makeText(getApplication(),"Booking Added Successfully", Toast.LENGTH_SHORT).show()
-            }
-            else Toast.makeText(getApplication(),"Please Put Valid Data", Toast.LENGTH_SHORT).show()
+            posted.value = repository.addNewBooking(newBooking)
+            if (posted.value == true) {
+                Toast.makeText(getApplication(), "Booking Added Successfully", Toast.LENGTH_SHORT)
+                    .show()
+            } else Toast.makeText(getApplication(), "Please Put Valid Data", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -206,7 +203,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app)   {
 //        }
     }
 
-    fun getDateTimeCalender(){
+    fun getDateTimeCalender() {
         val cal = Calendar.getInstance()
         minute = cal.get(Calendar.MINUTE)
         hour = cal.get(Calendar.HOUR)

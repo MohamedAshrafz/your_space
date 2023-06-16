@@ -15,6 +15,9 @@ interface AppDao {
     @Query("SELECT * FROM workingSpaces_table ORDER BY spaceId")
     fun gelAllWorkingSpaces(): LiveData<List<WorkingSpaceDB>>
 
+    @Query("SELECT * FROM workingSpaces_table WHERE spaceId == :spaceId")
+    fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB
+
     @Query("DELETE FROM workingSpaces_table")
     fun deleteAllWorkingSpaces()
 

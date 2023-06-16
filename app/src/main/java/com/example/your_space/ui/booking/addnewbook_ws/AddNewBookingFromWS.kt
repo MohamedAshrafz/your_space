@@ -99,7 +99,8 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                     startTime = "${addNewBookAppViewModel.savedHour}:${addNewBookAppViewModel.savedMinute}:00",
                     endTime = "${getEndTime().first}:${getEndTime().second}:00",
                     date = "${if (addNewBookAppViewModel.savedDay < 10) "0${addNewBookAppViewModel.savedDay}" else "${addNewBookAppViewModel.savedDay}"}-${if (addNewBookAppViewModel.savedMonth < 10) "0${addNewBookAppViewModel.savedMonth}" else "${addNewBookAppViewModel.savedMonth}"}-${addNewBookAppViewModel.savedYear}",
-                    roomId = roomItem.roomId.toString()
+                    roomId = roomItem.roomId.toString(),
+                    spaceId = roomItem.spaceId
                 )
                 addNewBookAppViewModel.addNewBook(newBook)
                 findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())

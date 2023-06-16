@@ -38,7 +38,9 @@ data class BookingPropertyPost(
     @Json(name = "roomId")
     val roomId: String,
     @Json(name = "userId")
-    val userId: String
+    val userId: String,
+    @Json(name = "spaceName")
+    val spaceName: String
 ) : Parcelable
 
 fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB> {
@@ -55,7 +57,8 @@ fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB
             date = it.date,
             startTime = it.startTime,
             endTime = it.endTime,
-            roomId = it.roomId
+            roomId = it.roomId,
+            spaceId = ""
         )
     }.toTypedArray()
 }

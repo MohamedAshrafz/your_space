@@ -83,7 +83,8 @@ data class BookingDB(
     val startTime: String = "",
     val endTime: String = "",
     val date: String = "",
-    val roomId: String = ""
+    val roomId: String = "",
+    val spaceId: String = "",
 ) : Parcelable {
     fun namingFunction(): String {
         return "Book in room: $roomId"
