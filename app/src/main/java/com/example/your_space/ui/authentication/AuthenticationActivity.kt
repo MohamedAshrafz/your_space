@@ -29,7 +29,7 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Implement the create account and sign in using FirebaseUI, use sign in using email and sign in using Google
-        binding.loginButton.setOnClickListener { launchSignupFlow() }
+//        binding.loginButton.setOnClickListener { launchSignupFlow() }
 
         // If the user was authenticated, send him to RemindersActivity
         if (FirebaseAuth.getInstance().currentUser != null) {
