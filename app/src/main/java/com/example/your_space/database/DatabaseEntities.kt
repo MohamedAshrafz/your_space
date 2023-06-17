@@ -23,8 +23,7 @@ data class UserDB(
     val mobileNo: String,
     val address: String,
     val bio: String,
-    val points: Int,
-    val picture: String
+    val points: Int
 ) : Parcelable
 
 @Entity(tableName = "requests_table")

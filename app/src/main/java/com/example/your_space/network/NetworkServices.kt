@@ -1,9 +1,6 @@
 package com.example.your_space.network
 
-import com.example.your_space.network.networkdatamodel.BookingProperty
-import com.example.your_space.network.networkdatamodel.BookingPropertyPost
-import com.example.your_space.network.networkdatamodel.SpaceItemProperty
-import com.example.your_space.network.networkdatamodel.WorkingSpaceRoomProperty
+import com.example.your_space.network.networkdatamodel.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.ResponseBody
@@ -29,6 +26,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface YourAppApiInterface {
+    @POST("user")
+    suspend fun addNewUser(@Body newUser: UserPropertyPost) : Response<ResponseBody>
+
     @GET("spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 

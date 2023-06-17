@@ -47,4 +47,13 @@
     <string name="yes_string">Yes</string>
     <string name="no_string">No</string>
     <string name="sign_up">Sign Up</string>
+    <string name="please_fill_your_data">Please fill your data</string>
+    <string name="user_name">User name</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="address">Address</string>
+    <string name="birthdate">Birthdate</string>
 </resources>
