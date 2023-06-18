@@ -19,7 +19,9 @@ class AuthenticationActivity : AppCompatActivity() {
     companion object {
         const val SIGN_IN_RESULT_CODE = 2030
         const val SIGN_IN_SUCCEEDED_EXTRA = "sign in succeeded"
+        const val LOGIN_STATE = "login state"
         const val USER_DATA = "user data"
+        const val USER_ID = "user id"
         private val TAG = AuthenticationActivity::class.java.simpleName
     }
 
@@ -45,8 +47,23 @@ class AuthenticationActivity : AppCompatActivity() {
 //            sentToMainActivity()
 //        }
 
-        signed.observe(this){ signedVal->
-            if (signedVal && signUpViewModel.currentUser.value != null){
+        val receiveSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
+
+        val userId = receiveSP.getString(USER_ID, null)
+
+        if (userId != null) {
+            sentToMainActivity()
+        }
+
+        signed.observe(this) { signedVal ->
+            Log.e("Auth Activity", signedVal.toString() + signUpViewModel.currentUser.value)
+            if (signedVal && signUpViewModel.currentUser.value != null) {
+
+                val sentSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
+                val editor = sentSP.edit()
+                editor.putString(USER_ID, signUpViewModel.currentUser.value?.userId)
+                editor.apply()
+
                 sentToMainActivity()
             }
         }
@@ -56,9 +73,10 @@ class AuthenticationActivity : AppCompatActivity() {
     // that he is signed in the first time the app launches this activity only
     private fun sentToMainActivity() {
         val startMainActivityIntent =
-            Intent(applicationContext, MainActivity::class.java).putExtra(
-                USER_DATA, signUpViewModel.currentUser.value
-            )
+            Intent(applicationContext, MainActivity::class.java)
+//                .putExtra(
+//                    USER_DATA, signUpViewModel.currentUser.value
+//                )
         startActivity(startMainActivityIntent)
         finish()
     }

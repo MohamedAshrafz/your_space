@@ -20,14 +20,15 @@ class AppRepository private constructor(private val database: AppDao) {
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
-    suspend fun getUserWithEmail(userEmail: String): UserDB? {
+    suspend fun getUserWithUserName(userName: String): UserDB? {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
                 val users = NetworkServices.getAllUsers()
                 if (users.isNotEmpty()) {
                     database.insertAllUsers(*(users.userPropertyModelToDatabaseModel()))
-                    currentUser = database.getUserWithEmail(userEmail)
+                    currentUser = database.getUserWithUserName(userName)
+                    Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
                 }
             }
         } catch (e: Exception) {

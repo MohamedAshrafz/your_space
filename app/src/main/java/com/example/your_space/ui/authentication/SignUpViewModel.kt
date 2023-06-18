@@ -118,6 +118,7 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
                 response = NetworkServices.addNewUser(newUser)
             }
             if (response.isSuccessful) {
+                getUser()
                 _showSignedUpToast.value = "You have successfully signed up"
             } else {
                 _showSignedUpToast.value = "This email is already used"
@@ -165,9 +166,7 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
     val currentUser: LiveData<UserDB>
         get() = _currentUser
 
-    fun getUser() {
-        viewModelScope.launch {
-            email.value?.let { _currentUser.value = repository.getUserWithEmail(it) }
-        }
+    private suspend fun getUser() {
+        username.value?.let { _currentUser.value = repository.getUserWithUserName(it) }
     }
 }
