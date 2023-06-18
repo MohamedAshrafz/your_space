@@ -138,4 +138,21 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
     fun clearSignedUpToast() {
         _showSignedUpToast.value = ""
     }
+
+    val savedDay = MutableLiveData(0)
+    val savedMonth = MutableLiveData(0)
+    val savedYear = MutableLiveData(0)
+
+    fun setBirthDate(day: Int, month: Int, year: Int) {
+        savedDay.value = day
+        savedMonth.value = month
+        savedYear.value = year
+
+        val stringBirthDate = if (month < 10) {
+            "$day-0$month-$year"
+        } else {
+            "$day-$month-$year"
+        }
+        _birthDate.value = stringBirthDate
+    }
 }

@@ -10,10 +10,12 @@
         tools:context=".authentication.MainAuthFragment">
 
         <TextView
-            style="@style/sign_up_field_right_attr_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal_margin"
+            android:layout_marginEnd="@dimen/normal_margin"
             android:text="@string/hi_there_please_login"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/login_text_size"
             app:layout_constraintBottom_toBottomOf="parent"

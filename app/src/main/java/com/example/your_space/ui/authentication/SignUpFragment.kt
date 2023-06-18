@@ -1,21 +1,27 @@
 package com.example.your_space.ui.authentication
 
+import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.your_space.databinding.FragmentSignUpBinding
+import java.util.*
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var _binding: FragmentSignUpBinding
     val binding
         get() = _binding
 
     private val signUpViewModel by activityViewModels<SignUpViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +60,7 @@ class SignUpFragment : Fragment() {
                     binding.repasswordTe.error = null
                 }
 
-                if (toastText == "You have successfully signed up"){
+                if (toastText == "You have successfully signed up") {
                     (requireActivity() as AuthenticationActivity).signed.postValue(true)
                 }
             }
@@ -65,19 +71,56 @@ class SignUpFragment : Fragment() {
 //        signUpViewModel.validPassword.observeForever { }
 //        signUpViewModel.validEmail.observeForever { }
 
-        binding.passwordIte.setOnClickListener {
-            binding.passwordTe.error = null
+        binding.passwordIte.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.passwordTe.error = null
+            }
         }
 
-        binding.emailIte.setOnClickListener {
-            binding.emailTe.error = null
+        binding.emailIte.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.emailTe.error = null
+            }
         }
 
-        binding.repasswordIte.setOnClickListener {
-            binding.repasswordTe.error = null
+        binding.repasswordIte.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.repasswordTe.error = null
+            }
+        }
+
+        binding.birthDateIte.setOnClickListener {
+            val dateAttrs = getCurrentDate()
+            DatePickerDialog(
+                requireContext(),
+                this,
+                dateAttrs.first,
+                dateAttrs.second - 1,
+                dateAttrs.third
+            ).show()
         }
 
         return binding.root
     }
 
+    private fun getCurrentDate(): Triple<Int, Int, Int> {
+        val calendar = Calendar.getInstance()
+        return if (signUpViewModel.savedDay.value == 0) {
+            Triple(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+        } else {
+            Triple(
+                signUpViewModel.savedYear.value ?: 0,
+                signUpViewModel.savedMonth.value ?: 0,
+                signUpViewModel.savedDay.value ?: 0
+            )
+        }
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        signUpViewModel.setBirthDate(dayOfMonth, month + 1, year)
+    }
 }
