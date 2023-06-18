@@ -8,6 +8,13 @@ import androidx.room.Query
 
 @Dao
 interface AppDao {
+    ////////////////Users///////////////////////////////////
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllUsers(vararg spaces: UserDB)
+
+    @Query("SELECT * FROM users_table WHERE  email == :userEmail")
+    fun getUserWithEmail(userEmail: String): UserDB
+
     ////////////////Spaces///////////////////////////////////
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllWorkingSpaces(vararg spaces: WorkingSpaceDB)

@@ -5,10 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
-import com.example.your_space.network.networkdatamodel.BookingPropertyPost
-import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
-import com.example.your_space.network.networkdatamodel.propertyModelToDatabaseModel
-import com.example.your_space.network.networkdatamodel.roomPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.*
 //import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,13 +20,28 @@ class AppRepository private constructor(private val database: AppDao) {
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
+    suspend fun getUserWithEmail(userEmail: String): UserDB? {
+        var currentUser: UserDB? = null
+        try {
+            withContext(Dispatchers.IO) {
+                val users = NetworkServices.getAllUsers()
+                if (users.isNotEmpty()) {
+                    database.insertAllUsers(*(users.userPropertyModelToDatabaseModel()))
+                    currentUser = database.getUserWithEmail(userEmail)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+        return currentUser
+    }
 
     suspend fun refreshWorkingSpaces() {
         try {
             withContext(Dispatchers.IO) {
                 val workingSpacesList = NetworkServices.getAllWorkingSpaces()
                 if (workingSpacesList.isNotEmpty()) {
-                    database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
+                    database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
                 }
             }
         } catch (e: Exception) {
@@ -46,7 +58,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 if (initialize) {
                     database.deleteAllWorkingSpaces()
                 }
-                database.insertAllWorkingSpaces(*(workingSpacesList.propertyModelToDatabaseModel()))
+                database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())

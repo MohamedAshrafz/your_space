@@ -26,6 +26,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface YourAppApiInterface {
+    @GET("user")
+    suspend fun getAllUsers(): List<UserProperty>
+
     @POST("user")
     suspend fun addNewUser(@Body newUser: UserPropertyPost) : Response<ResponseBody>
 

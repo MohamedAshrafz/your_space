@@ -1,6 +1,8 @@
 package com.example.your_space.network.networkdatamodel
 
 import android.os.Parcelable
+import com.example.your_space.database.UserDB
+import com.example.your_space.database.WorkingSpaceDB
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
@@ -9,18 +11,16 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserProperty(
     @Json(name = "userId")
-    val userId: Int,
+    val userId: String,
     @Json(name = "email")
     val email: String,
     @Json(name = "firstName")
     val firstName: String,
     @Json(name = "lastName")
     val lastName: String,
-    @Json(name = "password")
-    val password: String,
     @Json(name = "mobileNo")
     val mobileNo: String,
-    @Json(name = "address")
+    @Json(name = "password")
     val address: String,
     @Json(name = "birthDate")
     val birthDate: String,
@@ -31,6 +31,22 @@ data class UserProperty(
     @Json(name = "picture")
     val picture: String
 ) : Parcelable
+
+fun List<UserProperty>.userPropertyModelToDatabaseModel(): Array<UserDB> {
+    return map {
+        UserDB(
+            userId = it.userId,
+            email = it.email,
+            firstName = it.firstName,
+            lastName = it.lastName,
+            mobileNo = it.mobileNo,
+            address = it.address,
+            birthDate = it.birthDate,
+            bio = it.bio,
+            points = it.points
+        )
+    }.toTypedArray()
+}
 
 @JsonClass(generateAdapter = true)
 @Parcelize

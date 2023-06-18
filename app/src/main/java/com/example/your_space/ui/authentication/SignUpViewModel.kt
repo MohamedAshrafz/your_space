@@ -2,8 +2,10 @@ package com.example.your_space.ui.authentication
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.your_space.database.UserDB
 import com.example.your_space.network.Network.NetworkServices
 import com.example.your_space.network.networkdatamodel.UserPropertyPost
+import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -11,6 +13,9 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 
 class SignUpViewModel(app: Application) : AndroidViewModel(app) {
+
+    private val repository = AppRepository.getInstance(app.applicationContext)
+
     val newUserData = MutableLiveData<UserPropertyPost>()
 
     val _email = MutableLiveData<String>("")
@@ -154,5 +159,15 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
             "$day-$month-$year"
         }
         _birthDate.value = stringBirthDate
+    }
+
+    val _currentUser = MutableLiveData<UserDB>()
+    val currentUser: LiveData<UserDB>
+        get() = _currentUser
+
+    fun getUser() {
+        viewModelScope.launch {
+            email.value?.let { _currentUser.value = repository.getUserWithEmail(it) }
+        }
     }
 }

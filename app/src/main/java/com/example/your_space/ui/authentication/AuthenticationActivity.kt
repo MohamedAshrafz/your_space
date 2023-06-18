@@ -2,12 +2,13 @@ package com.example.your_space.ui.authentication
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.your_space.databinding.ActivityAuthenticationBinding
 import com.example.your_space.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
@@ -18,10 +19,15 @@ class AuthenticationActivity : AppCompatActivity() {
     companion object {
         const val SIGN_IN_RESULT_CODE = 2030
         const val SIGN_IN_SUCCEEDED_EXTRA = "sign in succeeded"
+        const val USER_DATA = "user data"
         private val TAG = AuthenticationActivity::class.java.simpleName
     }
 
     lateinit var binding: ActivityAuthenticationBinding
+
+    private val signUpViewModel: SignUpViewModel by lazy {
+        ViewModelProvider(this)[SignUpViewModel::class.java]
+    }
 
     val signed = MutableLiveData(false)
 
@@ -40,7 +46,7 @@ class AuthenticationActivity : AppCompatActivity() {
 //        }
 
         signed.observe(this){ signedVal->
-            if (signedVal){
+            if (signedVal && signUpViewModel.currentUser.value != null){
                 sentToMainActivity()
             }
         }
@@ -49,11 +55,11 @@ class AuthenticationActivity : AppCompatActivity() {
     // sending the the user to the reminder list activity and setting an extra to indicate
     // that he is signed in the first time the app launches this activity only
     private fun sentToMainActivity() {
-        val startReminderListIntent =
+        val startMainActivityIntent =
             Intent(applicationContext, MainActivity::class.java).putExtra(
-                SIGN_IN_SUCCEEDED_EXTRA, "SUCCEEDED"
+                USER_DATA, signUpViewModel.currentUser.value
             )
-        startActivity(startReminderListIntent)
+        startActivity(startMainActivityIntent)
         finish()
     }
 
