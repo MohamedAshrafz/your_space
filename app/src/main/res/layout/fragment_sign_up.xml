@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-       <variable
-           name="viewModel"
-           type="com.example.your_space.ui.authentication.SignUpViewModel" />
 
+        <variable
+            name="viewModel"
+            type="com.example.your_space.ui.authentication.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +51,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._username}"/>
+                        android:text="@={viewModel._username}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +65,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._firstName}"/>
+                        android:text="@={viewModel._firstName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +79,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._lastName}"/>
+                        android:text="@={viewModel._lastName}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -91,9 +91,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/lastName_te">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_ite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._email}"/>
+                        android:text="@={viewModel._email}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -101,15 +102,35 @@
                     style="@style/sign_up_field_right_attr_style"
                     android:hint="@string/password"
                     app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/email_te">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password_ite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="@={viewModel._password}"/>
+                        android:text="@={viewModel._password}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/repassword_te"
+                    style="@style/sign_up_field_right_attr_style"
+                    android:hint="@string/confirm_password"
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/password_te">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/repassword_ite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel._rePassword}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -118,12 +139,12 @@
                     android:hint="@string/mobile_number"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/password_te">
+                    app:layout_constraintTop_toBottomOf="@+id/repassword_te">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._mobileNo}"/>
+                        android:text="@={viewModel._mobileNo}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -137,7 +158,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._address}"/>
+                        android:text="@={viewModel._address}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -151,7 +172,11 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={viewModel._birthDate}"/>
+                        android:inputType="date"
+                        android:text="@={viewModel._birthDate}" />
+                    <!--                        android:clickable="false"-->
+                    <!--                        android:cursorVisible="false"-->
+                    <!--                        android:focusable="false"-->
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -161,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:text="@string/sign_up"
+                    android:text="@string/create_account"
                     android:textSize="@dimen/login_text_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

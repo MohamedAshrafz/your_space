@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.MutableLiveData
 import com.example.your_space.databinding.ActivityAuthenticationBinding
 import com.example.your_space.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
@@ -22,6 +23,8 @@ class AuthenticationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAuthenticationBinding
 
+    val signed = MutableLiveData(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthenticationBinding.inflate(layoutInflater)
@@ -32,14 +35,20 @@ class AuthenticationActivity : AppCompatActivity() {
 //        binding.loginButton.setOnClickListener { launchSignupFlow() }
 
         // If the user was authenticated, send him to RemindersActivity
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            sentToRemindersActivity()
+//        if (FirebaseAuth.getInstance().currentUser != null) {
+//            sentToMainActivity()
+//        }
+
+        signed.observe(this){ signedVal->
+            if (signedVal){
+                sentToMainActivity()
+            }
         }
     }
 
     // sending the the user to the reminder list activity and setting an extra to indicate
     // that he is signed in the first time the app launches this activity only
-    private fun sentToRemindersActivity() {
+    private fun sentToMainActivity() {
         val startReminderListIntent =
             Intent(applicationContext, MainActivity::class.java).putExtra(
                 SIGN_IN_SUCCEEDED_EXTRA, "SUCCEEDED"
@@ -79,7 +88,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
                 // navigate to the reminder list fragment
-                sentToRemindersActivity()
+                sentToMainActivity()
             } else {
                 // Sign in failed. If response is null the user canceled the sign-in flow using
                 // the back button. Otherwise check response.getError().getErrorCode() and handle

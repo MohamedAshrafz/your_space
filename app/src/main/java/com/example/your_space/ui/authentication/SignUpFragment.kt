@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.your_space.databinding.FragmentSignUpBinding
-import com.example.your_space.network.networkdatamodel.UserPropertyPost
 
 class SignUpFragment : Fragment() {
     private lateinit var _binding: FragmentSignUpBinding
@@ -29,33 +28,53 @@ class SignUpFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.signUpButton.setOnClickListener {
-            if (signUpViewModel.allFieldsNotEmpty()) {
+            signUpViewModel.postNewUser()
+        }
 
-                val newUser = UserPropertyPost(
-                    email = signUpViewModel.email.value ?: "",
-                    firstName = signUpViewModel.firstName.value ?: "",
-                    lastName = signUpViewModel.lastName.value ?: "",
-                    password = signUpViewModel.password.value ?: "",
-                    mobileNo = signUpViewModel.mobileNo.value ?: "",
-                    address = signUpViewModel.address.value ?: "",
-                    birthDate = signUpViewModel.birthDate.value ?: "",
-                    username = signUpViewModel.username.value ?: ""
-                )
+        signUpViewModel.showSignedUpToast.observe(viewLifecycleOwner) { toastText ->
+            if (!toastText.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), toastText, Toast.LENGTH_LONG).show()
+                signUpViewModel.clearSignedUpToast()
+                if (!signUpViewModel.isValidPassword()) {
+                    binding.passwordTe.error =
+                        "The password must contain 8 characters at lease, upper, lower letters and numbers"
+                } else {
+                    binding.passwordTe.error = null
+                }
+                if (!signUpViewModel.isValidEmail()) {
+                    binding.emailTe.error =
+                        "Please enter a valid mail"
+                } else {
+                    binding.emailTe.error = null
+                }
+                if (!signUpViewModel.checkPasswordMatching() && signUpViewModel.isValidPassword()) {
+                    binding.repasswordTe.error =
+                        "Please make sure you entered the right password"
+                } else {
+                    binding.repasswordTe.error = null
+                }
 
-                signUpViewModel.postNewUser(newUser)
-//                Toast.makeText(requireContext(), newUser.toString(), Toast.LENGTH_LONG)
-//                    .show()
-            } else {
-                Toast.makeText(requireContext(), "Please fill all fields first", Toast.LENGTH_SHORT)
-                    .show()
+                if (toastText == "You have successfully signed up"){
+                    (requireActivity() as AuthenticationActivity).signed.postValue(true)
+                }
             }
         }
 
-        signUpViewModel.showSignedUpToast.observe(viewLifecycleOwner){ toastText ->
-            if(!toastText.isNullOrEmpty()){
-                Toast.makeText(requireContext(), toastText, Toast.LENGTH_LONG).show()
-                signUpViewModel.clearSignedUpToast()
-            }
+//        // you have to observe the object to exist
+//        // if you removes this line signUpViewModel.validPassword.value will return null everywhere
+//        signUpViewModel.validPassword.observeForever { }
+//        signUpViewModel.validEmail.observeForever { }
+
+        binding.passwordIte.setOnClickListener {
+            binding.passwordTe.error = null
+        }
+
+        binding.emailIte.setOnClickListener {
+            binding.emailTe.error = null
+        }
+
+        binding.repasswordIte.setOnClickListener {
+            binding.repasswordTe.error = null
         }
 
         return binding.root
