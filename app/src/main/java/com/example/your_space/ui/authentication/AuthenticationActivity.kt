@@ -2,11 +2,13 @@ package com.example.your_space.ui.authentication
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.your_space.databinding.ActivityAuthenticationBinding
 import com.example.your_space.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
@@ -17,10 +19,19 @@ class AuthenticationActivity : AppCompatActivity() {
     companion object {
         const val SIGN_IN_RESULT_CODE = 2030
         const val SIGN_IN_SUCCEEDED_EXTRA = "sign in succeeded"
+        const val LOGIN_STATE = "login state"
+        const val USER_DATA = "user data"
+        const val USER_ID = "user id"
         private val TAG = AuthenticationActivity::class.java.simpleName
     }
 
     lateinit var binding: ActivityAuthenticationBinding
+
+    private val signUpViewModel: SignUpViewModel by lazy {
+        ViewModelProvider(this)[SignUpViewModel::class.java]
+    }
+
+    val signed = MutableLiveData(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,22 +40,44 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Implement the create account and sign in using FirebaseUI, use sign in using email and sign in using Google
-        binding.loginButton.setOnClickListener { launchSignupFlow() }
+//        binding.loginButton.setOnClickListener { launchSignupFlow() }
 
         // If the user was authenticated, send him to RemindersActivity
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            sentToRemindersActivity()
+//        if (FirebaseAuth.getInstance().currentUser != null) {
+//            sentToMainActivity()
+//        }
+
+        val receiveSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
+
+        val userId = receiveSP.getString(USER_ID, null)
+
+        if (userId != null) {
+            sentToMainActivity()
+        }
+
+        signed.observe(this) { signedVal ->
+            Log.e("Auth Activity", signedVal.toString() + signUpViewModel.currentUser.value)
+            if (signedVal && signUpViewModel.currentUser.value != null) {
+
+                val sentSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
+                val editor = sentSP.edit()
+                editor.putString(USER_ID, signUpViewModel.currentUser.value?.userId)
+                editor.apply()
+
+                sentToMainActivity()
+            }
         }
     }
 
     // sending the the user to the reminder list activity and setting an extra to indicate
     // that he is signed in the first time the app launches this activity only
-    private fun sentToRemindersActivity() {
-        val startReminderListIntent =
-            Intent(applicationContext, MainActivity::class.java).putExtra(
-                SIGN_IN_SUCCEEDED_EXTRA, "SUCCEEDED"
-            )
-        startActivity(startReminderListIntent)
+    private fun sentToMainActivity() {
+        val startMainActivityIntent =
+            Intent(applicationContext, MainActivity::class.java)
+//                .putExtra(
+//                    USER_DATA, signUpViewModel.currentUser.value
+//                )
+        startActivity(startMainActivityIntent)
         finish()
     }
 
@@ -79,7 +112,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
                 // navigate to the reminder list fragment
-                sentToRemindersActivity()
+                sentToMainActivity()
             } else {
                 // Sign in failed. If response is null the user canceled the sign-in flow using
                 // the back button. Otherwise check response.getError().getErrorCode() and handle

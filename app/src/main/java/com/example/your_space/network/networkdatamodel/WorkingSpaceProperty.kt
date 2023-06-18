@@ -43,7 +43,7 @@ data class SpaceItemProperty(
     val ratingList: List<Int>? = null
 ) : Parcelable
 
-fun List<SpaceItemProperty>.propertyModelToDatabaseModel(): Array<WorkingSpaceDB> {
+fun List<SpaceItemProperty>.workingSpacesPropertyModelToDatabaseModel(): Array<WorkingSpaceDB> {
     return map {
         WorkingSpaceDB(
             spaceId = it.spaceId.toString(),

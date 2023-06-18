@@ -31,13 +31,19 @@
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_booking.xml" value="0.2427536231884058" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_current_booking_page.xml" value="0.1375" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_first.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_first2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_main_auth.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_maps.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_rooms.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_second.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_second2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_sign_up.xml" value="0.264" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_space_details.xml" value="0.22826086956521738" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/fragment_third.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/frogment_main_auth.xml" value="0.253125" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/layout/roomitem.xml" value="0.109375" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/booking_item_context_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Andriod_studio_projects/your_space/app/src/main/res/menu/drawer_menu.xml" value="0.253125" />
@@ -52,7 +58,6 @@
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_add_new_book.xml" value="0.20833333333333334" />
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_add_new_booking_from_w_s.xml" value="0.23278985507246377" />
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_add_new_space.xml" value="0.20833333333333334" />
-        <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_booking.xml" value="0.2341485507246377" />
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_first.xml" value="0.20833333333333334" />
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_profile.xml" value="0.20833333333333334" />
         <entry key="..\:/Graduation project/your_space/app/src/main/res/layout/fragment_second.xml" value="0.20833333333333334" />

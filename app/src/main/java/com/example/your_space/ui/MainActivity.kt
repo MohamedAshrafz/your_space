@@ -2,6 +2,7 @@ package com.example.your_space.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +19,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.ActivityMainBinding
 import com.example.your_space.ui.authentication.AuthenticationActivity
-import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +38,28 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+//        // getting the current user data
+//        val myIntent = intent
+//
+//        val user = intent.getParcelableExtra<UserDB>(AuthenticationActivity.USER_DATA)
+//
+//        if (user != null) {
+//            Log.e("Main Activity", user.toString())
+//        } else {
+//            Log.e("Main Activity", "cannot get the user")
+//        }
+
+        val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
+
+        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
+
+        if (userId != null) {
+            Log.e("Main Activity", userId.toString())
+        } else {
+            Log.e("Main Activity", "cannot get the user")
+        }
 
         // getting the main layout components
         navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -132,19 +154,21 @@ class MainActivity : AppCompatActivity() {
                 // signing-out the current user
                 // we have to wait till sing-out complete
                 // otherwise AuthenticationActivity will launch this activity again
-                AuthUI.getInstance().signOut(this.applicationContext).addOnSuccessListener {
-                    // finishing the current activity
-                    finish()
+                // launch the sign-in activity
+                val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
+                val editor = sp.edit()
+                editor.putString(AuthenticationActivity.USER_ID, null)
+                editor.apply()
 
+                finish()
 
-                    // launch the sign-in activity
-                    val authenticationActivityIntent =
-                        Intent(
-                            this.applicationContext,
-                            AuthenticationActivity::class.java
-                        )
-                    startActivity(authenticationActivityIntent)
-                }
+                // launch the sign-in activity
+                val authenticationActivityIntent =
+                    Intent(
+                        this.applicationContext,
+                        AuthenticationActivity::class.java
+                    )
+                startActivity(authenticationActivityIntent)
             }
         }
         return super.onOptionsItemSelected(item)

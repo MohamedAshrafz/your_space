@@ -36,7 +36,8 @@
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:exported="true"
-            android:theme="@style/Theme.Your_space" >
+            android:theme="@style/Theme.Your_space"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

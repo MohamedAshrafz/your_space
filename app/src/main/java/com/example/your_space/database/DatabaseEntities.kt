@@ -3,9 +3,6 @@ package com.example.your_space.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
-//import com.example.your_space.ui.booking.BookItem
-//import com.example.your_space.ui.ourspaces.SpaceItem
 import kotlinx.parcelize.Parcelize
 import java.sql.Time
 import java.sql.Date
@@ -15,16 +12,16 @@ import java.util.*
 @Parcelize
 data class UserDB(
     @PrimaryKey
-    val userId: Int,
+    val userId: String,
     val email: String,
     val firstName: String,
     val lastName: String,
-    val password: String,
     val mobileNo: String,
     val address: String,
+    val birthDate: String,
     val bio: String,
     val points: Int,
-    val picture: String
+    val userName: String
 ) : Parcelable
 
 @Entity(tableName = "requests_table")
