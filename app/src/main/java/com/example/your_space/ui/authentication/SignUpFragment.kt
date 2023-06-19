@@ -59,10 +59,6 @@ class SignUpFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 } else {
                     binding.repasswordTe.error = null
                 }
-
-                if (toastText == "You have successfully signed up") {
-                    (requireActivity() as AuthenticationActivity).signed.postValue(true)
-                }
             }
         }
 

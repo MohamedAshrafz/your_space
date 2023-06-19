@@ -11,7 +11,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 const val PAGE_SIZE = 4
-const val IMAGE_VS_SPACEID_ENDPOINT = "images/space/"
+const val IMAGE_VS_SPACEID_ENDPOINT = "api/images/space/"
+const val API = "api/"
+const val LOGIN = "login"
+
 const val DEFAULT_IMAGE_INDEX = "0"
 
 private val moshi = Moshi.Builder()
@@ -26,29 +29,35 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface YourAppApiInterface {
-    @GET("user")
+    @GET("${API}user")
     suspend fun getAllUsers(): List<UserProperty>
 
-    @POST("user")
-    suspend fun addNewUser(@Body newUser: UserPropertyPost) : Response<ResponseBody>
+    @POST(LOGIN)
+    suspend fun loginWithUsernameAndPassword(
+        @Query("username") username: String,
+        @Query("password") password: String
+    ): Response<UserProperty>
 
-    @GET("spaces")
+    @POST("${API}user")
+    suspend fun addNewUser(@Body newUser: UserPropertyPost): Response<ResponseBody>
+
+    @GET("${API}spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
-    @GET("spaces/alldata/{page}/$PAGE_SIZE")
+    @GET("${API}spaces/alldata/{page}/$PAGE_SIZE")
     suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
 
-    @GET("bookings")
+    @GET("${API}bookings")
     suspend fun getAllBookings(): List<BookingProperty>
 
-    @GET("room/getBySpace/{spaceId}")
-    suspend fun getRoomsBySpaceId(@Path("spaceId") spaceId : String): List<WorkingSpaceRoomProperty>
+    @GET("${API}room/getBySpace/{spaceId}")
+    suspend fun getRoomsBySpaceId(@Path("spaceId") spaceId: String): List<WorkingSpaceRoomProperty>
 
-    @DELETE("bookings/{id}")
-    suspend fun cancelBooking(@Path("id") id : Int): Response<ResponseBody>
+    @DELETE("${API}bookings/{id}")
+    suspend fun cancelBooking(@Path("id") id: Int): Response<ResponseBody>
 
-    @POST("bookings")
-    suspend fun addNewBooking(@Body newBooking: BookingPropertyPost) : Response<ResponseBody>
+    @POST("${API}bookings")
+    suspend fun addNewBooking(@Body newBooking: BookingPropertyPost): Response<ResponseBody>
 }
 
 object Network {

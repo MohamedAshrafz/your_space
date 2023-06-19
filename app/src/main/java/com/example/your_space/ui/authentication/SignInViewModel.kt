@@ -1,0 +1,59 @@
+package com.example.your_space.ui.authentication
+
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.your_space.database.UserDB
+import com.example.your_space.repository.AppRepository
+import kotlinx.coroutines.launch
+
+enum class GET_USER_RESPONCE {
+    NO_SUCH_USER,
+    WRONG_PASSWORD,
+    OKEY
+}
+
+class SignInViewModel(app: Application) : AndroidViewModel(app) {
+
+    private val repository = AppRepository.getInstance(app.applicationContext)
+
+    val signed = MutableLiveData(false)
+
+    private val _currentUser = MutableLiveData<UserDB>()
+    val currentUser: LiveData<UserDB>
+        get() = _currentUser
+
+    private val _showSignedUpToast = MutableLiveData("")
+    val showSignedUpToast: LiveData<String>
+        get() = _showSignedUpToast
+
+    private suspend fun getUser(): Boolean {
+        if (username.value != null && password.value != null){
+            _currentUser.value = repository.getUserWithUserNameAndPassword(username.value!!, password.value!!)
+        }
+        return currentUser.value != null
+    }
+
+    fun checkNotEmpty(): Boolean {
+        return !username.value.isNullOrEmpty() &&
+                !password.value.isNullOrEmpty()
+    }
+
+    fun runSignInFlow() {
+        viewModelScope.launch {
+            if (getUser()) {
+                _showSignedUpToast.value = "You have successfully logged in"
+                signed.value = true
+            } else {
+                _showSignedUpToast.value = "Wrong username or password"
+            }
+        }
+    }
+
+    val _password = MutableLiveData("")
+    val password: LiveData<String>
+        get() = _password
+
+    val _username = MutableLiveData("")
+    val username: LiveData<String>
+        get() = _username
+}

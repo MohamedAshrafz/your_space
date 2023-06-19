@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.your_space.databinding.ActivityAuthenticationBinding
 import com.example.your_space.ui.MainActivity
@@ -31,7 +30,9 @@ class AuthenticationActivity : AppCompatActivity() {
         ViewModelProvider(this)[SignUpViewModel::class.java]
     }
 
-    val signed = MutableLiveData(false)
+    private val signInViewModel: SignInViewModel by lazy {
+        ViewModelProvider(this)[SignInViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +56,26 @@ class AuthenticationActivity : AppCompatActivity() {
             sentToMainActivity()
         }
 
-        signed.observe(this) { signedVal ->
+        signUpViewModel.signed.observe(this) { signedVal ->
             Log.e("Auth Activity", signedVal.toString() + signUpViewModel.currentUser.value)
             if (signedVal && signUpViewModel.currentUser.value != null) {
 
                 val sentSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
                 val editor = sentSP.edit()
                 editor.putString(USER_ID, signUpViewModel.currentUser.value?.userId)
+                editor.apply()
+
+                sentToMainActivity()
+            }
+        }
+
+        signInViewModel.signed.observe(this) { signedVal ->
+            Log.e("Auth Activity", signedVal.toString() + signInViewModel.currentUser.value)
+            if (signedVal && signInViewModel.currentUser.value != null) {
+
+                val sentSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
+                val editor = sentSP.edit()
+                editor.putString(USER_ID, signInViewModel.currentUser.value?.userId)
                 editor.apply()
 
                 sentToMainActivity()

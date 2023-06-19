@@ -31,6 +31,21 @@ data class UserProperty(
     val userName: String,
 ) : Parcelable
 
+fun UserProperty.userPropertyModelToDatabaseModel(): UserDB {
+    return UserDB(
+        userId = this.userId,
+        email = this.email,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        mobileNo = this.mobileNo,
+        address = this.address,
+        birthDate = this.birthDate,
+        bio = this.bio ?: "",
+        points = this.points,
+        userName = this.userName
+    )
+}
+
 fun List<UserProperty>.userPropertyModelToDatabaseModel(): Array<UserDB> {
     return map {
         UserDB(
@@ -41,7 +56,7 @@ fun List<UserProperty>.userPropertyModelToDatabaseModel(): Array<UserDB> {
             mobileNo = it.mobileNo,
             address = it.address,
             birthDate = it.birthDate,
-            bio = it.bio?: "",
+            bio = it.bio ?: "",
             points = it.points,
             userName = it.userName
         )

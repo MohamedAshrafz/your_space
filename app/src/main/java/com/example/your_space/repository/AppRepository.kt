@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import com.example.your_space.database.*
 import com.example.your_space.network.Network.NetworkServices
 import com.example.your_space.network.networkdatamodel.*
-//import com.example.your_space.ui.booking.BookItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -29,6 +28,27 @@ class AppRepository private constructor(private val database: AppDao) {
                     database.insertAllUsers(*(users.userPropertyModelToDatabaseModel()))
                     currentUser = database.getUserWithUserName(userName)
                     Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+        return currentUser
+    }
+
+    suspend fun getUserWithUserNameAndPassword(userName: String, password: String): UserDB? {
+        var currentUser: UserDB? = null
+        try {
+            withContext(Dispatchers.IO) {
+                val response = NetworkServices.loginWithUsernameAndPassword(userName, password)
+
+                if (response.isSuccessful){
+                    val user = response.body()
+                    user?.let {
+                        database.insertAllUsers(it.userPropertyModelToDatabaseModel())
+                        currentUser = database.getUserWithUserName(userName)
+                        Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
+                    }
                 }
             }
         } catch (e: Exception) {

@@ -16,7 +16,16 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    val newUserData = MutableLiveData<UserPropertyPost>()
+    val signed = MutableLiveData(false)
+
+    private val _currentUser = MutableLiveData<UserDB>()
+    val currentUser: LiveData<UserDB>
+        get() = _currentUser
+
+    private suspend fun getUser(): Boolean {
+        username.value?.let { _currentUser.value = repository.getUserWithUserName(it) }
+        return currentUser.value != null
+    }
 
     val _email = MutableLiveData<String>("")
     val email: LiveData<String>
@@ -118,8 +127,13 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
                 response = NetworkServices.addNewUser(newUser)
             }
             if (response.isSuccessful) {
-                getUser()
-                _showSignedUpToast.value = "You have successfully signed up"
+                if (getUser()) {
+                    _showSignedUpToast.value = "You have successfully signed up"
+                    signed.value = true
+                } else {
+                    _showSignedUpToast.value =
+                        "You have successfully signed up,\nbut there was a problem in logging in"
+                }
             } else {
                 _showSignedUpToast.value = "This email is already used"
             }
@@ -160,13 +174,5 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
             "$day-$month-$year"
         }
         _birthDate.value = stringBirthDate
-    }
-
-    val _currentUser = MutableLiveData<UserDB>()
-    val currentUser: LiveData<UserDB>
-        get() = _currentUser
-
-    private suspend fun getUser() {
-        username.value?.let { _currentUser.value = repository.getUserWithUserName(it) }
     }
 }

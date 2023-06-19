@@ -57,6 +57,10 @@
     <string name="address">Address</string>
     <string name="birthdate">Birthdate</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="create_account">Create account</string>
-    <string name="create_new_account">Create new account</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_new_account">Create New Account</string>
+    <string name="log_in_button_text">Log In</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="please_type_your_password">Please type your password</string>
+    <string name="please_type_your_username">Please type your username</string>
 </resources>
