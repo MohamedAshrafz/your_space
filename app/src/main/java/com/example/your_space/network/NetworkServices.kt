@@ -44,20 +44,35 @@ interface YourAppApiInterface {
     @GET("${API}spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
+    //    @Headers(
+//        "Cookie:JSESSIONID=A2B46CE2EAFDCE3C8D978A1576F72A22"
+//    )
     @GET("${API}spaces/alldata/{page}/$PAGE_SIZE")
-    suspend fun getWorkingSpacesUsingPaging(@Path("page") page: Int): List<SpaceItemProperty>
+    suspend fun getWorkingSpacesUsingPaging(
+        @Path("page") page: Int,
+        @Header("Cookie") cookie: String
+    ): List<SpaceItemProperty>
 
     @GET("${API}bookings")
     suspend fun getAllBookings(): List<BookingProperty>
 
     @GET("${API}room/getBySpace/{spaceId}")
-    suspend fun getRoomsBySpaceId(@Path("spaceId") spaceId: String): List<WorkingSpaceRoomProperty>
+    suspend fun getRoomsBySpaceId(
+        @Path("spaceId") spaceId: String,
+        @Header("Cookie") cookie: String
+    ): List<WorkingSpaceRoomProperty>
 
     @DELETE("${API}bookings/{id}")
-    suspend fun cancelBooking(@Path("id") id: Int): Response<ResponseBody>
+    suspend fun cancelBooking(
+        @Path("id") id: Int,
+        @Header("Cookie") cookie: String
+    ): Response<ResponseBody>
 
     @POST("${API}bookings")
-    suspend fun addNewBooking(@Body newBooking: BookingPropertyPost): Response<ResponseBody>
+    suspend fun addNewBooking(
+        @Body newBooking: BookingPropertyPost,
+        @Header("Cookie") cookie: String
+    ): Response<ResponseBody>
 }
 
 object Network {

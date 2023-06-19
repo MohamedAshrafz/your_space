@@ -42,7 +42,8 @@ fun UserProperty.userPropertyModelToDatabaseModel(): UserDB {
         birthDate = this.birthDate,
         bio = this.bio ?: "",
         points = this.points,
-        userName = this.userName
+        userName = this.userName,
+        password = ""
     )
 }
 
@@ -58,7 +59,8 @@ fun List<UserProperty>.userPropertyModelToDatabaseModel(): Array<UserDB> {
             birthDate = it.birthDate,
             bio = it.bio ?: "",
             points = it.points,
-            userName = it.userName
+            userName = it.userName,
+            password = ""
         )
     }.toTypedArray()
 }

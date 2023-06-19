@@ -53,6 +53,7 @@ class AuthenticationActivity : AppCompatActivity() {
         val userId = receiveSP.getString(USER_ID, null)
 
         if (userId != null) {
+            signInViewModel.reGetTokenAndUser(userId)
             sentToMainActivity()
         }
 

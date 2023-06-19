@@ -11,7 +11,10 @@ import kotlinx.coroutines.withContext
 
 const val REPOSITORY_ERROR_STRING = "Error in repository"
 
+
 class AppRepository private constructor(private val database: AppDao) {
+
+    private lateinit var session: String
 
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
@@ -36,17 +39,55 @@ class AppRepository private constructor(private val database: AppDao) {
         return currentUser
     }
 
+    suspend fun getUserWithUserId(userId: String): UserDB? {
+        var currentUser: UserDB? = null
+        try {
+            withContext(Dispatchers.IO) {
+                currentUser = database.getUserWithUserId(userId)
+                if (currentUser != null) {
+                    getUserWithUserNameAndPassword(
+                        (currentUser as UserDB).userName,
+                        (currentUser as UserDB).password
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+        return currentUser
+    }
+
     suspend fun getUserWithUserNameAndPassword(userName: String, password: String): UserDB? {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
                 val response = NetworkServices.loginWithUsernameAndPassword(userName, password)
 
-                if (response.isSuccessful){
-                    val user = response.body()
-                    user?.let {
-                        database.insertAllUsers(it.userPropertyModelToDatabaseModel())
-                        currentUser = database.getUserWithUserName(userName)
+
+                if (response.isSuccessful) {
+
+//                    Log.e(REPOSITORY_ERROR_STRING, response.headers().toString())
+                    session = response.headers().get("Set-Cookie")!!.split(";")[0]
+                    Log.e(REPOSITORY_ERROR_STRING, session)
+
+                    response.body()?.let {
+                        val responseUser = it.userPropertyModelToDatabaseModel()
+
+                        currentUser = UserDB(
+                            responseUser.userId,
+                            responseUser.email,
+                            responseUser.firstName,
+                            responseUser.lastName,
+                            responseUser.mobileNo,
+                            responseUser.address,
+                            responseUser.birthDate,
+                            responseUser.bio,
+                            responseUser.points,
+                            responseUser.userName,
+                            password,
+                        )
+
+                        database.insertAllUsers(currentUser as UserDB)
                         Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
                     }
                 }
@@ -75,7 +116,8 @@ class AppRepository private constructor(private val database: AppDao) {
 //        val end = start + PAGE_SIZE
         try {
             withContext(Dispatchers.IO) {
-                val workingSpacesList = NetworkServices.getWorkingSpacesUsingPaging(pageNumber)
+                val workingSpacesList =
+                    NetworkServices.getWorkingSpacesUsingPaging(pageNumber, session)
                 if (initialize) {
                     database.deleteAllWorkingSpaces()
                 }
@@ -101,7 +143,7 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun getRoomsBySpaceIdFromNetwork(spaceId: String) {
         try {
             withContext(Dispatchers.IO) {
-                val roomsList = NetworkServices.getRoomsBySpaceId(spaceId)
+                val roomsList = NetworkServices.getRoomsBySpaceId(spaceId, session)
                 database.deleteAllRoomsWithSpaceId(spaceId)
                 database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
             }
@@ -124,7 +166,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun addNewBooking(newBooking: BookingPropertyPost): Boolean {
         val isPosted: Boolean
-        val response = NetworkServices.addNewBooking(newBooking)
+        val response = NetworkServices.addNewBooking(newBooking, session)
         return if (response.isSuccessful) {
             isPosted = true
             refreshBookings()
@@ -146,7 +188,7 @@ class AppRepository private constructor(private val database: AppDao) {
         try {
             withContext(Dispatchers.IO) {
                 // Do the DELETE request and get response
-                val response = NetworkServices.cancelBooking(bookItem.bookingId.toInt())
+                val response = NetworkServices.cancelBooking(bookItem.bookingId.toInt(), session)
                 if (response.isSuccessful) {
                     database.deleteBooking(bookItem.bookingId)
 

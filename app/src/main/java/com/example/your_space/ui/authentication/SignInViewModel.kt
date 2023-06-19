@@ -26,11 +26,20 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     val showSignedUpToast: LiveData<String>
         get() = _showSignedUpToast
 
-    private suspend fun getUser(): Boolean {
-        if (username.value != null && password.value != null){
-            _currentUser.value = repository.getUserWithUserNameAndPassword(username.value!!, password.value!!)
+    suspend fun getUser(): Boolean {
+        if (username.value != null && password.value != null) {
+            _currentUser.value =
+                repository.getUserWithUserNameAndPassword(username.value!!, password.value!!)
         }
         return currentUser.value != null
+    }
+
+    fun reGetTokenAndUser(userId: String): UserDB? {
+        var currentUser: UserDB? = null
+        viewModelScope.launch {
+            currentUser =  repository.getUserWithUserId(userId)
+        }
+        return currentUser
     }
 
     fun checkNotEmpty(): Boolean {

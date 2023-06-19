@@ -21,7 +21,8 @@ data class UserDB(
     val birthDate: String,
     val bio: String,
     val points: Int,
-    val userName: String
+    val userName: String,
+    val password: String
 ) : Parcelable
 
 @Entity(tableName = "requests_table")
