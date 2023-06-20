@@ -47,7 +47,8 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.Your_space" >
+            android:theme="@style/Theme.Your_space"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

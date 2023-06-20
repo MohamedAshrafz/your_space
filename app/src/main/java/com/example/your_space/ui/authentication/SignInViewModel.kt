@@ -29,7 +29,7 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     private suspend fun getUser(): Boolean {
         if (username.value != null && password.value != null) {
             _currentUser.value =
-                repository.getUserWithUserNameAndPassword(username.value!!, password.value!!)
+                repository.loginAndGetTokenForUserWith(username.value!!, password.value!!)
         }
         return currentUser.value != null
     }
@@ -37,7 +37,7 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     fun reGetTokenAndUser(userId: String): UserDB? {
         var currentUser: UserDB? = null
         viewModelScope.launch {
-            currentUser =  repository.getUserWithUserId(userId)
+            currentUser =  repository.updateTokenForUserWithUserId(userId)
         }
         return currentUser
     }

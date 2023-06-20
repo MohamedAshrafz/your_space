@@ -39,13 +39,13 @@ class AppRepository private constructor(private val database: AppDao) {
         return currentUser
     }
 
-    suspend fun getUserWithUserId(userId: String): UserDB? {
+    suspend fun updateTokenForUserWithUserId(userId: String): UserDB? {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
                 currentUser = database.getUserWithUserId(userId)
                 if (currentUser != null) {
-                    getUserWithUserNameAndPassword(
+                    loginAndGetTokenForUserWith(
                         (currentUser as UserDB).userName,
                         (currentUser as UserDB).password
                     )
@@ -57,7 +57,7 @@ class AppRepository private constructor(private val database: AppDao) {
         return currentUser
     }
 
-    suspend fun getUserWithUserNameAndPassword(userName: String, password: String): UserDB? {
+    suspend fun loginAndGetTokenForUserWith(userName: String, password: String): UserDB? {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
@@ -186,7 +186,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
     suspend fun getUserWithId(userId: String): UserDB {
         return withContext(Dispatchers.IO) {
-            database.getUserWithId(userId)
+            database.getUserWithUserId(userId)
         }
     }
 

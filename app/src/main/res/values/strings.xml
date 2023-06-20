@@ -49,13 +49,18 @@
     <string name="sign_up">Sign Up</string>
     <string name="please_fill_your_data">Please fill your data</string>
     <string name="user_name">User name</string>
+    <string name="user_name_profile">User name:</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="email">Email</string>
+    <string name="email_profile">Email:</string>
     <string name="password">Password</string>
     <string name="mobile_number">Mobile number</string>
+    <string name="mobile_number_profile">Mobile number:</string>
     <string name="address">Address</string>
+    <string name="address_profile">Address:</string>
     <string name="birthdate">Birthdate</string>
+    <string name="birthdate_profile">Birthdate:</string>
     <string name="confirm_password">Confirm password</string>
     <string name="create_account">Create Account</string>
     <string name="create_new_account">Create New Account</string>
@@ -63,4 +68,11 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="please_type_your_password">Please type your password</string>
     <string name="please_type_your_username">Please type your username</string>
+    <string name="name">Name</string>
+    <string name="name_profile">Name:</string>
+    <string name="bio_profile">Bio:</string>
+    <string name="points_profile">Points:</string>
+    <string name="phone_number_profile">Phone Number:</string>
+    <string name="save">Save</string>
+    <string name="bio">Bio</string>
 </resources>
