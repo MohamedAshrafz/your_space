@@ -85,6 +85,28 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
             }
         }
 
+        _binding.btnAddNewBookWithPoints.setOnClickListener {
+            if (_binding.bookDateEditText2.text.toString() == "" ||
+                _binding.bookTimeEditText2.text.toString() == "" ||
+                _binding.durationEditText3.text.toString() == ""
+            ) {
+                Toast.makeText(context, "Plaese Fill All Data", Toast.LENGTH_SHORT).show()
+            } else {
+                val newBook = BookingDB(
+                    bookingId = "30",
+                    startTime = "${addNewBookAppViewModel.savedHour}:${addNewBookAppViewModel.savedMinute}:00",
+                    endTime = "${getEndTime().first}:${getEndTime().second}:00",
+                    date = "${if (addNewBookAppViewModel.savedDay < 10) "0${addNewBookAppViewModel.savedDay}" else "${addNewBookAppViewModel.savedDay}"}-${if (addNewBookAppViewModel.savedMonth < 10) "0${addNewBookAppViewModel.savedMonth}" else "${addNewBookAppViewModel.savedMonth}"}-${addNewBookAppViewModel.savedYear}",
+                    roomId = roomItem.roomId.toString(),
+                    spaceId = roomItem.spaceId
+                )
+                addNewBookAppViewModel.addNewBookWithPoints(newBook)
+                findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
+
+            }
+
+        }
+
 
         _binding.btnAddNewBook.setOnClickListener {
             if (_binding.bookDateEditText2.text.toString() == "" ||

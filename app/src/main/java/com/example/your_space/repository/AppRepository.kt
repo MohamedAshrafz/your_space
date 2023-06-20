@@ -122,6 +122,12 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
+    suspend fun getUserWithId(userId: String): UserDB {
+        return withContext(Dispatchers.IO) {
+            database.getUserWithId(userId)
+        }
+    }
+
     suspend fun deleteBookingWithId(bookItem: BookingDB) {
         try {
             withContext(Dispatchers.IO) {

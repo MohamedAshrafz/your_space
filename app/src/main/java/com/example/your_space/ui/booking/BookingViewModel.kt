@@ -25,6 +25,8 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     private var posted = MutableLiveData(true)
 
+    private var _userId = MutableLiveData("")
+
     var minute = 0
     var hour = 0
     var day = 0
@@ -97,6 +99,12 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun setUserId(userId : String) {
+        _userId.value = userId
+    }
+
+    fun getUserId() = _userId.value
+
     fun onCancelBookedItem(bookItem: BookingDB) {
         viewModelScope.launch {
             repository.deleteBookingWithId(bookItem)
@@ -142,19 +150,51 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         return false
     }
 
+    fun addNewBookWithPoints(bookItem: BookingDB) {
+        viewModelScope.launch {
+
+            val user = _userId.value?.let { repository.getUserWithId(it) }
+            if (user?.points != 0){
+                val newBooking = getUserId()?.let {
+                    BookingPropertyPost(
+                        startTime = bookItem.startTime,
+                        endTime = bookItem.endTime,
+                        date = bookItem.date,
+                        roomId = bookItem.roomId,
+                        userId = it,
+                        spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
+                    )
+                }
+                posted.value = newBooking?.let { repository.addNewBooking(it) }
+                if (posted.value == true) {
+                    Toast.makeText(getApplication(), "Booking Added Successfully", Toast.LENGTH_SHORT)
+                        .show()
+                } else Toast.makeText(getApplication(), "Please Put Valid Data", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else {
+                Toast.makeText(getApplication(), "You Don't Have Enough Points", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
 
     fun addNewBook(bookItem: BookingDB) {
         viewModelScope.launch {
 
-            val newBooking = BookingPropertyPost(
-                startTime = bookItem.startTime,
-                endTime = bookItem.endTime,
-                date = bookItem.date,
-                roomId = bookItem.roomId,
-                userId = "3",
-                spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
-            )
-            posted.value = repository.addNewBooking(newBooking)
+            val newBooking = getUserId()?.let {
+                BookingPropertyPost(
+                    startTime = bookItem.startTime,
+                    endTime = bookItem.endTime,
+                    date = bookItem.date,
+                    roomId = bookItem.roomId,
+                    userId = it,
+                    spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
+                )
+            }
+            posted.value = newBooking?.let { repository.addNewBooking(it) }
             if (posted.value == true) {
                 Toast.makeText(getApplication(), "Booking Added Successfully", Toast.LENGTH_SHORT)
                     .show()

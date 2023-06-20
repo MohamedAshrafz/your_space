@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentBookingBinding
+import com.example.your_space.ui.authentication.AuthenticationActivity
 import com.google.android.material.tabs.TabLayoutMediator
 
 const val CURRENT_OR_HISTORY_KEY = "RecyclerViewIndex"
@@ -35,6 +37,13 @@ class BookingFragment : Fragment() {
 
         val viewPagerAdaptor = BookingViewPagerAdaptor(this)
 
+        val sp = requireActivity().getSharedPreferences(
+            AuthenticationActivity.LOGIN_STATE,
+            AppCompatActivity.MODE_PRIVATE
+        )
+
+        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
+
         val viewPager = binding.bookingViewPager
         val tabLayout = binding.tabLayout
 
@@ -49,6 +58,10 @@ class BookingFragment : Fragment() {
                 historyTabPosition -> tab.text = resources.getText(R.string.History_text)
             }
         }.attach()
+
+        if (userId != null) {
+            bookingAppViewModel.setUserId(userId)
+        }
 
 
         return binding.root
