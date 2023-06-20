@@ -32,9 +32,6 @@
         <action
             android:id="@+id/action_SecondFragment_to_spaceDetailsFragment"
             app:destination="@id/spaceDetailsFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_addNewSpaceFragment"
-            app:destination="@id/addNewSpaceFragment" />
     </fragment>
     <fragment
         android:id="@+id/spaceDetailsFragment"
@@ -78,17 +75,6 @@
         <action
             android:id="@+id/action_bookingFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addNewSpaceFragment"
-        android:name="com.example.your_space.ui.AddNewSpaceFragment"
-        android:label="New Co-working Space"
-        tools:layout="@layout/fragment_add_new_space">
-        <action
-            android:id="@+id/action_addNewSpaceFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment"
-            app:popUpTo="@id/SecondFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addNewBookFragment"
