@@ -18,9 +18,6 @@ interface AppDao {
     @Query("SELECT * FROM users_table WHERE  userName == :userName")
     fun getUserWithUserName(userName: String): UserDB
 
-    @Query("SELECT * FROM users_table WHERE  userId == :userId")
-    fun getUserWithId(userId: String): UserDB
-
     ////////////////Spaces///////////////////////////////////
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllWorkingSpaces(vararg spaces: WorkingSpaceDB)
