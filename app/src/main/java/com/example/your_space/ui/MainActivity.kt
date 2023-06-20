@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.forEach
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,8 +19,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.ActivityMainBinding
+import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.authentication.AuthenticationActivity
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         val userId = sp.getString(AuthenticationActivity.USER_ID, null)
 
         if (userId != null) {
+            reGetTokenAndUser(userId)
             Log.e("Main Activity", userId.toString())
         } else {
             Log.e("Main Activity", "cannot get the user")
@@ -120,6 +124,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun reGetTokenAndUser(userId: String) {
+        val repository = AppRepository.getInstance(applicationContext)
+        lifecycleScope.launch {
+            repository.updateTokenForUserWithUserId(userId)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

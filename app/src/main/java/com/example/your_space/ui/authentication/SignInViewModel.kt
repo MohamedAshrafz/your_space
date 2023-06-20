@@ -18,6 +18,16 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
 
     val signed = MutableLiveData(false)
 
+    val navigateToMainActivity = MutableLiveData(false)
+
+    fun clearSigned() {
+        signed.value = false
+    }
+
+    fun clearNavigate() {
+        navigateToMainActivity.value = false
+    }
+
     private val _currentUser = MutableLiveData<UserDB>()
     val currentUser: LiveData<UserDB>
         get() = _currentUser
@@ -34,13 +44,15 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
         return currentUser.value != null
     }
 
-    fun reGetTokenAndUser(userId: String): UserDB? {
-        var currentUser: UserDB? = null
-        viewModelScope.launch {
-            currentUser =  repository.updateTokenForUserWithUserId(userId)
-        }
-        return currentUser
-    }
+//    fun reGetTokenAndUser(userId: String) {
+//        var currentUser: UserDB? = null
+//        viewModelScope.launch {
+//            currentUser = repository.updateTokenForUserWithUserId(userId)
+//            if (currentUser != null) {
+//                navigateToMainActivity.value = true
+//            }
+//        }
+//    }
 
     fun checkNotEmpty(): Boolean {
         return !username.value.isNullOrEmpty() &&
