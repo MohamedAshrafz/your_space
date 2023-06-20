@@ -26,10 +26,6 @@ class AuthenticationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAuthenticationBinding
 
-    private val signUpViewModel: SignUpViewModel by lazy {
-        ViewModelProvider(this)[SignUpViewModel::class.java]
-    }
-
     private val signInViewModel: SignInViewModel by lazy {
         ViewModelProvider(this)[SignInViewModel::class.java]
     }
@@ -55,19 +51,6 @@ class AuthenticationActivity : AppCompatActivity() {
         if (userId != null) {
             signInViewModel.reGetTokenAndUser(userId)
             sentToMainActivity()
-        }
-
-        signUpViewModel.signed.observe(this) { signedVal ->
-            Log.e("Auth Activity", signedVal.toString() + signUpViewModel.currentUser.value)
-            if (signedVal && signUpViewModel.currentUser.value != null) {
-
-                val sentSP = getSharedPreferences(LOGIN_STATE, MODE_PRIVATE)
-                val editor = sentSP.edit()
-                editor.putString(USER_ID, signUpViewModel.currentUser.value?.userId)
-                editor.apply()
-
-                sentToMainActivity()
-            }
         }
 
         signInViewModel.signed.observe(this) { signedVal ->

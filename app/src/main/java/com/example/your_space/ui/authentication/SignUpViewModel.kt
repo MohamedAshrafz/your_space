@@ -16,18 +16,8 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    val signed = MutableLiveData(false)
 
-    private val _currentUser = MutableLiveData<UserDB>()
-    val currentUser: LiveData<UserDB>
-        get() = _currentUser
-
-    private suspend fun getUser(): Boolean {
-        username.value?.let { _currentUser.value = repository.getUserWithUserName(it) }
-        return currentUser.value != null
-    }
-
-    val _email = MutableLiveData<String>("")
+    val _email = MutableLiveData("")
     val email: LiveData<String>
         get() = _email
 
@@ -63,20 +53,16 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
     val username: LiveData<String>
         get() = _username
 
-    val _signInStatus = MutableLiveData(false)
-    val signInStatus: LiveData<Boolean>
-        get() = _signInStatus
-
     private val _showSignedUpToast = MutableLiveData("")
     val showSignedUpToast: LiveData<String>
         get() = _showSignedUpToast
 
-    fun setSignedIn() {
-        _signInStatus.value = true
-    }
+    private val _navigateToSignInFragment = MutableLiveData(false)
+    val navigateToSignInFragment: LiveData<Boolean>
+        get() = _navigateToSignInFragment
 
-    fun setSignedOut() {
-        _signInStatus.value = false
+    fun clearNavigateToSignInFragment() {
+        _navigateToSignInFragment.value = false
     }
 
     private fun isAnyFieldEmpty(): Boolean {
@@ -127,13 +113,8 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
                 response = NetworkServices.addNewUser(newUser)
             }
             if (response.isSuccessful) {
-                if (getUser()) {
-                    _showSignedUpToast.value = "You have successfully signed up"
-                    signed.value = true
-                } else {
-                    _showSignedUpToast.value =
-                        "You have successfully signed up,\nbut there was a problem in logging in"
-                }
+                _showSignedUpToast.value = "Please check the confirmation mail"
+                _navigateToSignInFragment.value = true
             } else {
                 _showSignedUpToast.value = "This email is already used"
             }

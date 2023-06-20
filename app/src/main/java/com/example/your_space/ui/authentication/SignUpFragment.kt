@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentSignUpBinding
 import java.util.*
 
@@ -59,6 +60,13 @@ class SignUpFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 } else {
                     binding.repasswordTe.error = null
                 }
+            }
+        }
+
+        signUpViewModel.navigateToSignInFragment.observe(viewLifecycleOwner){ navigate ->
+            if (navigate){
+                findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
+                signUpViewModel.clearNavigateToSignInFragment()
             }
         }
 

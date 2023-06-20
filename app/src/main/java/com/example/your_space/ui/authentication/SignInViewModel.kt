@@ -22,11 +22,11 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     val currentUser: LiveData<UserDB>
         get() = _currentUser
 
-    private val _showSignedUpToast = MutableLiveData("")
+    private val _showSignedInToast = MutableLiveData("")
     val showSignedUpToast: LiveData<String>
-        get() = _showSignedUpToast
+        get() = _showSignedInToast
 
-    suspend fun getUser(): Boolean {
+    private suspend fun getUser(): Boolean {
         if (username.value != null && password.value != null) {
             _currentUser.value =
                 repository.getUserWithUserNameAndPassword(username.value!!, password.value!!)
@@ -50,10 +50,10 @@ class SignInViewModel(app: Application) : AndroidViewModel(app) {
     fun runSignInFlow() {
         viewModelScope.launch {
             if (getUser()) {
-                _showSignedUpToast.value = "You have successfully logged in"
+                _showSignedInToast.value = "You have successfully logged in"
                 signed.value = true
             } else {
-                _showSignedUpToast.value = "Wrong username or password"
+                _showSignedInToast.value = "Wrong username or password"
             }
         }
     }
