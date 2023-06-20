@@ -18,7 +18,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
-    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
+    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("Current")
+
+    val historyBookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("Past")
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
