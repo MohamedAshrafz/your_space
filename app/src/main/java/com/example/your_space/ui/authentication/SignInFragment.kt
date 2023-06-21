@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSignInBinding
+import com.google.android.material.snackbar.Snackbar
 
 class SignInFragment : Fragment() {
 
@@ -31,20 +32,31 @@ class SignInFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.signInButton.setOnClickListener {
-            if (signInViewModel.checkNotEmpty()) {
-                signInViewModel.runSignInFlow()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Please fill both username and password",
-                    Toast.LENGTH_LONG
-                ).show()
+            signInViewModel.setLoginButtonPressed()
+        }
+
+        signInViewModel.loginButtonPressed.observe(viewLifecycleOwner){ isPressed ->
+            if (isPressed){
+                if (signInViewModel.checkNotEmpty()) {
+                    signInViewModel.runSignInFlow()
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.Please_ill_both_username_and_password),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                signInViewModel.clearLoginButtonPressed()
             }
         }
 
         signInViewModel.showSignedUpToast.observe(viewLifecycleOwner) { toastText ->
             if (!toastText.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), toastText, Toast.LENGTH_LONG).show()
+                if (toastText == getString(R.string.you_have_successfully_logged_in)) {
+                    Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
+                } else {
+                    Snackbar.make(binding.root, toastText, Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
 

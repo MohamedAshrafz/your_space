@@ -83,5 +83,7 @@ data class UserPropertyPost(
     @Json(name = "birthDate")
     val birthDate: String,
     @Json(name = "username")
-    val username: String
+    val username: String,
+    @Json(name = "bio")
+    val bio: String = "",
 ) : Parcelable

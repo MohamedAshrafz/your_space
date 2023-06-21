@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -129,7 +130,21 @@ class MainActivity : AppCompatActivity() {
     fun reGetTokenAndUser(userId: String) {
         val repository = AppRepository.getInstance(applicationContext)
         lifecycleScope.launch {
-            repository.updateTokenForUserWithUserId(userId)
+            val user = repository.updateTokenForUserWithUserId(userId)
+            if (user == null) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.connection_error),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else if (user.userId == "-1") {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.there_was_a_problem_in_logging_you_in),
+                    Toast.LENGTH_LONG
+                ).show()
+                logoutFlow()
+            }
         }
     }
 
@@ -161,28 +176,32 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.logout -> {
-                // logout implementation
-                // signing-out the current user
-                // we have to wait till sing-out complete
-                // otherwise AuthenticationActivity will launch this activity again
-                // launch the sign-in activity
-                val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
-                val editor = sp.edit()
-                editor.putString(AuthenticationActivity.USER_ID, null)
-                editor.apply()
-
-                finish()
-
-                // launch the sign-in activity
-                val authenticationActivityIntent =
-                    Intent(
-                        this.applicationContext,
-                        AuthenticationActivity::class.java
-                    )
-                startActivity(authenticationActivityIntent)
+                logoutFlow()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun logoutFlow() {
+        // logout implementation
+        // signing-out the current user
+        // we have to wait till sing-out complete
+        // otherwise AuthenticationActivity will launch this activity again
+        // launch the sign-in activity
+        val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putString(AuthenticationActivity.USER_ID, null)
+        editor.apply()
+
+        finish()
+
+        // launch the sign-in activity
+        val authenticationActivityIntent =
+            Intent(
+                this.applicationContext,
+                AuthenticationActivity::class.java
+            )
+        startActivity(authenticationActivityIntent)
     }
 
     override fun onSupportNavigateUp(): Boolean {

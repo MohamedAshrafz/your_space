@@ -43,13 +43,8 @@ class AppRepository private constructor(private val database: AppDao) {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
-                currentUser = database.getUserWithUserId(userId)
-                if (currentUser != null) {
-                    loginAndGetTokenForUserWith(
-                        (currentUser as UserDB).userName,
-                        (currentUser as UserDB).password
-                    )
-                }
+                val dbUser = database.getUserWithUserId(userId)
+                currentUser = loginAndGetTokenForUserWith(dbUser.userName, dbUser.password)
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -90,6 +85,10 @@ class AppRepository private constructor(private val database: AppDao) {
                         database.insertAllUsers(currentUser as UserDB)
                         Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
                     }
+                } else {
+                    currentUser = UserDB(
+                        userId = "-1",
+                    )
                 }
             }
         } catch (e: Exception) {

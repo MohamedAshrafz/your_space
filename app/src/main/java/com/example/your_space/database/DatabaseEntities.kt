@@ -13,16 +13,16 @@ import java.util.*
 data class UserDB(
     @PrimaryKey
     val userId: String,
-    val email: String,
-    val firstName: String,
-    val lastName: String,
-    val mobileNo: String,
-    val address: String,
-    val birthDate: String,
-    val bio: String,
-    val points: Int,
-    val userName: String,
-    val password: String
+    val email: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val mobileNo: String = "",
+    val address: String = "",
+    val birthDate: String = "",
+    val bio: String = "",
+    val points: Int = 0,
+    val userName: String = "",
+    val password: String = ""
 ) : Parcelable
 
 @Entity(tableName = "requests_table")
