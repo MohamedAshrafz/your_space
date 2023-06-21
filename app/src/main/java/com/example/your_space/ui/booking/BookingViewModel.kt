@@ -19,9 +19,9 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    private val _bookedList = repository.bookingsRepo
-    val bookedList: LiveData<List<BookingDB>>
-        get() = _bookedList
+    private val _upComingBookedList = repository.upComingBookingsRepo
+    val upComingBookedList: LiveData<List<BookingDB>>
+        get() = _upComingBookedList
 
 
 
@@ -97,7 +97,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getAppropriateRecyclerView(recyclerType: String): LiveData<List<BookingDB>> {
         return when (recyclerType) {
-            RecyclerType.CURRENT.name -> bookedList
+            RecyclerType.CURRENT.name -> upComingBookedList
             else -> bookedHistoryList
         }
     }
@@ -133,7 +133,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                         roomId = bookItem.roomId,
                         userId = it,
                         spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name,
-                        bookingStatus = "Past"
+                        paymentMethod = "lol"
                     )
                 }
                 posted.value = newBooking?.let { repository.addNewBooking(it) }
@@ -153,17 +153,17 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
 
     fun addNewBook(bookItem: BookingDB) {
-        viewModelScope.launch {
+         viewModelScope.launch {
 
             val newBooking = getUserId()?.let {
                 BookingPropertyPost(
-                    startTime = bookItem.startTime,
-                    endTime = bookItem.endTime,
+                    startTime = "03:00:00",
+                    endTime = "05:00:00",
                     date = bookItem.date,
                     roomId = bookItem.roomId,
-                    userId = it,
+                    userId = "1",
                     spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name,
-                    bookingStatus = "Past"
+                    paymentMethod = "lol"
                 )
             }
             posted.value = newBooking?.let { repository.addNewBooking(it) }

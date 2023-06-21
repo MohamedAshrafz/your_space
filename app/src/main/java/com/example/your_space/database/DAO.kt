@@ -39,8 +39,9 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllBookings(vararg bookings: BookingDB)
 
-    @Query("SELECT * FROM booking_table WHERE (bookingStatus = :status ) ORDER BY bookingId")
-    fun gelAllBookings(status : String): LiveData<List<BookingDB>>
+    @Query("SELECT * FROM booking_table WHERE bookingStatus = :status ORDER BY bookingId")
+    fun getBookings(status : String): LiveData<List<BookingDB>>
+
 
 //    @Query("SELECT * FROM booking_table WHERE (bookingStatus == :status ) ORDER BY bookingId")
 //    fun getAllHistoryBookings(): LiveData<List<BookingDB>>

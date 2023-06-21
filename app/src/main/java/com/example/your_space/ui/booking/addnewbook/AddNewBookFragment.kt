@@ -63,12 +63,19 @@ class AddNewBookFragment : Fragment() , DatePickerDialog.OnDateSetListener, Time
                 Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
             }else{
 
+//                val newBook = BookingDB(
+//                    bookingId = "30",
+//                    startTime = "${addNewBookAppViewModel.savedHour}:${if (addNewBookAppViewModel.savedMinute < 10 ) "0${addNewBookAppViewModel.savedMinute}" else "${addNewBookAppViewModel.savedMinute}"}:00",
+//                    endTime = "${getEndTime().first}:${getEndTime().second}:00",
+//                    date = "${if (addNewBookAppViewModel.savedDay < 10) "0${addNewBookAppViewModel.savedDay}" else "${addNewBookAppViewModel.savedDay}"}-${if (addNewBookAppViewModel.savedMonth < 10) "0${addNewBookAppViewModel.savedMonth}" else "${addNewBookAppViewModel.savedMonth}"}-${addNewBookAppViewModel.savedYear}",
+//                    roomId = "2"
+//                )
                 val newBook = BookingDB(
                     bookingId = "30",
-                    startTime = "${addNewBookAppViewModel.savedHour}:${addNewBookAppViewModel.savedMinute}:00",
-                    endTime = "${getEndTime().first}:${getEndTime().second}:00",
+                    startTime = "03:00:00",
+                    endTime = "04:00:00",
                     date = "${if (addNewBookAppViewModel.savedDay < 10) "0${addNewBookAppViewModel.savedDay}" else "${addNewBookAppViewModel.savedDay}"}-${if (addNewBookAppViewModel.savedMonth < 10) "0${addNewBookAppViewModel.savedMonth}" else "${addNewBookAppViewModel.savedMonth}"}-${addNewBookAppViewModel.savedYear}",
-                    roomId = "1"
+                    roomId = "2"
                 )
                 addNewBookAppViewModel.addNewBook(newBook)
                 findNavController().navigate(AddNewBookFragmentDirections.actionAddNewBookFragmentToBookingFragment())

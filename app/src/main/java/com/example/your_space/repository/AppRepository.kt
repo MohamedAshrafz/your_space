@@ -18,9 +18,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
-    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("Current")
+    val upComingBookingsRepo: LiveData<List<BookingDB>> = database.getBookings("upcoming")
 
-    val historyBookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("Past")
+    val historyBookingsRepo: LiveData<List<BookingDB>> = database.getBookings("past")
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
@@ -133,9 +133,11 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun refreshBookings() {
         try {
             withContext(Dispatchers.IO) {
-                val bookingsList = NetworkServices.getAllBookings()
+                val upComingBookingsList = NetworkServices.getAllUpComingBookings(session)
+                val historyBookingsList = NetworkServices.getAllHistoryBookings(session)
                 database.deleteAllBookings()
-                database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
+                database.insertAllBookings(*(upComingBookingsList.bookingPropertyModelToDatabaseModel()))
+                database.insertAllBookings(*(historyBookingsList.bookingPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -167,17 +169,24 @@ class AppRepository private constructor(private val database: AppDao) {
     }
 
     suspend fun addNewBooking(newBooking: BookingPropertyPost): Boolean {
-        val isPosted: Boolean
-        val response = NetworkServices.addNewBooking(newBooking, session)
-        return if (response.isSuccessful) {
-            isPosted = true
-            refreshBookings()
-            isPosted
-        } else {
-            isPosted = false
-            Log.e("RETROFIT_ERROR", response.code().toString())
-            isPosted
+        var isPosted: Boolean = false
+        try {
+
+            val response = NetworkServices.addNewBooking(newBooking, session)
+            return if (response.isSuccessful) {
+                isPosted = true
+                refreshBookings()
+                isPosted
+            } else {
+                isPosted = false
+                Log.e("RETROFIT_ERROR", response.code().toString())
+                isPosted
+            }
         }
+        catch (e : Exception){
+            Log.e("aaaaahhhhhhhhh",e.stackTraceToString().toString())
+        }
+        return isPosted
     }
 
     suspend fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB {
