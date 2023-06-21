@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.Home,
                 R.id.SecondFragment,
                 R.id.bookingFragment,
-                R.id.mapsFragment
+                R.id.messagesFragment
             )
         )
 

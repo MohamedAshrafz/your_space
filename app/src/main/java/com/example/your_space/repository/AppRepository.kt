@@ -16,7 +16,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
     private lateinit var session: String
 
-    fun getSession(): String{
+    fun getSession(): String {
         return session
     }
 
@@ -237,6 +237,23 @@ class AppRepository private constructor(private val database: AppDao) {
         withContext(Dispatchers.IO) {
             database.deleteAllRooms()
         }
+    }
+
+    suspend fun sendMessage(message: String, userId: String): Boolean {
+        var isSucceeded = false
+        try {
+            withContext(Dispatchers.IO) {
+                val response = NetworkServices.postMessage(userId, message, session)
+                if (response.isSuccessful) {
+                    isSucceeded = true
+                } else {
+                    Log.e("RETROFIT_ERROR", response.code().toString())
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+        return isSucceeded
     }
 
     companion object {

@@ -24,9 +24,9 @@ data class SpaceItemProperty(
     @Json(name = "contactNumber")
     val contactNumber: String = "",
     @Json(name = "minPrice")
-    val minPrice: Int = 4,
+    val minPrice: Double = 0.0,
     @Json(name = "maxPrice")
-    val maxPrice: Int = 5,
+    val maxPrice: Double = 0.0,
     @Json(name = "startTime")
     val startTime: String = "",
     @Json(name = "endTime")

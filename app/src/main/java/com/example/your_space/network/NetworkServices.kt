@@ -80,6 +80,13 @@ interface YourAppApiInterface {
         @Body newBooking: BookingPropertyPost,
         @Header("Cookie") cookie: String
     ): Response<ResponseBody>
+
+    @POST("${API}message")
+    suspend fun postMessage(
+        @Query("userId") userId: String,
+        @Query("message") message: String,
+        @Header("Cookie") cookie: String
+    ): Response<ResponseBody>
 }
 
 object Network {

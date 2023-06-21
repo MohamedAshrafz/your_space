@@ -66,6 +66,7 @@
     <string name="create_new_account">Create New Account</string>
     <string name="log_in_button_text">Log In</string>
     <string name="welcome_back">Welcome Back</string>
+    <string name="Welcome_how_can_we_help_you">Welcome, how can we help you?</string>
     <string name="please_type_your_password">Please type your password</string>
     <string name="please_type_your_username">Please type your username</string>
     <string name="name">Name</string>
@@ -82,4 +83,7 @@
     <string name="Please_ill_both_username_and_password">Please fill both username and password</string>
     <string name="Fields_was_updated_correctly">Fields was updated correctly</string>
     <string name="sorry_we_could_not_update_your_data">Sorry we could not update your data</string>
+    <string name="type_message">Type message..</string>
+    <string name="send">Send</string>
+    <string name="message_us">Message Us</string>
 </resources>

@@ -23,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 enum class FragmentEnumForIndexing(val index: Int) {
     OUR_SPACES(index = 1),
     YOUR_BOOKINGS(index = 2),
-    MAPS(index = 3)
+    MAPS(index = 3),
 }
 
 class ClassListener(

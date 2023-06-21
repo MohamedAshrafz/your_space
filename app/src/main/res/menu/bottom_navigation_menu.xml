@@ -17,9 +17,15 @@
         android:icon="@drawable/ic_baseline_calendar_today_48"
         android:title="@string/bookings"/>
     <item
-        android:id="@+id/mapsFragment"
+        android:id="@+id/messagesFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_map_48"
-        android:title="@string/onMap"/>
+        android:icon="@drawable/ic_baseline_message_48"
+        android:title="@string/message_us"/>
+
+<!--    <item-->
+<!--        android:id="@id/mapsFragment"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_map_48"-->
+<!--        android:title="@string/onMap"/>-->
 
 </menu>
