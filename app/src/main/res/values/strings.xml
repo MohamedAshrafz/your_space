@@ -80,4 +80,6 @@
     <string name="there_was_a_problem_in_logging_you_in">"There was a problem in logging you in"</string>
     <string name="you_have_successfully_logged_in">You have successfully logged in</string>
     <string name="Please_ill_both_username_and_password">Please fill both username and password</string>
+    <string name="Fields_was_updated_correctly">Fields was updated correctly</string>
+    <string name="sorry_we_could_not_update_your_data">Sorry we could not update your data</string>
 </resources>

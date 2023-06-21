@@ -87,3 +87,26 @@ data class UserPropertyPost(
     @Json(name = "bio")
     val bio: String = "",
 ) : Parcelable
+
+@JsonClass(generateAdapter = true)
+@Parcelize
+data class UserPropertyUpdate(
+    @Json(name = "userId")
+    val userId: String,
+    @Json(name = "email")
+    val email: String,
+    @Json(name = "firstName")
+    val firstName: String,
+    @Json(name = "lastName")
+    val lastName: String,
+    @Json(name = "mobileNo")
+    val mobileNo: String,
+    @Json(name = "address")
+    val address: String,
+    @Json(name = "birthDate")
+    val birthDate: String,
+    @Json(name = "username")
+    val username: String,
+    @Json(name = "bio")
+    val bio: String,
+) : Parcelable

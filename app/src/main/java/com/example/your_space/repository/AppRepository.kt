@@ -52,12 +52,28 @@ class AppRepository private constructor(private val database: AppDao) {
         return currentUser
     }
 
+    suspend fun updateUserData(newUserData: UserPropertyUpdate, userId: String): Boolean {
+        var isSucceeded = false
+        try {
+            withContext(Dispatchers.IO) {
+                val response = NetworkServices.updateUser(newUserData, session, userId)
+
+                if (response.isSuccessful) {
+                    updateTokenForUserWithUserId(userId)
+                    isSucceeded = true
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+        return isSucceeded
+    }
+
     suspend fun loginAndGetTokenForUserWith(userName: String, password: String): UserDB? {
         var currentUser: UserDB? = null
         try {
             withContext(Dispatchers.IO) {
                 val response = NetworkServices.loginWithUsernameAndPassword(userName, password)
-
 
                 if (response.isSuccessful) {
 

@@ -41,6 +41,13 @@ interface YourAppApiInterface {
     @POST("${API}user")
     suspend fun addNewUser(@Body newUser: UserPropertyPost): Response<ResponseBody>
 
+    @PUT("${API}user/{userId}")
+    suspend fun updateUser(
+        @Body newUser: UserPropertyUpdate,
+        @Header("Cookie") cookie: String,
+        @Path("userId") userId: String
+    ): Response<ResponseBody>
+
     @GET("${API}spaces")
     suspend fun getAllWorkingSpaces(): List<SpaceItemProperty>
 
