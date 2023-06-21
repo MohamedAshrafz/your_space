@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.example.your_space.R
 import com.example.your_space.database.WorkingSpaceDB
@@ -17,6 +18,7 @@ import com.example.your_space.databinding.CoworkingSpaceItemBinding
 import com.example.your_space.network.Constants.BASE_URL
 import com.example.your_space.network.DEFAULT_IMAGE_INDEX
 import com.example.your_space.network.IMAGE_VS_SPACEID_ENDPOINT
+import com.example.your_space.repository.AppRepository
 
 class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) -> Unit) :
     ListAdapter<WorkingSpaceDB, OurSpacesAdabter.SpaceItemViewHolder>(DiffCallback) {
@@ -95,15 +97,22 @@ fun bindImage(imageView: ImageView, imageUrl: String?) {
 @BindingAdapter(value = ["spaceIdForImage", "index"], requireAll = false)
 fun bindImage(imageView: ImageView, spaceId: String?, index: String?) {
 
-    val imageUrl = if (index == null){
+    val imageUrl = if (index == null) {
         "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$DEFAULT_IMAGE_INDEX"
-    }else{
+    } else {
         "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$index"
     }
 
-    val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
+    val repository = AppRepository.getInstance(imageView.context)
+
+    val glideUrl = GlideUrl(
+        imageUrl,
+        LazyHeaders.Builder().addHeader("Cookie", repository.getSession()).build()
+    )
+
+//    val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
     Glide.with(imageView.context)
-        .load(imageUri)
+        .load(glideUrl)
         .apply(
             RequestOptions()
                 .placeholder(R.drawable.loading_animation)

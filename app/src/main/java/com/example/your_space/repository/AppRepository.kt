@@ -16,6 +16,10 @@ class AppRepository private constructor(private val database: AppDao) {
 
     private lateinit var session: String
 
+    fun getSession(): String{
+        return session
+    }
+
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
