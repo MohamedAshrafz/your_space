@@ -55,17 +55,6 @@ class MainActivity : AppCompatActivity() {
 //            Log.e("Main Activity", "cannot get the user")
 //        }
 
-        val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
-
-        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
-
-        if (userId != null) {
-            reGetTokenAndUser(userId)
-            Log.e("Main Activity", userId.toString())
-        } else {
-            Log.e("Main Activity", "cannot get the user")
-        }
-
         // getting the main layout components
         navController = findNavController(R.id.nav_host_fragment_content_main)
         val bindingDrawerLayout = binding.drawerLayout
@@ -125,6 +114,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val sp = getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
+
+        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
+
+        if (userId != null) {
+            reGetTokenAndUser(userId)
+            Log.e("Main Activity", userId.toString())
+        } else {
+            Log.e("Main Activity", "cannot get the user")
+        }
     }
 
     fun reGetTokenAndUser(userId: String) {
@@ -193,8 +196,6 @@ class MainActivity : AppCompatActivity() {
         editor.putString(AuthenticationActivity.USER_ID, null)
         editor.apply()
 
-        finish()
-
         // launch the sign-in activity
         val authenticationActivityIntent =
             Intent(
@@ -202,6 +203,8 @@ class MainActivity : AppCompatActivity() {
                 AuthenticationActivity::class.java
             )
         startActivity(authenticationActivityIntent)
+
+        this.finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

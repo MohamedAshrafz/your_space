@@ -76,7 +76,7 @@ class AuthenticationActivity : AppCompatActivity() {
 //                    USER_DATA, signUpViewModel.currentUser.value
 //                )
         startActivity(startMainActivityIntent)
-        finish()
+        this.finish()
     }
 
     private fun launchSignupFlow() {
