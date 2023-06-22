@@ -60,8 +60,8 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-
             repository.loadWorkingSpacesOfPage(0, true)
+//            repository.refreshWorkingSpaces()
         }
     }
 
@@ -92,6 +92,12 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
             _isSwipeRefreshing.value = false
         }
     }
+
+//    fun refreshOnSwipeNoPagination() {
+//        viewModelScope.launch {
+//            repository.refreshWorkingSpaces()
+//        }
+//    }
 
     fun isEmptySpace(spaceItem: WorkingSpaceDB): Boolean {
         if (spaceItem.name.isEmpty() ||

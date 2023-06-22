@@ -70,6 +70,7 @@ class SecondFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             spaceAppViewModel.refreshOnSwipe()
+//            spaceAppViewModel.refreshOnSwipeNoPagination()
         }
 
         spaceAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
