@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.your_space.R
 import com.example.your_space.repository.AppRepository
 
 class HomeViewModel(app: Application) : AndroidViewModel(app) {
@@ -20,9 +21,9 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun fillHomeList() {
         _homeList.value?.apply {
-            add(HomeItem("go to our spaces", "@drawable/coworking"))
-            add(HomeItem("Check your bookings", "@drawable/coworking"))
-            add(HomeItem("Found the nearest Co-working spaces now", "@drawable/coworking"))
+            add(HomeItem("New you can check our available spaced", R.drawable.card1))
+            add(HomeItem("Check your bookings", R.drawable.card2))
+//            add(HomeItem("Found the nearest Co-working spaces now", "@drawable/coworking"))
         }
     }
 }

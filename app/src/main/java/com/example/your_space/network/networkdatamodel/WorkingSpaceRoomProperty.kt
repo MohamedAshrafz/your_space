@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class WorkingSpaceRoomProperty (
+data class WorkingSpaceRoomProperty(
     @Json(name = "id")
     val roomId: Int,
     @Json(name = "number")
@@ -25,7 +25,7 @@ data class WorkingSpaceRoomProperty (
     @Json(name = "spaceId")
     val space: String,
 
-        ) :Parcelable
+    ) : Parcelable
 
 
 fun List<WorkingSpaceRoomProperty>.roomPropertyModelToDatabaseModel(): Array<SpaceRoomDB> {

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:text="@{spaceItem.name}"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +30,8 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="16dp"
@@ -44,10 +44,10 @@
 
         <ImageView
             android:id="@+id/imageView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_location_on_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -57,68 +57,44 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{spaceItem.address}"
+            android:text="@{spaceItem.locationFunction()}"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView15"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView15"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Address"
-            android:textSize="@dimen/spaceDetails"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAdressSpaceDetails" />
+            app:layout_constraintTop_toTopOf="@+id/imageView15" />
 
         <ImageView
             android:id="@+id/imageView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_local_phone_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAdressSpaceDetails" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
         <TextView
             android:id="@+id/tvMobileSpaceDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:text="@{spaceItem.contactNumber}"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView16"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:text="Mobile"
-            android:textSize="@dimen/spaceDetails"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMobileSpaceDetails" />
+            app:layout_constraintTop_toTopOf="@+id/imageView16" />
 
         <ImageView
             android:id="@+id/imageView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_star_rate_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvMobileSpaceDetails" />
@@ -128,20 +104,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:text="@{String.valueOf(spaceItem.rating)}"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView17"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+            app:layout_constraintTop_toTopOf="@+id/imageView17" />
 
         <ImageView
             android:id="@+id/imageView20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_wifi_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView17" />
@@ -151,20 +127,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="Offers free Wi-Fi"
+            android:text="@{spaceItem.freeWiFiFunction()}"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView20"
-            app:layout_constraintTop_toBottomOf="@+id/tvRatingSpaceDetails" />
+            app:layout_constraintTop_toTopOf="@+id/imageView20" />
 
         <ImageView
             android:id="@+id/imageView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_access_time_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView20" />
@@ -174,20 +150,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:text="Open now"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView22"
-            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            app:layout_constraintTop_toTopOf="@+id/imageView22" />
 
         <ImageView
             android:id="@+id/imageView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/ic_baseline_monetization_on_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView22" />
@@ -197,13 +173,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
-            android:text="@{String.valueOf(spaceItem.minPrice)}"
+            android:text="@{spaceItem.pricingFunction()}"
             android:textSize="@dimen/spaceDetails"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView24"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            app:layout_constraintTop_toTopOf="@+id/imageView24" />
 
 
         <Button

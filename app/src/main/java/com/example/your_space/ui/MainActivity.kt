@@ -149,11 +149,11 @@ class MainActivity : AppCompatActivity() {
                 ).show()
                 logoutFlow()
             } else {
-                Snackbar.make(
-                    view,
-                    getString(R.string.you_are_connected),
-                    Snackbar.LENGTH_LONG
-                ).show()
+//                Snackbar.make(
+//                    view,
+//                    getString(R.string.you_are_connected),
+//                    Snackbar.LENGTH_LONG
+//                ).show()
             }
         }
     }
