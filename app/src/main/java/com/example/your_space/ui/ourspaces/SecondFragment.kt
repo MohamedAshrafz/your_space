@@ -89,10 +89,6 @@ class SecondFragment : Fragment() {
             false
         }
 
-        spaceAppViewModel.spacesList.observe(viewLifecycleOwner){
-            binding.spaceItemsRecyclerView.scrollToPosition(0)
-        }
-
         binding.checkBox2.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 spaceAppViewModel._switchKey.value = 1
