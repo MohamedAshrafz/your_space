@@ -28,7 +28,8 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            roomIdForImage="@{Integer.toString(roomItem.roomId)}"/>
 
         <TextView
             android:id="@+id/tvTitle"
