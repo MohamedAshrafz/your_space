@@ -1,14 +1,17 @@
 package com.example.your_space.ui.booking
 
 import android.app.Application
+import android.content.Context.MODE_PRIVATE
 import android.widget.Toast
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.BookingDB
 import com.example.your_space.database.SpaceRoomDB
-import com.example.your_space.database.UserDB
-import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.repository.AppRepository
+import com.example.your_space.ui.authentication.AuthenticationActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -27,7 +30,9 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
 
     private var posted = MutableLiveData(true)
 
-    private var _userId = MutableLiveData("")
+    private val _userId = MutableLiveData("-1")
+    val userId: LiveData<String>
+        get() = _userId
 
     var minute = 0
     var hour = 0
@@ -43,7 +48,8 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     var savedCorrectMonth = 0
 
     private var _bookedHistoryList = repository.historyBookingsRepo
-//    MutableLiveData(
+
+    //    MutableLiveData(
 //        listOf(
 //            BookingDB(
 //                bookingId = "8",
@@ -93,16 +99,20 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         get() = _isSwipeRefreshing
 
     init {
-        fillHistoryList()
+//        fillHistoryList()
+
+
 
         viewModelScope.launch {
             //repository.deleteBooking()
+            val sp = app.getSharedPreferences(AuthenticationActivity.LOGIN_STATE, MODE_PRIVATE)
+            _userId.value = sp.getString(AuthenticationActivity.USER_ID, null)
 
-            repository.refreshBookings()
+            repository.refreshBookings(userId.value!!)
         }
     }
 
-    fun setUserId(userId : String) {
+    fun setUserId(userId: String) {
         _userId.value = userId
     }
 
@@ -138,7 +148,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     fun refreshOnSwipe() {
         viewModelScope.launch {
             _isSwipeRefreshing.value = true
-            repository.refreshBookings()
+            repository.refreshBookings(_userId.value!!)
             _isSwipeRefreshing.value = false
         }
     }
@@ -154,11 +164,15 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun addNewBookWithPoints(bookItem: BookingDB,roomItem: SpaceRoomDB,duration : String) : Boolean {
+    fun addNewBookWithPoints(
+        bookItem: BookingDB,
+        roomItem: SpaceRoomDB,
+        duration: String
+    ): Boolean {
         var flag = false
         viewModelScope.launch {
             val user = _userId.value?.let { repository.getUserWithId(it) }
-            if ((roomItem.price * duration.toInt()) < user!!.points ){
+            if ((roomItem.price * duration.toInt()) < user!!.points) {
                 val newBooking = getUserId()?.let {
                     BookingPropertyPost(
                         startTime = bookItem.startTime,
@@ -173,7 +187,11 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                 posted.value = newBooking?.let { repository.addNewBooking(it) }
 
                 if (posted.value == true) {
-                    Toast.makeText(getApplication(), "Booking Added Successfully", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        getApplication(),
+                        "Booking Added Successfully",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     flag = true
                 } else {
@@ -183,9 +201,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                 }
 
 
-            }
-
-            else {
+            } else {
                 Toast.makeText(getApplication(), "You Don't Have Enough Points", Toast.LENGTH_SHORT)
                     .show()
                 flag = false
@@ -193,8 +209,6 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         }
         return flag
     }
-
-
 
 
     fun addNewBook(bookItem: BookingDB) {

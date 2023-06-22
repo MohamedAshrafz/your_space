@@ -149,11 +149,11 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
-    suspend fun refreshBookings() {
+    suspend fun refreshBookings(userId: String) {
         try {
             withContext(Dispatchers.IO) {
-                val bookingsList = NetworkServices.getAllBookings(session)
-                val historyBookingsList = NetworkServices.getAllHistoryBookings(session)
+                val bookingsList = NetworkServices.getAllBookings(userId, session)
+                val historyBookingsList = NetworkServices.getAllHistoryBookings(userId, session)
                 database.deleteAllBookings()
                 database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
                 database.insertAllBookings(*(historyBookingsList.bookingPropertyModelToDatabaseModel()))
@@ -192,7 +192,7 @@ class AppRepository private constructor(private val database: AppDao) {
         val response = NetworkServices.addNewBooking(newBooking, session)
         return if (response.isSuccessful) {
             isPosted = true
-            refreshBookings()
+            refreshBookings(newBooking.userId)
             isPosted
         } else {
             isPosted = false

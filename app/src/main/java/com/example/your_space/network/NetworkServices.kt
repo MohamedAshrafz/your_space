@@ -60,11 +60,17 @@ interface YourAppApiInterface {
         @Header("Cookie") cookie: String
     ): List<SpaceItemProperty>
 
-    @GET("${API}bookings/upComingBookings/1")
-    suspend fun getAllBookings(@Header("Cookie") cookie: String): List<BookingProperty>
+    @GET("${API}bookings/upComingBookings/{spaceId}")
+    suspend fun getAllBookings(
+        @Path("spaceId") spaceId: String,
+        @Header("Cookie") cookie: String
+    ): List<BookingProperty>
 
-    @GET("${API}bookings/pastBookings/1")
-    suspend fun getAllHistoryBookings(@Header("Cookie") cookie: String): List<BookingProperty>
+    @GET("${API}bookings/pastBookings/{spaceId}")
+    suspend fun getAllHistoryBookings(
+        @Path("spaceId") spaceId: String,
+        @Header("Cookie") cookie: String
+    ): List<BookingProperty>
 
     @GET("${API}room/getBySpace/{spaceId}")
     suspend fun getRoomsBySpaceId(
