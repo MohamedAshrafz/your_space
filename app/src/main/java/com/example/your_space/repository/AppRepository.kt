@@ -14,10 +14,10 @@ const val REPOSITORY_ERROR_STRING = "Error in repository"
 
 class AppRepository private constructor(private val database: AppDao) {
 
-    private lateinit var session: String
+    var mySession: String? = null
 
-    fun getSession(): String {
-        return session
+    fun getSession(): String? {
+        return mySession
     }
 
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> =
@@ -69,11 +69,18 @@ class AppRepository private constructor(private val database: AppDao) {
         var isSucceeded = false
         try {
             withContext(Dispatchers.IO) {
-                val response = NetworkServices.updateUser(newUserData, session, userId)
+                val response = mySession?.let {
+                    NetworkServices.updateUser(
+                        newUserData,
+                        it, userId
+                    )
+                }
 
-                if (response.isSuccessful) {
-                    updateTokenForUserWithUserId(userId)
-                    isSucceeded = true
+                response?.let {
+                    if (response.isSuccessful) {
+                        updateTokenForUserWithUserId(userId)
+                        isSucceeded = true
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -91,8 +98,8 @@ class AppRepository private constructor(private val database: AppDao) {
                 if (response.isSuccessful) {
 
 //                    Log.e(REPOSITORY_ERROR_STRING, response.headers().toString())
-                    session = response.headers().get("Set-Cookie")!!.split(";")[0]
-                    Log.e(REPOSITORY_ERROR_STRING, session)
+                    mySession = response.headers().get("Set-Cookie")!!.split(";")[0]
+                    Log.e(REPOSITORY_ERROR_STRING, mySession!!)
 
                     response.body()?.let {
                         val responseUser = it.userPropertyModelToDatabaseModel()
@@ -145,11 +152,13 @@ class AppRepository private constructor(private val database: AppDao) {
         try {
             withContext(Dispatchers.IO) {
                 val workingSpacesList =
-                    NetworkServices.getWorkingSpacesUsingPaging(pageNumber, session)
+                    mySession?.let { NetworkServices.getWorkingSpacesUsingPaging(pageNumber, it) }
                 if (initialize) {
                     database.deleteAllWorkingSpaces()
                 }
-                database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
+                workingSpacesList?.let {
+                    database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
+                }
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -159,11 +168,16 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun refreshBookings(userId: String) {
         try {
             withContext(Dispatchers.IO) {
-                val bookingsList = NetworkServices.getAllBookings(userId, session)
-                val historyBookingsList = NetworkServices.getAllHistoryBookings(userId, session)
+                val bookingsList = mySession?.let { NetworkServices.getAllBookings(userId, it) }
+                val historyBookingsList =
+                    mySession?.let { NetworkServices.getAllHistoryBookings(userId, it) }
                 database.deleteAllBookings()
-                database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
-                database.insertAllBookings(*(historyBookingsList.bookingPropertyModelToDatabaseModel()))
+                bookingsList?.let {
+                    database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
+                }
+                historyBookingsList?.let {
+                    database.insertAllBookings(*(historyBookingsList.bookingPropertyModelToDatabaseModel()))
+                }
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -173,9 +187,11 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun getRoomsBySpaceIdFromNetwork(spaceId: String) {
         try {
             withContext(Dispatchers.IO) {
-                val roomsList = NetworkServices.getRoomsBySpaceId(spaceId, session)
+                val roomsList = mySession?.let { NetworkServices.getRoomsBySpaceId(spaceId, it) }
                 database.deleteAllRoomsWithSpaceId(spaceId)
-                database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
+                roomsList?.let {
+                    database.insertAllRooms(*(roomsList.roomPropertyModelToDatabaseModel()))
+                }
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
@@ -195,17 +211,18 @@ class AppRepository private constructor(private val database: AppDao) {
     }
 
     suspend fun addNewBooking(newBooking: BookingPropertyPost): Boolean {
-        val isPosted: Boolean
-        val response = NetworkServices.addNewBooking(newBooking, session)
-        return if (response.isSuccessful) {
-            isPosted = true
-            refreshBookings(newBooking.userId)
-            isPosted
-        } else {
-            isPosted = false
-            Log.e("RETROFIT_ERROR", response.code().toString())
-            isPosted
+        var isPosted: Boolean = false
+        val response = mySession?.let { NetworkServices.addNewBooking(newBooking, it) }
+
+        if (response != null) {
+            if (response.isSuccessful) {
+                isPosted = true
+                refreshBookings(newBooking.userId)
+            } else {
+                Log.e("RETROFIT_ERROR", response.code().toString())
+            }
         }
+        return isPosted
     }
 
     suspend fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB {
@@ -224,12 +241,16 @@ class AppRepository private constructor(private val database: AppDao) {
         try {
             withContext(Dispatchers.IO) {
                 // Do the DELETE request and get response
-                val response = NetworkServices.cancelBooking(bookItem.bookingId.toInt(), session)
-                if (response.isSuccessful) {
-                    database.deleteBooking(bookItem.bookingId)
+                val response =
+                    mySession?.let { NetworkServices.cancelBooking(bookItem.bookingId.toInt(), it) }
 
-                } else {
-                    Log.e("RETROFIT_ERROR", response.code().toString())
+                response?.let {
+                    if (response.isSuccessful) {
+                        database.deleteBooking(bookItem.bookingId)
+
+                    } else {
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -254,11 +275,13 @@ class AppRepository private constructor(private val database: AppDao) {
         var isSucceeded = false
         try {
             withContext(Dispatchers.IO) {
-                val response = NetworkServices.postMessage(userId, message, session)
-                if (response.isSuccessful) {
-                    isSucceeded = true
-                } else {
-                    Log.e("RETROFIT_ERROR", response.code().toString())
+                val response = mySession?.let { NetworkServices.postMessage(userId, message, it) }
+                response?.let {
+                    if (response.isSuccessful) {
+                        isSucceeded = true
+                    } else {
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+                    }
                 }
             }
         } catch (e: Exception) {

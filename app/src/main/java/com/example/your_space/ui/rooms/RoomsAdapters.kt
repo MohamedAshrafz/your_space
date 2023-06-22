@@ -1,6 +1,7 @@
 package com.example.your_space.ui.rooms
 
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
@@ -28,18 +29,30 @@ fun bindImage(imageView: ImageView, roomId: String?, index: String?) {
 
     val repository = AppRepository.getInstance(imageView.context)
 
-    val glideUrl = GlideUrl(
-        imageUrl,
-        LazyHeaders.Builder().addHeader("Cookie", repository.getSession()).build()
-    )
-
-//    val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
-    Glide.with(imageView.context)
-        .load(glideUrl)
-        .apply(
-            RequestOptions()
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)
+    if (repository.getSession() != null){
+        val glideUrl = GlideUrl(
+            imageUrl,
+            LazyHeaders.Builder().addHeader("Cookie", repository.getSession()).build()
         )
-        .into(imageView)
+
+        Glide.with(imageView.context)
+            .load(glideUrl)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imageView)
+    } else {
+        val imageUri = imageUrl.toUri().buildUpon().scheme("http").build()
+
+        Glide.with(imageView.context)
+            .load(imageUri)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image)
+            )
+            .into(imageView)
+    }
 }
