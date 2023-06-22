@@ -53,7 +53,7 @@ class SignInFragment : Fragment() {
         signInViewModel.showSignedUpToast.observe(viewLifecycleOwner) { toastText ->
             if (!toastText.isNullOrEmpty()) {
                 if (toastText == getString(R.string.you_have_successfully_logged_in)) {
-                    Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), toastText, Toast.LENGTH_SHORT).show()
                 } else {
                     Snackbar.make(binding.root, toastText, Snackbar.LENGTH_SHORT).show()
                 }

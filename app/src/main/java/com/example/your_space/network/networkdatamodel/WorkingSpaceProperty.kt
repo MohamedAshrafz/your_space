@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class SpaceItemProperty(
     @Json(name = "spaceId")
-    val spaceId: Int,
+    val spaceId: String,
     @Json(name = "address")
     val address: String = "",
     @Json(name = "district")
@@ -46,13 +46,16 @@ data class SpaceItemProperty(
 fun List<SpaceItemProperty>.workingSpacesPropertyModelToDatabaseModel(): Array<WorkingSpaceDB> {
     return map {
         WorkingSpaceDB(
-            spaceId = it.spaceId.toString(),
+            spaceId = it.spaceId,
             name = it.name,
             address = it.address,
             contactNumber = it.contactNumber,
-            rating = it.ratingAverage,
-            minPrice = it.minPrice.toDouble(),
+            rating = it.ratingAverage.toString(),
+            minPrice = it.minPrice,
+            maxPrice = it.maxPrice,
             description = it.description,
+            district = it.district,
+            drinks = it.drinks
         )
     }.toTypedArray()
 }

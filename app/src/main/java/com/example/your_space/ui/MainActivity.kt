@@ -130,13 +130,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun reGetTokenAndUser(userId: String) {
+    private fun reGetTokenAndUser(userId: String) {
         val repository = AppRepository.getInstance(applicationContext)
         lifecycleScope.launch {
             val user = repository.updateTokenForUserWithUserId(userId)
+            val view = window.decorView
             if (user == null) {
                 Snackbar.make(
-                    binding.root,
+                    view,
                     getString(R.string.connection_error),
                     Snackbar.LENGTH_LONG
                 ).show()
@@ -147,6 +148,12 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 logoutFlow()
+            } else {
+//                Snackbar.make(
+//                    view,
+//                    getString(R.string.you_are_connected),
+//                    Snackbar.LENGTH_LONG
+//                ).show()
             }
         }
     }

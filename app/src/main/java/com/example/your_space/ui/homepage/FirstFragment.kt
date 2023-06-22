@@ -92,6 +92,7 @@ class FirstFragment : Fragment() {
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 
                 homeItemBinding.homeItem = item
+                homeItemBinding.itemImg.setImageDrawable(requireContext().getDrawable(item.img))
 
                 // has to but a function not a reference to a function
                 homeItemBinding.itemLayout.setOnClickListener { listCL[list.indexOf(item)].getListener() }

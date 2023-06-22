@@ -10,8 +10,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
-const val PAGE_SIZE = 4
+const val PAGE_SIZE = 50
 const val IMAGE_VS_SPACEID_ENDPOINT = "api/images/space/"
+const val IMAGE_VS_ROOMID_ENDPOINT = "api/images/room/"
+const val IMAGE_VS_USERID_ENDPOINT = "api/images/user/"
 const val API = "api/"
 const val LOGIN = "login"
 

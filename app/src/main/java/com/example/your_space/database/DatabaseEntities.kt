@@ -46,32 +46,52 @@ data class SpaceRoomDB(
     val activity: String,
     val type: String,
     val price: Float,
-    val image: String ="",
-    val spaceId: String
-) : Parcelable
+    val image: String = "",
+    val spaceId: String,
+) : Parcelable {
+    fun typeFunction(): String {
+        return "Type: $type"
+    }
+
+    fun priceFunction(): String {
+        return "Price: $price"
+    }
+}
 
 @Entity(tableName = "workingSpaces_table")
 @Parcelize
 data class WorkingSpaceDB(
     @PrimaryKey
-    val spaceId: String = UUID.randomUUID().toString(),
+    val spaceId: String,
     val address: String,
-    val district: String = "",
-    val rating: Double,
+    val district: String,
+    val rating: String,
     val images: String = "",
     val roomNumbers: Int = 0,
     val description: String,
     val name: String,
     val contactNumber: String,
     val minPrice: Double,
-    val maxPrice: Double = 100.0,
-    val drinks: Boolean = false,
+    val maxPrice: Double,
+    val drinks: Boolean,
     val owner: String = "",
     val outdoors: Boolean = false,
 
     val time: Time = Time(50L),
     val date: Date = Date(50L)
-) : Parcelable
+) : Parcelable {
+    fun locationFunction(): String {
+        return "$address $district"
+    }
+
+    fun pricingFunction(): String {
+        return "$minPrice - $maxPrice"
+    }
+
+    fun freeWiFiFunction(): String {
+        return if (drinks) "Offers free Wi-Fi" else "No offer free Wi-Fi"
+    }
+}
 
 @Entity(tableName = "booking_table")
 @Parcelize
