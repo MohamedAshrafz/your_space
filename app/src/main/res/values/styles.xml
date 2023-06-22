@@ -33,4 +33,22 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textSize">@dimen/profile_font_size</item>
     </style>
+
+    <style name="leftField_profile">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">@dimen/profile_font_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rightField_profile">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:textSize">@dimen/profile_font_size</item>
+    </style>
 </resources>
