@@ -10,10 +10,13 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.database.BookingDB
 import com.example.your_space.databinding.FragmentAddNewBookingFromWSBinding
+import com.example.your_space.ui.authentication.AuthenticationActivity
 //import com.example.your_space.ui.booking.BookItem
 import com.example.your_space.ui.booking.BookingViewModel
 import com.example.your_space.ui.booking.addnewbook.AddNewBookFragmentDirections
@@ -40,6 +43,16 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
 
         // provide argument to the function
         val roomItem = AddNewBookingFromWSArgs.fromBundle(requireArguments()).selectedRoom
+
+
+        val sp = requireActivity().getSharedPreferences(
+            AuthenticationActivity.LOGIN_STATE,
+            AppCompatActivity.MODE_PRIVATE
+        )
+
+        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
+
+
 
         binding.bookNameEditText.text = roomItem.name
 
@@ -100,8 +113,23 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                     roomId = roomItem.roomId.toString(),
                     spaceId = roomItem.spaceId
                 )
-                addNewBookAppViewModel.addNewBookWithPoints(newBook)
-                findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
+                if(addNewBookAppViewModel.savedYear < addNewBookAppViewModel.year ||
+                    ((addNewBookAppViewModel.savedYear == addNewBookAppViewModel.year)&&
+                            addNewBookAppViewModel.savedMonth < addNewBookAppViewModel.month) ||
+                    ((addNewBookAppViewModel.savedYear == addNewBookAppViewModel.year)&&
+                            (addNewBookAppViewModel.savedMonth == addNewBookAppViewModel.month+1) &&
+                            (addNewBookAppViewModel.savedDay < addNewBookAppViewModel.day)) ){
+                    Toast.makeText(context, "Plaese Put Valid Date", Toast.LENGTH_SHORT).show()
+                }
+                else{
+
+                    val navFlag = addNewBookAppViewModel.addNewBookWithPoints(newBook,roomItem)
+                    if(navFlag == true){
+                        findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
+                    }
+
+                }
+
 
             }
 
@@ -124,9 +152,26 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                     roomId = roomItem.roomId.toString(),
                     spaceId = roomItem.spaceId
                 )
-                addNewBookAppViewModel.addNewBook(newBook)
-                findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
+                if(addNewBookAppViewModel.savedYear < addNewBookAppViewModel.year ||
+                    ((addNewBookAppViewModel.savedYear == addNewBookAppViewModel.year)&&
+                            addNewBookAppViewModel.savedMonth < addNewBookAppViewModel.month) ||
+                    ((addNewBookAppViewModel.savedYear == addNewBookAppViewModel.year)&&
+                            (addNewBookAppViewModel.savedCorrectMonth == addNewBookAppViewModel.month) &&
+                            (addNewBookAppViewModel.savedDay < addNewBookAppViewModel.day)) ){
 
+                    Toast.makeText(context, "Plaese Put Valid Date", Toast.LENGTH_SHORT).show()
+                }
+
+                else if(((addNewBookAppViewModel.savedYear == addNewBookAppViewModel.year)&&
+                            (addNewBookAppViewModel.savedCorrectMonth == addNewBookAppViewModel.month) &&
+                            (addNewBookAppViewModel.savedDay == addNewBookAppViewModel.day) &&
+                            (addNewBookAppViewModel.savedHour < addNewBookAppViewModel.hour))){
+                    Toast.makeText(context, "Plaese Put Valid Time", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    addNewBookAppViewModel.addNewBook(newBook)
+                    findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
+                }
             }
 
         }

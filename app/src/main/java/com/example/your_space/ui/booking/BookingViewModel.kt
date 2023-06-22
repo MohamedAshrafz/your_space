@@ -4,6 +4,8 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.your_space.database.BookingDB
+import com.example.your_space.database.SpaceRoomDB
+import com.example.your_space.database.UserDB
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.networkdatamodel.BookingPropertyPost
 import com.example.your_space.repository.AppRepository
@@ -151,11 +153,12 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
         return false
     }
 
-    fun addNewBookWithPoints(bookItem: BookingDB) {
-        viewModelScope.launch {
 
+    fun addNewBookWithPoints(bookItem: BookingDB,roomItem: SpaceRoomDB) : Boolean {
+        var flag = false
+        viewModelScope.launch {
             val user = _userId.value?.let { repository.getUserWithId(it) }
-            if (user?.points != 0){
+            if (roomItem.price < user!!.points){
                 val newBooking = getUserId()?.let {
                     BookingPropertyPost(
                         startTime = bookItem.startTime,
@@ -168,19 +171,30 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 }
                 posted.value = newBooking?.let { repository.addNewBooking(it) }
+
                 if (posted.value == true) {
                     Toast.makeText(getApplication(), "Booking Added Successfully", Toast.LENGTH_SHORT)
                         .show()
-                } else Toast.makeText(getApplication(), "Please Put Valid Data", Toast.LENGTH_SHORT)
-                    .show()
+                    flag = true
+                } else {
+                    Toast.makeText(getApplication(), "Please Put Valid Data", Toast.LENGTH_SHORT)
+                        .show()
+                    flag = false
+                }
+
+
             }
 
             else {
                 Toast.makeText(getApplication(), "You Don't Have Enough Points", Toast.LENGTH_SHORT)
                     .show()
+                flag = false
             }
         }
+        return flag
     }
+
+
 
 
     fun addNewBook(bookItem: BookingDB) {
