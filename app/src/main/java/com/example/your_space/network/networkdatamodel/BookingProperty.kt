@@ -23,7 +23,19 @@ data class BookingProperty(
     @Json(name = "date")
     val date: String = "",
     @Json(name = "roomId")
-    val roomId: String
+    val roomId: String,
+    @Json(name = "userId")
+    val userId: String,
+    @Json(name = "spaceName")
+    val spaceName: String,
+    @Json(name = "qrScan")
+    val qrScan: Boolean,
+    @Json(name = "paymentMethod")
+    val paymentMethod: String,
+    @Json(name = "price")
+    val price: Double,
+    @Json(name = "bookingStatus")
+    val bookingStatus: String
 ) : Parcelable
 
 @JsonClass(generateAdapter = true)
@@ -40,7 +52,9 @@ data class BookingPropertyPost(
     @Json(name = "userId")
     val userId: String,
     @Json(name = "spaceName")
-    val spaceName: String
+    val spaceName: String,
+    @Json(name = "paymentMethod")
+    val paymentMethod: String = "lol"
 ) : Parcelable
 
 fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB> {
@@ -58,7 +72,8 @@ fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB
             startTime = it.startTime,
             endTime = it.endTime,
             roomId = it.roomId,
-            spaceId = ""
+            spaceId = "",
+            bookingStatus = it.bookingStatus
         )
     }.toTypedArray()
 }

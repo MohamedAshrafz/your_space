@@ -40,40 +40,41 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     var savedYear = 0
     var savedCorrectMonth = 0
 
-    private var _bookedHistoryList = MutableLiveData(
-        listOf(
-            BookingDB(
-                bookingId = "8",
-                date = "2023-4-28",
-                startTime = "02:30",
-                endTime = "04:30"
-            ),
-            BookingDB(
-                bookingId = "9",
-                date = "2023-4-28",
-                startTime = "02:30",
-                endTime = "04:30"
-            ),
-            BookingDB(
-                bookingId = "10",
-                date = "2023-4-28",
-                startTime = "02:30",
-                endTime = "04:30"
-            ),
-            BookingDB(
-                bookingId = "11",
-                date = "2023-4-28",
-                startTime = "02:30",
-                endTime = "04:30"
-            ),
-            BookingDB(
-                bookingId = "12",
-                date = "2023-4-28",
-                startTime = "02:30",
-                endTime = "04:30"
-            )
-        )
-    )
+    private var _bookedHistoryList = repository.historyBookingsRepo
+//    MutableLiveData(
+//        listOf(
+//            BookingDB(
+//                bookingId = "8",
+//                date = "2023-4-28",
+//                startTime = "02:30",
+//                endTime = "04:30"
+//            ),
+//            BookingDB(
+//                bookingId = "9",
+//                date = "2023-4-28",
+//                startTime = "02:30",
+//                endTime = "04:30"
+//            ),
+//            BookingDB(
+//                bookingId = "10",
+//                date = "2023-4-28",
+//                startTime = "02:30",
+//                endTime = "04:30"
+//            ),
+//            BookingDB(
+//                bookingId = "11",
+//                date = "2023-4-28",
+//                startTime = "02:30",
+//                endTime = "04:30"
+//            ),
+//            BookingDB(
+//                bookingId = "12",
+//                date = "2023-4-28",
+//                startTime = "02:30",
+//                endTime = "04:30"
+//            )
+//        )
+//    )
     val bookedHistoryList: LiveData<List<BookingDB>>
         get() = _bookedHistoryList
 
@@ -117,7 +118,7 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun onDeleteBookedItem(bookItem: BookingDB) {
-        _bookedHistoryList.postValue(_bookedHistoryList.value?.filter { it.bookingId != bookItem.bookingId })
+//        _bookedHistoryList.postValue(_bookedHistoryList.value?.filter { it.bookingId != bookItem.bookingId })
         _showDelete.value = true
     }
 
@@ -162,7 +163,8 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                         date = bookItem.date,
                         roomId = bookItem.roomId,
                         userId = it,
-                        spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
+                        spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name,
+                        paymentMethod = "Points"
                     )
                 }
                 posted.value = newBooking?.let { repository.addNewBooking(it) }
@@ -191,7 +193,8 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
                     date = bookItem.date,
                     roomId = bookItem.roomId,
                     userId = it,
-                    spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name
+                    spaceName = repository.getSpaceWithSpaceId(bookItem.spaceId).name,
+                    paymentMethod = "Cash"
                 )
             }
             posted.value = newBooking?.let { repository.addNewBooking(it) }

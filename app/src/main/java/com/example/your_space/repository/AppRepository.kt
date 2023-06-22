@@ -22,7 +22,9 @@ class AppRepository private constructor(private val database: AppDao) {
 
     val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
 
-    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
+    val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("upcoming")
+
+    val historyBookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("past")
 
 //    val roomsRepo: LiveData<List<SpaceRoomDB>> = database.getAllRooms()
 
@@ -150,9 +152,11 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun refreshBookings() {
         try {
             withContext(Dispatchers.IO) {
-                val bookingsList = NetworkServices.getAllBookings()
+                val bookingsList = NetworkServices.getAllBookings(session)
+                val historyBookingsList = NetworkServices.getAllHistoryBookings(session)
                 database.deleteAllBookings()
                 database.insertAllBookings(*(bookingsList.bookingPropertyModelToDatabaseModel()))
+                database.insertAllBookings(*(historyBookingsList.bookingPropertyModelToDatabaseModel()))
             }
         } catch (e: Exception) {
             Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
