@@ -20,7 +20,14 @@ class AppRepository private constructor(private val database: AppDao) {
         return session
     }
 
-    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> = database.gelAllWorkingSpaces()
+    val workingSpacesRepo: LiveData<List<WorkingSpaceDB>> =
+        database.getAllWorkingSpaces()
+
+    val workingSpacesRepoOrderByRatings: LiveData<List<WorkingSpaceDB>> =
+        database.getAllWorkingSpacesOrderByRatings()
+
+    fun workingSpacesRepoSearchBy(distract: String): LiveData<List<WorkingSpaceDB>> =
+        database.getAllWorkingSpacesSearchBy(distract)
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings()
 

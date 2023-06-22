@@ -53,6 +53,7 @@ fun List<SpaceItemProperty>.workingSpacesPropertyModelToDatabaseModel(): Array<W
             rating = it.ratingAverage,
             minPrice = it.minPrice.toDouble(),
             description = it.description,
+            district = it.district
         )
     }.toTypedArray()
 }

@@ -1,6 +1,7 @@
 package com.example.your_space.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -23,7 +24,13 @@ interface AppDao {
     fun insertAllWorkingSpaces(vararg spaces: WorkingSpaceDB)
 
     @Query("SELECT * FROM workingSpaces_table ORDER BY spaceId")
-    fun gelAllWorkingSpaces(): LiveData<List<WorkingSpaceDB>>
+    fun getAllWorkingSpaces(): LiveData<List<WorkingSpaceDB>>
+
+    @Query("SELECT * FROM workingSpaces_table ORDER BY rating")
+    fun getAllWorkingSpacesOrderByRatings(): LiveData<List<WorkingSpaceDB>>
+
+    @Query("SELECT * FROM workingSpaces_table WHERE district Like :district")
+    fun getAllWorkingSpacesSearchBy(district: String): LiveData<List<WorkingSpaceDB>>
 
     @Query("SELECT * FROM workingSpaces_table WHERE spaceId == :spaceId")
     fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB

@@ -2,10 +2,7 @@ package com.example.your_space.ui.ourspaces
 
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.PAGE_SIZE
 import com.example.your_space.repository.AppRepository
@@ -15,7 +12,29 @@ class OurSpacesViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    private var _spacesList = repository.workingSpacesRepo
+    var _switchKey = MutableLiveData(0)
+    val switchKey: LiveData<Int>
+        get() = _switchKey
+
+    var _searchText = MutableLiveData("")
+    val searchText: LiveData<String>
+        get() = _searchText
+
+    private var _spacesList = switchKey.switchMap { switchKey ->
+        var returnedRV = repository.workingSpacesRepo
+        when (switchKey) {
+            0 -> {
+                returnedRV = repository.workingSpacesRepo
+            }
+            1 -> {
+                returnedRV = repository.workingSpacesRepoOrderByRatings
+            }
+            2 -> {
+                returnedRV = repository.workingSpacesRepoSearchBy(searchText.value!!)
+            }
+        }
+        returnedRV
+    }
     val spacesList: LiveData<List<WorkingSpaceDB>>
         get() = _spacesList
 

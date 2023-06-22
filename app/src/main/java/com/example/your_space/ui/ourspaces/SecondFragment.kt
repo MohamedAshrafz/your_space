@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -71,15 +72,53 @@ class SecondFragment : Fragment() {
             spaceAppViewModel.refreshOnSwipe()
         }
 
-        spaceAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner){ isRefreshing ->
+        spaceAppViewModel.isSwipeRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
             binding.swipeRefreshLayout.isRefreshing = isRefreshing
-            if (!isRefreshing){
+            if (!isRefreshing) {
                 adaptor.notifyDataSetChanged()
 //                binding.spaceItemsRecyclerView.scrollToPosition(0)
             }
         }
 
+        binding.searchView.setOnQueryTextListener(MySearchQueryListener(spaceAppViewModel))
+        binding.searchView.setOnSearchClickListener {
+            binding.checkBox2.visibility = View.GONE
+        }
+        binding.searchView.setOnCloseListener {
+            binding.checkBox2.visibility = View.VISIBLE
+            false
+        }
+
+        spaceAppViewModel.spacesList.observe(viewLifecycleOwner){
+            binding.spaceItemsRecyclerView.scrollToPosition(0)
+        }
+
+        binding.checkBox2.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                spaceAppViewModel._switchKey.value = 1
+            } else {
+                spaceAppViewModel._switchKey.value = 0
+            }
+        }
+
         return binding.root
+    }
+
+    class MySearchQueryListener(
+        private val spacesViewModel: OurSpacesViewModel,
+    ) : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            spacesViewModel._searchText.value = "%$query%"
+            spacesViewModel._switchKey.value = 2
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            spacesViewModel._searchText.value = "%$newText%"
+            spacesViewModel._switchKey.value = 2
+            return true
+        }
+
     }
 
     class EndlessScrollListener(
