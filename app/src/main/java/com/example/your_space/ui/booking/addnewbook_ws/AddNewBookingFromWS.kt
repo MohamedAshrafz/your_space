@@ -122,8 +122,8 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                     Toast.makeText(context, "Plaese Put Valid Date", Toast.LENGTH_SHORT).show()
                 }
                 else{
-
-                    val navFlag = addNewBookAppViewModel.addNewBookWithPoints(newBook,roomItem)
+                    val duration = _binding.durationEditText3.text.toString()
+                    val navFlag = addNewBookAppViewModel.addNewBookWithPoints(newBook,roomItem,duration)
                     if(navFlag == true){
                         findNavController().navigate(AddNewBookingFromWSDirections.actionAddNewBookingFromWSToBookingFragment())
                     }

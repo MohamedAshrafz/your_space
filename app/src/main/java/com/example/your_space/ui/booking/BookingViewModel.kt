@@ -154,11 +154,11 @@ class BookingViewModel(app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun addNewBookWithPoints(bookItem: BookingDB,roomItem: SpaceRoomDB) : Boolean {
+    fun addNewBookWithPoints(bookItem: BookingDB,roomItem: SpaceRoomDB,duration : String) : Boolean {
         var flag = false
         viewModelScope.launch {
             val user = _userId.value?.let { repository.getUserWithId(it) }
-            if (roomItem.price < user!!.points){
+            if ((roomItem.price * duration.toInt()) < user!!.points ){
                 val newBooking = getUserId()?.let {
                     BookingPropertyPost(
                         startTime = bookItem.startTime,
