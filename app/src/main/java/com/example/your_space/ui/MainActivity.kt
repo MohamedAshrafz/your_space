@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             val user = repository.updateTokenForUserWithUserId(userId)
             if (user == null) {
                 Snackbar.make(
-                    binding.root,
+                    binding.root.findViewById(R.id.homeFragment),
                     getString(R.string.connection_error),
                     Snackbar.LENGTH_LONG
                 ).show()
@@ -147,6 +147,12 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 logoutFlow()
+            } else {
+                Snackbar.make(
+                    binding.root.findViewById(R.id.homeFragment),
+                    getString(R.string.you_are_connected),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
     }

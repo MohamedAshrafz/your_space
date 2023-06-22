@@ -77,6 +77,7 @@
     <string name="save">Save</string>
     <string name="bio">Bio</string>
     <string name="connection_error">There is a problem with the server or internet connection</string>
+    <string name="you_are_connected">You are connected</string>
     <string name="wrong_username_or_password">Wrong username or password</string>
     <string name="there_was_a_problem_in_logging_you_in">"There was a problem in logging you in"</string>
     <string name="you_have_successfully_logged_in">You have successfully logged in</string>
