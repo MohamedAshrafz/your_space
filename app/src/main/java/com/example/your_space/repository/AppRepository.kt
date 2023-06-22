@@ -26,8 +26,8 @@ class AppRepository private constructor(private val database: AppDao) {
     val workingSpacesRepoOrderByRatings: LiveData<List<WorkingSpaceDB>> =
         database.getAllWorkingSpacesOrderByRatings()
 
-    fun workingSpacesRepoSearchBy(distract: String): LiveData<List<WorkingSpaceDB>> =
-        database.getAllWorkingSpacesSearchBy(distract)
+    fun workingSpacesRepoSearchBy(searchQuery: String): LiveData<List<WorkingSpaceDB>> =
+        database.getAllWorkingSpacesSearchBy(searchQuery)
 
     val bookingsRepo: LiveData<List<BookingDB>> = database.gelAllBookings("upcoming")
 

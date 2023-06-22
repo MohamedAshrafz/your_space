@@ -29,8 +29,8 @@ interface AppDao {
     @Query("SELECT * FROM workingSpaces_table ORDER BY rating DESC")
     fun getAllWorkingSpacesOrderByRatings(): LiveData<List<WorkingSpaceDB>>
 
-    @Query("SELECT * FROM workingSpaces_table WHERE district Like :district")
-    fun getAllWorkingSpacesSearchBy(district: String): LiveData<List<WorkingSpaceDB>>
+    @Query("SELECT * FROM workingSpaces_table WHERE district Like :searchQuery OR address Like :searchQuery")
+    fun getAllWorkingSpacesSearchBy(searchQuery: String): LiveData<List<WorkingSpaceDB>>
 
     @Query("SELECT * FROM workingSpaces_table WHERE spaceId == :spaceId")
     fun getSpaceWithSpaceId(spaceId: String): WorkingSpaceDB
