@@ -82,7 +82,7 @@ class EditProfileViewModel(val app: Application, val userId: String) : AndroidVi
         viewModelScope.launch {
             isSucceeded = repository.updateUserData(newUserData, userId)
             if (isSucceeded) {
-                _snackbarText.value = app.getString(R.string.Fields_was_updated_correctly)
+                _snackbarText.value = app.getString(R.string.Fields_updated_correctly)
                 _navigateBack.value = true
             } else {
                 _snackbarText.value = app.getString(R.string.sorry_we_could_not_update_your_data)

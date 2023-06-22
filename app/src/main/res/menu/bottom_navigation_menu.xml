@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_baseline_calendar_today_48"
         android:title="@string/bookings"/>
     <item
-        android:id="@+id/messagesFragment"
+        android:id="@id/messagesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_message_48"
         android:title="@string/message_us"/>
