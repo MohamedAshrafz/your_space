@@ -30,6 +30,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#534A4A</item>
+        <item name="colorControlActivated">#FFEB3B</item>
+    </style>
+
     <style name="Theme.Your_space.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Your_space.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

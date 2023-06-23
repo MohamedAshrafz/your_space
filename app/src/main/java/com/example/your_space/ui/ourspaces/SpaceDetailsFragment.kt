@@ -2,14 +2,13 @@ package com.example.your_space.ui.ourspaces
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.your_space.database.SpaceRoomDB
 import com.example.your_space.databinding.FragmentSpaceDetailsBinding
-
+import com.example.your_space.repository.AppRepository
 
 
 class SpaceDetailsFragment : Fragment() {
@@ -35,6 +34,13 @@ class SpaceDetailsFragment : Fragment() {
         binding.mapBtn.setOnClickListener {
             findNavController().navigate(
                 SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToMapsFragment2(spaceId)
+            )
+        }
+
+
+        binding.ratingsBtn.setOnClickListener {
+            findNavController().navigate(
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToRatingsFragment(spaceId)
             )
         }
 

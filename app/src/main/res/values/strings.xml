@@ -91,4 +91,6 @@
     <string name="go_to_rooms">Go To Rooms</string>
     <string name="show_ratings">Show ratings</string>
     <string name="show_location">Show location</string>
+    <string name="rating">Rating:</string>
+    <string name="comment">Comment:</string>
 </resources>

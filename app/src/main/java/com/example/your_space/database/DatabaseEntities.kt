@@ -125,6 +125,21 @@ data class BookingDB(
     }
 }
 
+@Entity(tableName = "ratings_table")
+@Parcelize
+data class RatingsDB(
+    @PrimaryKey
+    val ratingId: String,
+    val comment: String,
+    val rating: String,
+    val userId: String,
+    val spaceId: String
+) : Parcelable {
+    fun ratingToFloat(): Float{
+        return rating.toFloat()
+    }
+}
+
 //fun List<SpaceItem>.spaceToDatabaseModel(): Array<WorkingSpaceDB> {
 //    return map {
 //        WorkingSpaceDB(

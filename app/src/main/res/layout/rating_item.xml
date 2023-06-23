@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ratingsItem"
+            type="com.example.your_space.database.RatingsDB" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutBookItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/shape_padding"
+        android:background="@drawable/background_shape"
+        android:elevation="@dimen/items_elevation"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/time_static_text"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/date_static_text"
+            app:layout_constraintTop_toBottomOf="@+id/date_static_text" />
+
+        <TextView
+            android:id="@+id/date_static_text"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RatingBar
+            android:id="@+id/date_textView"
+            style="@style/book_text_style"
+            android:layout_width="230dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="10dp"
+            android:foregroundTint="@color/white"
+            android:rating="@{ratingsItem.ratingToFloat()}"
+            android:theme="@style/RatingBar"
+            app:layout_constraintBottom_toBottomOf="@+id/date_static_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/date_static_text"
+            app:layout_constraintTop_toTopOf="@+id/date_static_text" />
+
+        <TextView
+            android:id="@+id/time_textView"
+            style="@style/book_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{ratingsItem.comment}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/time_static_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/time_static_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -205,6 +205,26 @@ class AppRepository private constructor(private val database: AppDao) {
         }
     }
 
+    suspend fun getRatingsBySpaceIdFromNetwork(spaceId: String) {
+        try {
+            withContext(Dispatchers.IO) {
+                val ratingsList = mySession?.let { NetworkServices.getRatingsOfSpaceId(spaceId, it) }
+                database.deleteAllRatingsWithSpaceId(spaceId)
+                ratingsList?.let {
+                    database.insertAllRatings(*(ratingsList.ratingPropertyModelToDatabaseModel()))
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+        }
+    }
+
+    suspend fun getRatingsBySpaceIdFromDB(spaceId: String): LiveData<List<RatingsDB>> {
+        return withContext(Dispatchers.IO) {
+            database.getAllRatingsWithSpaceId(spaceId)
+        }
+    }
+
     suspend fun deleteAllWorkingSpaces() {
         withContext(Dispatchers.IO) {
             database.deleteAllWorkingSpaces()

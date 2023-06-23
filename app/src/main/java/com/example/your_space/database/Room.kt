@@ -6,7 +6,7 @@ import androidx.room.*
 
 @Database(
     entities = [UserDB::class, RequestDB::class, WorkingSpaceDB::class,
-        BookingDB::class, SpaceRoomDB::class],
+        BookingDB::class, SpaceRoomDB::class, RatingsDB::class],
     version = 1,
     exportSchema = false
 )

@@ -105,6 +105,12 @@ interface YourAppApiInterface {
         @Header("Cookie") cookie: String
     ): List<Double>
 
+    @GET("${API}ratings/space/{spaceId}")
+    suspend fun getRatingsOfSpaceId(
+        @Path("spaceId") id: String,
+        @Header("Cookie") cookie: String
+    ): List<RatingsProperty>
+
 }
 
 object Network {
