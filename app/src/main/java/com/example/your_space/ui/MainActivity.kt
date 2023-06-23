@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         if (userId != null) {
             reGetTokenAndUser(userId)
-            Log.e("Main Activity", userId.toString())
+            Log.i("SP UserId", userId.toString())
         } else {
             Log.e("Main Activity", "cannot get the user")
         }
@@ -134,26 +134,34 @@ class MainActivity : AppCompatActivity() {
         val repository = AppRepository.getInstance(applicationContext)
         lifecycleScope.launch {
             val user = repository.updateTokenForUserWithUserId(userId)
-            val view = window.decorView
-            if (user == null) {
-                Snackbar.make(
-                    view,
-                    getString(R.string.connection_error),
-                    Snackbar.LENGTH_LONG
-                ).show()
-            } else if (user.userId == "-1") {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.there_was_a_problem_in_logging_you_in),
-                    Toast.LENGTH_LONG
-                ).show()
-                logoutFlow()
-            } else {
-//                Snackbar.make(
-//                    view,
-//                    getString(R.string.you_are_connected),
-//                    Snackbar.LENGTH_LONG
-//                ).show()
+//            val view = window.decorView
+
+            try {
+                if (user == null) {
+                    Snackbar.make(
+                        binding.root.findViewById(R.id.nav_host_fragment_content_main),
+                        getString(R.string.connection_error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                } else if (user.userId == "-1") {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.there_was_a_problem_in_logging_you_in),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    logoutFlow()
+                } else {
+                    Snackbar.make(
+                        binding.root.findViewById(R.id.nav_host_fragment_content_main),
+                        getString(R.string.you_are_connected),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Log.e(
+                    "Error showing Snackbar",
+                    e.printStackTrace().toString()
+                )
             }
         }
     }

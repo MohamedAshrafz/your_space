@@ -1,15 +1,21 @@
 package com.example.your_space.ui.booking
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
+import com.example.your_space.R
 import com.example.your_space.databinding.FragmentCurrentBookingPageBinding
+import com.example.your_space.ui.homepage.FragmentEnumForIndexing
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
 class CurrentBookingPageFragment : Fragment() {
@@ -62,12 +68,30 @@ class CurrentBookingPageFragment : Fragment() {
                 }
             })
             binding.addBookFab.setOnClickListener {
-                findNavController().navigate(BookingFragmentDirections.actionBookingFragmentToSecondFragment())
-                Toast.makeText(requireContext(),"Choose Your Space Now", Toast.LENGTH_SHORT).show()
+                val menuItem =
+                    requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)?.menu?.get(
+                        FragmentEnumForIndexing.OUR_SPACES.index
+                    )
+                if (menuItem != null) {
+                    NavigationUI.onNavDestinationSelected(menuItem, findNavController())
+                }
+
+                try {
+                    Snackbar.make(
+                        requireActivity().findViewById(R.id.nav_host_fragment_content_main),
+                        "Choose the preferred Space Now",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Log.e(
+                        "Error showing Snackbar",
+                        e.printStackTrace().toString()
+                    )
+                }
             }
         } else {
             rvAdaptor = BookingRecyclerViewAdaptor(
-                { bookItem -> bookingAppViewModel.onDeleteBookedItem(bookItem) },
+                { bookItem -> bookingAppViewModel.onCancelBookedItem(bookItem) },
                 ButtonType.DELETE.asString
             )
             bookingAppViewModel.showDelete.observe(viewLifecycleOwner) { value ->
