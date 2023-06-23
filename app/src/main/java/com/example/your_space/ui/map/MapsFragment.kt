@@ -77,7 +77,7 @@ class MapsFragment : Fragment() {
                         LatLng(
                             sydney.latitude,
                             sydney.longitude
-                        ), 14.0f
+                        ), 12.0f
                     )
                 )
                 setLocation.value = false
