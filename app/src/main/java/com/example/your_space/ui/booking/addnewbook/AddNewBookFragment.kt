@@ -91,7 +91,7 @@ class AddNewBookFragment : Fragment() , DatePickerDialog.OnDateSetListener, Time
         val cal = Calendar.getInstance()
         cal.set(Calendar.HOUR,addNewBookAppViewModel.savedHour)
         cal.set(Calendar.MINUTE,addNewBookAppViewModel.savedMinute)
-        cal.add(Calendar.HOUR,duration)
+        cal.add(Calendar.MINUTE, duration*30)
         val endHour = cal.get(Calendar.HOUR)
         val endMinute = cal.get(Calendar.MINUTE)
         return Pair(endHour,endMinute)
