@@ -55,7 +55,9 @@ fun List<SpaceItemProperty>.workingSpacesPropertyModelToDatabaseModel(): Array<W
             maxPrice = it.maxPrice,
             description = it.description,
             district = it.district,
-            drinks = it.drinks
+            drinks = it.drinks,
+            startTime = it.startTime,
+            endTime = it.endTime
         )
     }.toTypedArray()
 }

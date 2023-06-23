@@ -4,8 +4,8 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.sql.Time
 import java.sql.Date
+import java.sql.Time
 import java.util.*
 
 @Entity(tableName = "users_table")
@@ -76,6 +76,8 @@ data class WorkingSpaceDB(
     val drinks: Boolean,
     val owner: String = "",
     val outdoors: Boolean = false,
+    val startTime: String,
+    val endTime: String,
 
     val time: Time = Time(50L),
     val date: Date = Date(50L)
@@ -90,6 +92,14 @@ data class WorkingSpaceDB(
 
     fun freeWiFiFunction(): String {
         return if (drinks) "Offers free Wi-Fi" else "No offer free Wi-Fi"
+    }
+
+    fun openNewFunction(): String {
+        return "$startTime - $endTime"
+    }
+
+    fun drinksFunction(): String {
+        return if (drinks) "Drinks: Yes" else "Drinks: No"
     }
 }
 
