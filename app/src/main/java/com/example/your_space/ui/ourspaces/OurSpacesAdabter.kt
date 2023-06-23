@@ -59,7 +59,7 @@ class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) ->
 
     object DiffCallback : DiffUtil.ItemCallback<WorkingSpaceDB>() {
         override fun areItemsTheSame(oldItem: WorkingSpaceDB, newItem: WorkingSpaceDB): Boolean {
-            return oldItem.spaceId == newItem.spaceId
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: WorkingSpaceDB, newItem: WorkingSpaceDB): Boolean {
