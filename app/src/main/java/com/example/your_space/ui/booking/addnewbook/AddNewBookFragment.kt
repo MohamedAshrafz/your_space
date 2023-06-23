@@ -61,7 +61,11 @@ class AddNewBookFragment : Fragment() , DatePickerDialog.OnDateSetListener, Time
                     _binding.bookTimeEditText.text.toString() == "" ||
                     _binding.durationEditText.text.toString() == ""){
                 Toast.makeText(context,"Plaese Fill All Data", Toast.LENGTH_SHORT).show()
-            }else{
+            }
+            else if (_binding.durationEditText.text.toString().toInt() > 12){
+                Toast.makeText(context, "You can't book more than 6 hours", Toast.LENGTH_SHORT).show()
+            }
+            else{
 
                 val newBook = BookingDB(
                     bookingId = "30",

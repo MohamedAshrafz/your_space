@@ -104,7 +104,11 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                 _binding.durationEditText3.text.toString() == ""
             ) {
                 Toast.makeText(context, "Plaese Fill All Data", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            else if (_binding.durationEditText3.text.toString().toInt() > 12){
+                Toast.makeText(context, "You can't book more than 6 hours", Toast.LENGTH_SHORT).show()
+            }
+            else {
                 val newBook = BookingDB(
                     bookingId = "30",
                     startTime = "${addNewBookAppViewModel.savedHour}:${addNewBookAppViewModel.savedMinute}:00",
@@ -142,7 +146,11 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
                 _binding.durationEditText3.text.toString() == ""
             ) {
                 Toast.makeText(context, "Plaese Fill All Data", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            else if (_binding.durationEditText3.text.toString().toInt() > 12){
+                Toast.makeText(context, "You can't book more than 6 hours", Toast.LENGTH_SHORT).show()
+            }
+            else {
 
                 val newBook = BookingDB(
                     bookingId = "30",
