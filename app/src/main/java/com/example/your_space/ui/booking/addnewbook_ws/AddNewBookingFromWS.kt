@@ -183,7 +183,7 @@ class AddNewBookingFromWS : Fragment(), DatePickerDialog.OnDateSetListener,
             val cal = Calendar.getInstance()
             cal.set(Calendar.HOUR_OF_DAY, addNewBookAppViewModel.savedHour)
             cal.set(Calendar.MINUTE, addNewBookAppViewModel.savedMinute)
-            cal.add(Calendar.HOUR_OF_DAY, duration)
+            cal.add(Calendar.MINUTE, duration*30)
             val endHour = cal.get(Calendar.HOUR_OF_DAY)
             val endMinute = cal.get(Calendar.MINUTE)
             return Pair(endHour, endMinute)
