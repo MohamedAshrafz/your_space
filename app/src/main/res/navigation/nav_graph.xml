@@ -38,18 +38,15 @@
         android:name="com.example.your_space.ui.ourspaces.SpaceDetailsFragment"
         android:label="@string/WorkSpaceDetails_label"
         tools:layout="@layout/fragment_space_details" >
-        <action
-            android:id="@+id/action_spaceDetailsFragment_to_SecondFragment2"
-            app:destination="@id/SecondFragment" />
         <argument
             android:name="selectedSpaceItem"
             app:argType="com.example.your_space.database.WorkingSpaceDB" />
         <action
-            android:id="@+id/action_spaceDetailsFragment_to_addNewBookingFromWS2"
-            app:destination="@id/addNewBookingFromWS" />
-        <action
             android:id="@+id/action_spaceDetailsFragment_to_roomsFragment"
             app:destination="@id/roomsFragment" />
+        <action
+            android:id="@+id/action_spaceDetailsFragment_to_mapsFragment2"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -95,7 +92,10 @@
         android:id="@+id/mapsFragment"
         android:name="com.example.your_space.ui.map.MapsFragment"
         android:label="@string/onMap"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps"
+        >
+        <argument android:name="selectedSpaceId" />
+    </fragment>
     <fragment
         android:id="@+id/addNewBookingFromWS"
         android:name="com.example.your_space.ui.booking.addnewbook_ws.AddNewBookingFromWS"

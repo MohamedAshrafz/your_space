@@ -16,21 +16,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.example.your_space.BuildConfig
 import com.example.your_space.R
+import com.example.your_space.network.Network.NetworkServices
+import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.MainActivity
+import com.example.your_space.ui.ourspaces.OurSpacesViewModel
+import com.example.your_space.ui.rooms.RoomsFragmentArgs
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class MapsFragment : Fragment() {
 
     lateinit var map: GoogleMap
+
+    private val lat = MutableLiveData(0.0)
+    private val lng = MutableLiveData(0.0)
+    private val setLocation = MutableLiveData(false)
 
     // for saving the state of error_snackbar to dismiss it later when the location is enabled
     var locationErrorSnackbarRef: Snackbar? = null
@@ -50,25 +65,54 @@ class MapsFragment : Fragment() {
 
         checkForPermissions()
 
-//        val sydney = LatLng(-34.0, 151.0)
-//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        setLocation.observe(viewLifecycleOwner) {
+            if (setLocation.value == true) {
+                val sydney = LatLng(lat.value!!, lng.value!!)
+                googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+                googleMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            sydney.latitude,
+                            sydney.longitude
+                        ), 14.0f
+                    )
+                )
+            }
+        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val spaceId = MapsFragmentArgs.fromBundle(requireArguments()).selectedSpaceId
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
 
         if ((requireActivity() as MainActivity).locationErrorSnackbar != null) {
             locationErrorSnackbarRef =
                 (requireActivity() as MainActivity).locationErrorSnackbar
+        }
+
+
+        val repository = AppRepository.getInstance(requireActivity().applicationContext)
+
+        lifecycleScope.launch {
+            val latLongList =
+                repository.mySession?.let { NetworkServices.getLatLongForSpaceId(spaceId, it) }
+
+            lat.value = latLongList?.get(0)
+            lng.value = latLongList?.get(1)
+            setLocation.value = true
         }
     }
 

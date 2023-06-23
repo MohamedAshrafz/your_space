@@ -32,6 +32,12 @@ class SpaceDetailsFragment : Fragment() {
             )
         }
 
+        binding.mapBtn.setOnClickListener {
+            findNavController().navigate(
+                SpaceDetailsFragmentDirections.actionSpaceDetailsFragmentToMapsFragment2(spaceId)
+            )
+        }
+
         binding.spaceItem = spaceItem
 
         return binding.root

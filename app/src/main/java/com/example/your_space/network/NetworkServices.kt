@@ -98,6 +98,13 @@ interface YourAppApiInterface {
         @Query("message") message: String,
         @Header("Cookie") cookie: String
     ): Response<ResponseBody>
+
+    @GET("${API}spaces/getCoordinates")
+    suspend fun getLatLongForSpaceId(
+        @Query("spaceId") spaceId: String,
+        @Header("Cookie") cookie: String
+    ): List<Double>
+
 }
 
 object Network {

@@ -89,4 +89,6 @@
     <string name="message_us">Message Us</string>
     <string name="book_now">Book Now</string>
     <string name="go_to_rooms">Go To Rooms</string>
+    <string name="show_ratings">Show ratings</string>
+    <string name="show_location">Show location</string>
 </resources>
