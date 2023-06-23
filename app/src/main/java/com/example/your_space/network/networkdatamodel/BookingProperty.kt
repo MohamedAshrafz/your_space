@@ -73,7 +73,8 @@ fun List<BookingProperty>.bookingPropertyModelToDatabaseModel(): Array<BookingDB
             endTime = it.endTime,
             roomId = it.roomId,
             spaceId = "",
-            bookingStatus = it.bookingStatus
+            bookingStatus = it.bookingStatus,
+            spaceName = it.spaceName
         )
     }.toTypedArray()
 }
