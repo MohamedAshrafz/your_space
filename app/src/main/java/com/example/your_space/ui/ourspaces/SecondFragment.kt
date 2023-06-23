@@ -87,6 +87,7 @@ class SecondFragment : Fragment() {
         }
         binding.searchView.setOnCloseListener {
             binding.checkBox2.visibility = View.VISIBLE
+            spaceAppViewModel._switchKey.value = 0
             false
         }
 
@@ -98,6 +99,14 @@ class SecondFragment : Fragment() {
             }
         }
 
+        spaceAppViewModel.switchKey.observe(viewLifecycleOwner){
+            if (spaceAppViewModel.switchKey.value == 2) {
+                binding.checkBox2.visibility = View.GONE
+            } else{
+                binding.checkBox2.visibility = View.VISIBLE
+            }
+        }
+
         return binding.root
     }
 
@@ -105,14 +114,18 @@ class SecondFragment : Fragment() {
         private val spacesViewModel: OurSpacesViewModel,
     ) : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
-            spacesViewModel._searchText.value = "%$query%"
-            spacesViewModel._switchKey.value = 2
+            if (!query.isNullOrEmpty()){
+                spacesViewModel._searchText.value = "%$query%"
+                spacesViewModel._switchKey.value = 2
+            }
             return true
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-            spacesViewModel._searchText.value = "%$newText%"
-            spacesViewModel._switchKey.value = 2
+            if (!newText.isNullOrEmpty()) {
+                spacesViewModel._searchText.value = "%$newText%"
+                spacesViewModel._switchKey.value = 2
+            }
             return true
         }
 

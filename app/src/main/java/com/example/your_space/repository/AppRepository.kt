@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 const val REPOSITORY_ERROR_STRING = "Error in repository"
+const val REPOSITORY_INFO_STRING = "Repo Info"
 
 
 class AppRepository private constructor(private val database: AppDao) {
@@ -43,7 +44,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 if (users.isNotEmpty()) {
                     database.insertAllUsers(*(users.userPropertyModelToDatabaseModel()))
                     currentUser = database.getUserWithUserName(userName)
-                    Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
+                    Log.e(REPOSITORY_INFO_STRING, currentUser.toString())
                 }
             }
         } catch (e: Exception) {
@@ -99,7 +100,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
 //                    Log.e(REPOSITORY_ERROR_STRING, response.headers().toString())
                     mySession = response.headers().get("Set-Cookie")!!.split(";")[0]
-                    Log.e(REPOSITORY_ERROR_STRING, mySession!!)
+                    Log.e(REPOSITORY_INFO_STRING, mySession!!)
 
                     response.body()?.let {
                         val responseUser = it.userPropertyModelToDatabaseModel()
@@ -119,7 +120,7 @@ class AppRepository private constructor(private val database: AppDao) {
                         )
 
                         database.insertAllUsers(currentUser as UserDB)
-                        Log.e(REPOSITORY_ERROR_STRING, currentUser.toString())
+                        Log.e(REPOSITORY_INFO_STRING, currentUser.toString())
                     }
                 } else {
                     currentUser = UserDB(

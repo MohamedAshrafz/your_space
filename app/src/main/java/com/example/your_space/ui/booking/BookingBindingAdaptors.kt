@@ -55,6 +55,7 @@ class BookingRecyclerViewAdaptor(
                         R.drawable.ic_baseline_delete_24
                     )
                 )
+//                binding.funcButton.visibility = View.GONE
             }
             binding.bookItem = item
             binding.funcButton.setOnClickListener {
@@ -115,7 +116,7 @@ class BookingRecyclerViewAdaptor(
 
 }
 
-@BindingAdapter("bookList")
+@BindingAdapter("bookingItemsList")
 fun bindAsteroidsList(recyclerView: RecyclerView, list: List<BookingDB>?) {
     val adapter = recyclerView.adapter as BookingRecyclerViewAdaptor
     adapter.submitList(list)
