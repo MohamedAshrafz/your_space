@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{spaceItem.locationFunction()}"
+            android:text="@{spaceItem.district}"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"

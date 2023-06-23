@@ -83,7 +83,7 @@ data class WorkingSpaceDB(
     val date: Date = Date(50L)
 ) : Parcelable {
     fun locationFunction(): String {
-        return "$address $district"
+        return "$address, $district"
     }
 
     fun pricingFunction(): String {

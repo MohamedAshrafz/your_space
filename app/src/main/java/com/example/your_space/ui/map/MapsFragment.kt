@@ -68,7 +68,9 @@ class MapsFragment : Fragment() {
         setLocation.observe(viewLifecycleOwner) {
             if (setLocation.value == true) {
                 val sydney = LatLng(lat.value!!, lng.value!!)
-                googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+                googleMap.addMarker(
+                    MarkerOptions().position(sydney).title("Selected working space location")
+                )
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
                 googleMap.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -78,6 +80,7 @@ class MapsFragment : Fragment() {
                         ), 14.0f
                     )
                 )
+                setLocation.value = false
             }
         }
     }
