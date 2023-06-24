@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.your_space.databinding.FragmentProfileBinding
+import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.authentication.AuthenticationActivity
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -50,5 +53,24 @@ class ProfileFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val repository = AppRepository.getInstance(requireActivity().applicationContext)
+
+        val sp = requireActivity().getSharedPreferences(
+            AuthenticationActivity.LOGIN_STATE,
+            AppCompatActivity.MODE_PRIVATE
+        )
+
+        val userId = sp.getString(AuthenticationActivity.USER_ID, null)
+
+        lifecycleScope.launch {
+            if (userId != null) {
+                repository.updateTokenForUserWithUserId(userId)
+            }
+        }
     }
 }

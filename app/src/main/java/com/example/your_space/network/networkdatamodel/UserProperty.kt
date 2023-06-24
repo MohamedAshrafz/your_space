@@ -109,4 +109,6 @@ data class UserPropertyUpdate(
     val username: String,
     @Json(name = "bio")
     val bio: String,
+    @Json(name = "points")
+    val points: Int
 ) : Parcelable

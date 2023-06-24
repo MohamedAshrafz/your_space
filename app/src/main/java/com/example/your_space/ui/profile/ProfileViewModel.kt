@@ -22,7 +22,7 @@ class ProfileViewModel(app: Application, val userId: String) : AndroidViewModel(
     private val repository = AppRepository.getInstance(app.applicationContext)
 
     private val _user: LiveData<UserDB> =
-        liveData { emit(repository.getUserWithId(userId)) }
+        liveData { emitSource(repository.getUserWithIdLD(userId)) }
 
     val email: LiveData<String> = _user.map { it.email }
 

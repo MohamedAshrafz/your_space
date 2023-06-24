@@ -70,6 +70,7 @@ class EditProfileViewModel(val app: Application, val userId: String) : AndroidVi
             userId = user.value!!.userId,
             email = user.value!!.email,
             username = user.value!!.userName,
+            points = user.value!!.points,
 
             firstName = firstName.value!!,
             lastName = lastName.value!!,

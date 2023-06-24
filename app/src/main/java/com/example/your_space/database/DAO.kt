@@ -16,6 +16,9 @@ interface AppDao {
     @Query("SELECT * FROM users_table WHERE  userId == :userId")
     fun getUserWithUserId(userId: String): UserDB
 
+    @Query("SELECT * FROM users_table WHERE  userId == :userId")
+    fun getUserWithUserIdLD(userId: String): LiveData<UserDB>
+
     @Query("SELECT * FROM users_table WHERE  userName == :userName")
     fun getUserWithUserName(userName: String): UserDB
 
