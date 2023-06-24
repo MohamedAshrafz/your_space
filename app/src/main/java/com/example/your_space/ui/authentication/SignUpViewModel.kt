@@ -116,7 +116,7 @@ class SignUpViewModel(app: Application) : AndroidViewModel(app) {
                 _showSignedUpToast.value = "Please check the confirmation mail"
                 _navigateToSignInFragment.value = true
             } else {
-                _showSignedUpToast.value = "This email is already used"
+                _showSignedUpToast.value = "Sorry we could not make this account right now"
             }
         }
     }
