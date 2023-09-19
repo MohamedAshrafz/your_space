@@ -154,11 +154,16 @@ class AppRepository private constructor(private val database: AppDao) {
             withContext(Dispatchers.IO) {
                 val workingSpacesList =
                     mySession?.let { NetworkServices.getWorkingSpacesUsingPaging(pageNumber, it) }
-                if (initialize) {
+
+                if (initialize && workingSpacesList?.isNotEmpty() == true) {
                     database.deleteAllWorkingSpaces()
-                }
-                workingSpacesList?.let {
-                    database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
+                    workingSpacesList.let {
+                        database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
+                    }
+                } else if (workingSpacesList?.isNotEmpty() == true) {
+                    workingSpacesList.let {
+                        database.insertAllWorkingSpaces(*(workingSpacesList.workingSpacesPropertyModelToDatabaseModel()))
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -208,7 +213,8 @@ class AppRepository private constructor(private val database: AppDao) {
     suspend fun getRatingsBySpaceIdFromNetwork(spaceId: String) {
         try {
             withContext(Dispatchers.IO) {
-                val ratingsList = mySession?.let { NetworkServices.getRatingsOfSpaceId(spaceId, it) }
+                val ratingsList =
+                    mySession?.let { NetworkServices.getRatingsOfSpaceId(spaceId, it) }
                 database.deleteAllRatingsWithSpaceId(spaceId)
                 ratingsList?.let {
                     database.insertAllRatings(*(ratingsList.ratingPropertyModelToDatabaseModel()))

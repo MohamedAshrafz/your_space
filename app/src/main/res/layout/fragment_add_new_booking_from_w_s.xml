@@ -183,6 +183,16 @@
             app:layout_constraintTop_toBottomOf="@+id/btnAddNewBookWithPoints"
             app:layout_constraintVertical_bias="0.612" />
 
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Full day"
+            app:layout_constraintBottom_toBottomOf="@+id/textView15"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toTopOf="@+id/textView15" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
