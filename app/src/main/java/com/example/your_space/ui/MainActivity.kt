@@ -104,14 +104,13 @@ class MainActivity : AppCompatActivity() {
                 // Set the drawer icon to appear on the "home" button
                 toggle.isDrawerIndicatorEnabled = true
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                toggle.syncState()
             } else {
                 binding.bottomNavigation.visibility = View.GONE
                 // Set navigate up button to visible
                 toggle.isDrawerIndicatorEnabled = false
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                toggle.syncState()
             }
+            toggle.syncState()
         }
 
     }

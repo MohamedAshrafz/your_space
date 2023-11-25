@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -63,42 +64,22 @@ class FirstFragment : Fragment() {
         homeAppViewModel.homeList.observe(viewLifecycleOwner) { list ->
             for (item in list) {
 
-                val listCL = mutableListOf<ClassListener>()
-
-                listCL.apply {
-                    add(
-                        ClassListener(
-                            FragmentEnumForIndexing.OUR_SPACES.index,
-                            requireActivity(),
-                            findNavController()
-                        )
-                    )
-                    add(
-                        ClassListener(
-                            FragmentEnumForIndexing.YOUR_BOOKINGS.index,
-                            requireActivity(),
-                            findNavController()
-                        )
-                    )
-                    add(
-                        ClassListener(
-                            FragmentEnumForIndexing.MAPS.index,
-                            requireActivity(),
-                            findNavController()
-                        )
-                    )
-                }
-
                 val homeItemBinding = ItemBinding.inflate(inflater, container, false)
 
                 homeItemBinding.homeItem = item
-                homeItemBinding.itemImg.setImageDrawable(requireContext().getDrawable(item.img))
+                homeItemBinding.itemImg.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        requireContext(),
+                        item.img
+                    )
+                )
 
+                // getting the appropriate listener depending on the given item index
+                val listener = ClassListener(item.index, requireActivity(), findNavController())
                 // has to but a function not a reference to a function
-                homeItemBinding.itemLayout.setOnClickListener { listCL[list.indexOf(item)].getListener() }
+                homeItemBinding.itemLayout.setOnClickListener { listener.getListener() }
 
                 homeItemBinding.lifecycleOwner = viewLifecycleOwner
-
                 binding.linearLayoutList.addView(homeItemBinding.itemLayout)
             }
         }

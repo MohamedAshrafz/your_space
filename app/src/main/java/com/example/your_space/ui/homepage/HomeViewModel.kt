@@ -21,9 +21,27 @@ class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun fillHomeList() {
         _homeList.value?.apply {
-            add(HomeItem("New you can check our available spaced", R.drawable.card1))
-            add(HomeItem("Check your bookings", R.drawable.card2))
-//            add(HomeItem("Found the nearest Co-working spaces now", "@drawable/coworking"))
+            add(
+                HomeItem(
+                    "New you can check our available spaced",
+                    R.drawable.card1,
+                    FragmentEnumForIndexing.OUR_SPACES.index
+                )
+            )
+            add(
+                HomeItem(
+                    "Check your bookings",
+                    R.drawable.card2,
+                    FragmentEnumForIndexing.YOUR_BOOKINGS.index
+                )
+            )
+//            add(
+//                HomeItem(
+//                    "Found the nearest Co-working spaces now",
+//                    R.drawable.ic_baseline_map_48,
+//                    FragmentEnumForIndexing.MAPS.index
+//                )
+//            )
         }
     }
 }
