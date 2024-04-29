@@ -33,4 +33,5 @@ ext {
     moshi = '1.9.3'
     scalarconverter = '2.5.0'
     version_glide = "4.8.0"
+    lottieVersion = '6.3.0'
 }

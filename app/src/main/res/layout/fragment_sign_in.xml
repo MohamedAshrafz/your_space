@@ -10,15 +10,21 @@
             type="com.example.your_space.ui.authentication.SignInViewModel" />
     </data>
 
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.authentication.SignInFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.authentication.SignInFragment">
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/signIn_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
             android:layout_marginBottom="15dp"
             android:text="@string/log_in_button_text"
             android:textSize="@dimen/login_text_size"
@@ -31,14 +37,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userName_te"
             style="@style/sign_up_field_right_attr_style"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:hint="@string/user_name"
-            app:layout_constraintBottom_toTopOf="@+id/password_te"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed">
+            app:layout_constraintTop_toBottomOf="@+id/welcome_lottie_animation">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userName_ite"
@@ -50,15 +54,16 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_te"
             style="@style/sign_up_field_right_attr_style"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName_te">
+            app:layout_constraintTop_toBottomOf="@+id/userName_te"
+            app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_ite"
@@ -68,19 +73,20 @@
                 android:text="@={viewModel._password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_back"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/userName_te"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/welcome_lottie_animation"
+            android:layout_width="374dp"
+            android:layout_height="235dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.207"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/welcome_people" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
 
 
 
