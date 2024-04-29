@@ -9,18 +9,20 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.your_space"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    namespace "com.example.your_space"
 
     buildTypes {
         release {
@@ -36,6 +38,8 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        //  Review: https://medium.com/androiddevelopers/5-ways-to-prepare-your-app-build-for-android-studio-flamingo-release-da34616bb946
+        buildConfig true
         viewBinding true
         dataBinding true
     }
