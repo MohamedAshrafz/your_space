@@ -17,7 +17,7 @@ import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
 import com.example.your_space.network.Constants.BASE_URL
 import com.example.your_space.network.DEFAULT_IMAGE_INDEX
-import com.example.your_space.network.IMAGE_VS_SPACEID_ENDPOINT
+import com.example.your_space.network.Paths
 import com.example.your_space.repository.AppRepository
 
 class OurSpacesAdabter(private val clickListener: (spaceItem: WorkingSpaceDB) -> Unit) :
@@ -98,9 +98,9 @@ fun bindImage(imageView: ImageView, imageUrl: String?) {
 fun bindImage(imageView: ImageView, spaceId: String?, index: String?) {
 
     val imageUrl = if (index == null) {
-        "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$DEFAULT_IMAGE_INDEX"
+        "$BASE_URL${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$DEFAULT_IMAGE_INDEX"
     } else {
-        "$BASE_URL$IMAGE_VS_SPACEID_ENDPOINT$spaceId/$index"
+        "$BASE_URL${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$index"
     }
 
     val repository = AppRepository.getInstance(imageView.context)

@@ -11,11 +11,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 const val PAGE_SIZE = 50
-const val IMAGE_VS_SPACEID_ENDPOINT = "api/images/space/"
 const val IMAGE_VS_ROOMID_ENDPOINT = "api/images/room/"
 const val IMAGE_VS_USERID_ENDPOINT = "api/images/user/"
 const val API = "api/"
 const val LOGIN = "login"
+
+enum class Paths(val path: String) {
+    IMAGE_VS_SPACEID_ENDPOINT("api/images/space/"),
+    IMAGE_VS_ROOMID_ENDPOINT("api/images/room/"),
+    IMAGE_VS_USERID_ENDPOINT("api/images/user/"),
+    API("api/"),
+    LOGIN("login"),
+}
 
 const val DEFAULT_IMAGE_INDEX = "0"
 
