@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.your_space.R
 import com.example.your_space.database.UserDB
 import com.example.your_space.repository.AppRepository
+import com.example.your_space.ui.dialogs.AnimationDialog
 import kotlinx.coroutines.launch
 
 enum class GET_USER_RESPONCE {
@@ -20,6 +21,8 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     val signed = MutableLiveData(false)
 
     val navigateToMainActivity = MutableLiveData(false)
+
+    lateinit var animationDialog: AnimationDialog
 
     fun clearSigned() {
         signed.value = false
@@ -61,18 +64,23 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun runSignInFlow() {
+        animationDialog.show("Login Progressing...")
         viewModelScope.launch {
             val user = getUser()
             if (user == null) {
-                _showSignedInToast.value =
-                    app.applicationContext.getString(R.string.connection_error)
+                animationDialog.failedDismiss("Failed, Server Unavailable", 0L, null)
+//                _showSignedInToast.value =
+//                    app.applicationContext.getString(R.string.connection_error)
             } else if (user.userId == "-1") {
-                _showSignedInToast.value =
-                    app.applicationContext.getString(R.string.wrong_username_or_password)
+                animationDialog.failedDismiss("Failed, Wrong username or password", 0L, null)
+//                _showSignedInToast.value =
+//                    app.applicationContext.getString(R.string.wrong_username_or_password)
             } else {
-                _showSignedInToast.value =
-                    app.applicationContext.getString(R.string.you_have_successfully_logged_in)
-                signed.value = true
+                animationDialog.doneDismiss("Done", 0L, kotlinx.coroutines.Runnable {
+                    signed.postValue(true)
+                })
+//                _showSignedInToast.value =
+//                    app.applicationContext.getString(R.string.you_have_successfully_logged_in)
             }
         }
     }
@@ -89,11 +97,11 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     val loginButtonPressed: LiveData<Boolean>
         get() = _loginButtonPressed
 
-    fun setLoginButtonPressed(){
+    fun setLoginButtonPressed() {
         _loginButtonPressed.value = true
     }
 
-    fun clearLoginButtonPressed(){
+    fun clearLoginButtonPressed() {
         _loginButtonPressed.value = false
     }
 }

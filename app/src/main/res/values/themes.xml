@@ -21,7 +21,7 @@
 
     <!--    <color name="my_light_primary">#03A9F4</color>-->
     <color name="colorAccent">#4dabda</color>
-    <color name="colorPrimary">#6ab343</color>
+    <color name="colorPrimary">@color/blue_500</color>
     <!--    <color name="colorPrimaryDark">#1f691e</color>-->
     <!--    <color name="colorLightGreen">#43b354</color>-->
     <!--    <color name="colorDarkGreen">#258135</color>-->

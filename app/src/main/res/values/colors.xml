@@ -11,4 +11,7 @@
 
     <color name="colorSurface">#EBF7FF</color>
     <color name="colorSecondaryContainer">#7AC9FA</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="blue_500">#03A9F4</color>
 </resources>
