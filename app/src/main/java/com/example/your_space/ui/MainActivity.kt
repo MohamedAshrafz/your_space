@@ -2,7 +2,6 @@ package com.example.your_space.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,14 +24,17 @@ import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.authentication.AuthenticationActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
-    lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
 
     // for saving the state of error_snackbar to dismiss it later when the location is enabled
     var locationErrorSnackbar: Snackbar? = null
@@ -125,45 +127,44 @@ class MainActivity : AppCompatActivity() {
 
         if (userId != null) {
             reGetTokenAndUser(userId)
-            Log.i("SP UserId", userId.toString())
         } else {
-            Log.e("Main Activity", "cannot get the user")
+            Timber.tag(TAG).e("cannot get the user")
         }
     }
 
     private fun reGetTokenAndUser(userId: String) {
         val repository = AppRepository.getInstance(applicationContext)
+        Timber.tag(TAG).i("Initiating getting token for userId: [%s]", userId)
         lifecycleScope.launch {
             val user = repository.updateTokenForUserWithUserId(userId)
 //            val view = window.decorView
 
-            try {
-                if (user == null) {
-                    Snackbar.make(
-                        binding.root.findViewById(R.id.nav_host_fragment_content_main),
-                        getString(R.string.connection_error),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                } else if (user.userId == "-1") {
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.there_was_a_problem_in_logging_you_in),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    logoutFlow()
-                } else {
-                    Snackbar.make(
-                        binding.root.findViewById(R.id.nav_host_fragment_content_main),
-                        getString(R.string.you_are_connected),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-            } catch (e: Exception) {
-                Log.e(
-                    "Error showing Snackbar",
-                    e.printStackTrace().toString()
-                )
+
+            val errorMsg: String
+            if (user == null) {
+                Snackbar.make(
+                    binding.root.findViewById(R.id.nav_host_fragment_content_main),
+                    getString(R.string.connection_error),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                errorMsg = getString(R.string.connection_error)
+            } else if (user.userId == "-1") {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.there_was_a_problem_in_logging_you_in),
+                    Toast.LENGTH_LONG
+                ).show()
+                logoutFlow()
+                errorMsg = getString(R.string.there_was_a_problem_in_logging_you_in)
+            } else {
+                Snackbar.make(
+                    binding.root.findViewById(R.id.nav_host_fragment_content_main),
+                    getString(R.string.you_are_connected),
+                    Snackbar.LENGTH_LONG
+                ).show()
+                errorMsg = getString(R.string.you_are_connected)
             }
+            Timber.tag(TAG).d(errorMsg)
         }
     }
 

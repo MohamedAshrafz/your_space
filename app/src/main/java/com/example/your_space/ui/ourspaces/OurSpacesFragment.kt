@@ -143,10 +143,10 @@ class OurSpacesFragment : Fragment() {
             val currentItemsCount = layoutManager.itemCount
             val indexOfLastItem = layoutManager.findLastVisibleItemPosition()
 
-//            if (!loading && (indexOfLastItem + 1 >= currentItemsCount)) {
-//                loading = true
-//                onLoadMoreItems()
-//            }
+            if (!loading && (indexOfLastItem + 1 >= currentItemsCount)) {
+                loading = true
+                onLoadMoreItems()
+            }
         }
 
         fun setLoading(loading: Boolean) {

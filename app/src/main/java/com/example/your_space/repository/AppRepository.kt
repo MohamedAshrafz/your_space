@@ -1,20 +1,29 @@
 package com.example.your_space.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.your_space.database.*
+import com.example.your_space.database.AppDao
+import com.example.your_space.database.AppDatabase
+import com.example.your_space.database.BookingDB
+import com.example.your_space.database.RatingsDB
+import com.example.your_space.database.SpaceRoomDB
+import com.example.your_space.database.UserDB
+import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.network.Network.NetworkServices
-import com.example.your_space.network.networkdatamodel.*
+import com.example.your_space.network.networkdatamodel.BookingPropertyPost
+import com.example.your_space.network.networkdatamodel.UserPropertyUpdate
+import com.example.your_space.network.networkdatamodel.bookingPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.ratingPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.roomPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.userPropertyModelToDatabaseModel
+import com.example.your_space.network.networkdatamodel.workingSpacesPropertyModelToDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
-const val REPOSITORY_ERROR_STRING = "Error in repository"
-const val REPOSITORY_INFO_STRING = "Repo Info"
-
+import timber.log.Timber
 
 class AppRepository private constructor(private val database: AppDao) {
 
+    private val TAG = AppRepository::class.java.simpleName
     var mySession: String? = null
 
     fun getSession(): String? {
@@ -44,11 +53,11 @@ class AppRepository private constructor(private val database: AppDao) {
                 if (users.isNotEmpty()) {
                     database.insertAllUsers(*(users.userPropertyModelToDatabaseModel()))
                     currentUser = database.getUserWithUserName(userName)
-                    Log.e(REPOSITORY_INFO_STRING, currentUser.toString())
+                    Timber.tag(TAG).e(currentUser.toString())
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
         return currentUser
     }
@@ -61,7 +70,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 currentUser = loginAndGetTokenForUserWith(dbUser.userName, dbUser.password)
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
         return currentUser
     }
@@ -85,7 +94,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
         return isSucceeded
     }
@@ -100,7 +109,7 @@ class AppRepository private constructor(private val database: AppDao) {
 
 //                    Log.e(REPOSITORY_ERROR_STRING, response.headers().toString())
                     mySession = response.headers().get("Set-Cookie")!!.split(";")[0]
-                    Log.e(REPOSITORY_INFO_STRING, mySession!!)
+                    Timber.tag(TAG).e(mySession!!)
 
                     response.body()?.let {
                         val responseUser = it.userPropertyModelToDatabaseModel()
@@ -120,7 +129,7 @@ class AppRepository private constructor(private val database: AppDao) {
                         )
 
                         database.insertAllUsers(currentUser as UserDB)
-                        Log.e(REPOSITORY_INFO_STRING, currentUser.toString())
+                        Timber.tag(TAG).e(currentUser.toString())
                     }
                 } else {
                     currentUser = UserDB(
@@ -129,7 +138,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
         return currentUser
     }
@@ -143,7 +152,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
     }
 
@@ -167,7 +176,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
     }
 
@@ -186,7 +195,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
     }
 
@@ -200,7 +209,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
     }
 
@@ -221,7 +230,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
     }
 
@@ -238,7 +247,7 @@ class AppRepository private constructor(private val database: AppDao) {
     }
 
     suspend fun addNewBooking(newBooking: BookingPropertyPost): Boolean {
-        var isPosted: Boolean = false
+        var isPosted = false
         val response = mySession?.let { NetworkServices.addNewBooking(newBooking, it) }
 
         if (response != null) {
@@ -246,7 +255,7 @@ class AppRepository private constructor(private val database: AppDao) {
                 isPosted = true
                 refreshBookings(newBooking.userId)
             } else {
-                Log.e("RETROFIT_ERROR", response.code().toString())
+                Timber.tag("RETROFIT_ERROR").e(response.code().toString())
             }
         }
         return isPosted
@@ -282,12 +291,12 @@ class AppRepository private constructor(private val database: AppDao) {
                         database.deleteBooking(bookItem.bookingId)
 
                     } else {
-                        Log.e("RETROFIT_ERROR", response.code().toString())
+                        Timber.tag("RETROFIT_ERROR").e(response.code().toString())
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
 
     }
@@ -313,12 +322,12 @@ class AppRepository private constructor(private val database: AppDao) {
                     if (response.isSuccessful) {
                         isSucceeded = true
                     } else {
-                        Log.e("RETROFIT_ERROR", response.code().toString())
+                        Timber.tag(TAG).e(response.code().toString())
                     }
                 }
             }
         } catch (e: Exception) {
-            Log.e(REPOSITORY_ERROR_STRING, e.stackTraceToString())
+            Timber.tag(TAG).e(e.stackTraceToString())
         }
         return isSucceeded
     }
