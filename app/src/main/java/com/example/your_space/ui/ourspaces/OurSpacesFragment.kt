@@ -10,14 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.your_space.databinding.FragmentSecondBinding
+import com.example.your_space.databinding.FragmentOurSpacesBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class OurSpacesFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentOurSpacesBinding? = null
     private val binding
         get() = _binding!!
 
@@ -30,7 +30,7 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentOurSpacesBinding.inflate(inflater, container, false)
 
         binding.viewModel = spaceAppViewModel
         val adaptor =
@@ -60,7 +60,7 @@ class SecondFragment : Fragment() {
             if (selectedSpaceItem != null) {
                 requireView().findNavController()
                     .navigate(
-                        SecondFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(
+                        OurSpacesFragmentDirections.actionSecondFragmentToSpaceDetailsFragment(
                             selectedSpaceItem
                         )
                     )

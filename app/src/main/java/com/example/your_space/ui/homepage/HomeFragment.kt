@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.your_space.R
-import com.example.your_space.databinding.FragmentFirstBinding
+import com.example.your_space.databinding.FragmentHomeBinding
 import com.example.your_space.databinding.ItemBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -45,7 +45,7 @@ class ClassListener(
 
 class FirstFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
 
@@ -59,7 +59,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         homeAppViewModel.homeList.observe(viewLifecycleOwner) { list ->
             for (item in list) {

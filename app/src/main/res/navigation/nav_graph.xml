@@ -9,7 +9,7 @@
         android:id="@+id/Home"
         android:name="com.example.your_space.ui.homepage.FirstFragment"
         android:label="@string/home_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -21,9 +21,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.your_space.ui.ourspaces.SecondFragment"
+        android:name="com.example.your_space.ui.ourspaces.OurSpacesFragment"
         android:label="@string/ourSpaces_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_our_spaces">
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/Home"
