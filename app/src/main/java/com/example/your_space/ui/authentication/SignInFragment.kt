@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.your_space.R
 import com.example.your_space.databinding.FragmentSignInBinding
-import com.example.your_space.ui.dialogs.AnimationDialog
 import com.google.android.material.snackbar.Snackbar
 
 class SignInFragment : Fragment() {
@@ -32,14 +30,12 @@ class SignInFragment : Fragment() {
         binding.viewModel = signInViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        signInViewModel.animationDialog = AnimationDialog(this.requireContext())
-
         binding.signInButton.setOnClickListener {
             signInViewModel.setLoginButtonPressed()
         }
 
-        signInViewModel.loginButtonPressed.observe(viewLifecycleOwner){ isPressed ->
-            if (isPressed){
+        signInViewModel.loginButtonPressed.observe(viewLifecycleOwner) { isPressed ->
+            if (isPressed) {
                 if (signInViewModel.checkNotEmpty()) {
                     signInViewModel.runSignInFlow()
                 } else {

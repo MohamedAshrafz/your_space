@@ -120,4 +120,8 @@ dependencies {
 
     // lottie for animation
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+
+    // Timber for logs
+    implementation "com.jakewharton.timber:timber:$timberVersion"
 }

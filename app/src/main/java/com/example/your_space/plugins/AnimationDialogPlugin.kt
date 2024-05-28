@@ -1,5 +1,6 @@
-package com.example.your_space.ui.dialogs
+package com.example.your_space.plugins
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Handler
@@ -12,7 +13,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.your_space.R
 import com.google.android.material.textview.MaterialTextView
 
-class AnimationDialog(private val context: Context) : Dialog(context) {
+class AnimationDialogPlugin(private val context: Context) : Dialog(context) {
     private val progress_bar: ProgressBar
     private val message_text: MaterialTextView
     private val done_image: LottieAnimationView
@@ -104,6 +105,23 @@ class AnimationDialog(private val context: Context) : Dialog(context) {
     }
 
     companion object {
-        private val TAG = AnimationDialog::class.java.simpleName
+        private val TAG = AnimationDialogPlugin::class.java.simpleName
+
+
+        @SuppressLint("StaticFieldLeak")
+        private var animationDialogINSTANCE: AnimationDialogPlugin? = null
+
+        fun registerAnimationDialog(context: Context): AnimationDialogPlugin {
+            synchronized(this) {
+                animationDialogINSTANCE = null
+
+                animationDialogINSTANCE = AnimationDialogPlugin(context)
+                return animationDialogINSTANCE!!
+            }
+        }
+
+        fun getInstance(): AnimationDialogPlugin {
+            return animationDialogINSTANCE!!
+        }
     }
 }

@@ -20,6 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.your_space.R
 import com.example.your_space.databinding.ActivityMainBinding
+import com.example.your_space.plugins.AnimationDialogPlugin
 import com.example.your_space.repository.AppRepository
 import com.example.your_space.ui.authentication.AuthenticationActivity
 import com.google.android.material.snackbar.Snackbar
@@ -113,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             toggle.syncState()
         }
 
+        AnimationDialogPlugin.registerAnimationDialog(this)
     }
 
     override fun onStart() {

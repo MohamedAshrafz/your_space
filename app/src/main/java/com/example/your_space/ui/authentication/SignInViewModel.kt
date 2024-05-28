@@ -1,11 +1,14 @@
 package com.example.your_space.ui.authentication
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.your_space.R
 import com.example.your_space.database.UserDB
 import com.example.your_space.repository.AppRepository
-import com.example.your_space.ui.dialogs.AnimationDialog
+import com.example.your_space.plugins.AnimationDialogPlugin
 import kotlinx.coroutines.launch
 
 enum class GET_USER_RESPONCE {
@@ -14,22 +17,26 @@ enum class GET_USER_RESPONCE {
     OKEY
 }
 
+enum class LOGIN_RETURN_TYPE(val stringResource: Int) {
+    NO_SUCH_USER(R.string.wrong_username_or_password),
+    CONNECTION_FAILED(R.string.connection_error),
+    SUCCESS(R.string.login_success)
+}
+
 class SignInViewModel(val app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository.getInstance(app.applicationContext)
 
-    val signed = MutableLiveData(false)
-
     val navigateToMainActivity = MutableLiveData(false)
 
-    lateinit var animationDialog: AnimationDialog
-
-    fun clearSigned() {
-        signed.value = false
-    }
+    val loginResponseEvent = MutableLiveData(Pair<Boolean, LOGIN_RETURN_TYPE?>(false, null))
 
     fun clearNavigate() {
         navigateToMainActivity.value = false
+    }
+
+    fun clearLoginResponseEvent() {
+        loginResponseEvent.value = Pair(false, null)
     }
 
     private val _currentUser = MutableLiveData<UserDB>()
@@ -64,23 +71,16 @@ class SignInViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun runSignInFlow() {
-        animationDialog.show("Login Progressing...")
+        AnimationDialogPlugin.getInstance().show("Login Progressing...")
         viewModelScope.launch {
             val user = getUser()
+            AnimationDialogPlugin.getInstance().dismiss()
             if (user == null) {
-                animationDialog.failedDismiss("Failed, Server Unavailable", 0L, null)
-//                _showSignedInToast.value =
-//                    app.applicationContext.getString(R.string.connection_error)
+                loginResponseEvent.postValue(Pair(true, LOGIN_RETURN_TYPE.CONNECTION_FAILED))
             } else if (user.userId == "-1") {
-                animationDialog.failedDismiss("Failed, Wrong username or password", 0L, null)
-//                _showSignedInToast.value =
-//                    app.applicationContext.getString(R.string.wrong_username_or_password)
+                loginResponseEvent.postValue(Pair(true, LOGIN_RETURN_TYPE.NO_SUCH_USER))
             } else {
-                animationDialog.doneDismiss("Done", 0L, kotlinx.coroutines.Runnable {
-                    signed.postValue(true)
-                })
-//                _showSignedInToast.value =
-//                    app.applicationContext.getString(R.string.you_have_successfully_logged_in)
+                loginResponseEvent.postValue(Pair(true, LOGIN_RETURN_TYPE.SUCCESS))
             }
         }
     }
