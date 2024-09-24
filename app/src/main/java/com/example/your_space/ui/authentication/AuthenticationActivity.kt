@@ -16,10 +16,10 @@ import com.example.your_space.R
 import com.example.your_space.databinding.ActivityAuthenticationBinding
 import com.example.your_space.plugins.AnimationDialogPlugin
 import com.example.your_space.ui.MainActivity
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
+// import com.firebase.ui.auth.AuthUI
+// import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.textview.MaterialTextView
-import com.google.firebase.auth.FirebaseAuth
+// import com.google.firebase.auth.FirebaseAuth
 import timber.log.Timber
 
 class AuthenticationActivity : AppCompatActivity() {
@@ -99,25 +99,25 @@ class AuthenticationActivity : AppCompatActivity() {
         this.finish()
     }
 
-    private fun launchSignupFlow() {
-        // Give users the option to sign in / register with their email or Google account. If users
-        // choose to register with their email, they will need to create a password as well.
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
-        )
-
-        // Create and launch sign-in intent.
-        // the new way of doing so with the use of registerForActivityResult
-        // no need for SIGN_IN_RESULT_CODE
-        resultLauncher.launch(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setIsSmartLockEnabled(false)
-                .build()
-        )
-    }
+//    private fun launchSignupFlow() {
+//        // Give users the option to sign in / register with their email or Google account. If users
+//        // choose to register with their email, they will need to create a password as well.
+//        val providers = arrayListOf(
+//            AuthUI.IdpConfig.EmailBuilder().build(),
+//            AuthUI.IdpConfig.GoogleBuilder().build()
+//        )
+//
+//        // Create and launch sign-in intent.
+//        // the new way of doing so with the use of registerForActivityResult
+//        // no need for SIGN_IN_RESULT_CODE
+//        resultLauncher.launch(
+//            AuthUI.getInstance()
+//                .createSignInIntentBuilder()
+//                .setAvailableProviders(providers)
+//                .setIsSmartLockEnabled(false)
+//                .build()
+//        )
+//    }
 
     private var statusDialog: AlertDialog? = null
     private var doneAlertTextView: MaterialTextView? = null
@@ -173,29 +173,29 @@ class AuthenticationActivity : AppCompatActivity() {
         }, 2000L)
     }
 
-    var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val response = IdpResponse.fromResultIntent(result.data)
-                if (result.resultCode == Activity.RESULT_OK) {
-                    // Successfully signed in user.
-                    Timber.tag(TAG).i(
-                        "Successfully signed in user %s",
-                        FirebaseAuth.getInstance().currentUser?.displayName
-                    )
-                    // navigate to the reminder list fragment
-                    sentToMainActivity()
-                } else {
-                    // Sign in failed. If response is null the user canceled the sign-in flow using
-                    // the back button. Otherwise check response.getError().getErrorCode() and handle
-                    // the error.
-                    Timber.tag(TAG).i("Sign in unsuccessful %s", response?.error?.errorCode)
-                    Toast.makeText(
-                        applicationContext,
-                        "There was an error in the signing in",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
+//    var resultLauncher =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                val response = IdpResponse.fromResultIntent(result.data)
+//                if (result.resultCode == Activity.RESULT_OK) {
+//                    // Successfully signed in user.
+//                    Timber.tag(TAG).i(
+//                        "Successfully signed in user %s",
+//                        FirebaseAuth.getInstance().currentUser?.displayName
+//                    )
+//                    // navigate to the reminder list fragment
+//                    sentToMainActivity()
+//                } else {
+//                    // Sign in failed. If response is null the user canceled the sign-in flow using
+//                    // the back button. Otherwise check response.getError().getErrorCode() and handle
+//                    // the error.
+//                    Timber.tag(TAG).i("Sign in unsuccessful %s", response?.error?.errorCode)
+//                    Toast.makeText(
+//                        applicationContext,
+//                        "There was an error in the signing in",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        }
 }

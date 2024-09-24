@@ -87,7 +87,7 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-auth-ktx'
 
     // firebase auth Ui
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+    // implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 
     // Maps & Geofencing
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
