@@ -9,19 +9,17 @@
         android:layout_height="match_parent"
         tools:context=".authentication.MainAuthFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normal_margin"
-            android:layout_marginEnd="@dimen/normal_margin"
-            android:text="@string/hi_there_please_login"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/login_text_size"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/welcome_lottie_animation"
+            android:layout_width="374dp"
+            android:layout_height="235dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/welcome_people" />
 
         <Button
             android:id="@+id/login_button"

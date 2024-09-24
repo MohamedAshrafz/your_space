@@ -59,29 +59,29 @@ class SignInFragment : Fragment() {
             }
         }
 
-        binding.userNameIte.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                binding.userNameIte.hint = ""
-            } else {
-                val imm =
-                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.userNameIte, InputMethodManager.SHOW_IMPLICIT)
-
-                binding.userNameIte.hint = getString(R.string.please_type_your_username)
-            }
-        }
-
-        binding.passwordIte.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                binding.passwordIte.hint = ""
-            } else {
-                val imm =
-                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.passwordIte, InputMethodManager.SHOW_IMPLICIT)
-
-                binding.passwordIte.hint = getString(R.string.please_type_your_password)
-            }
-        }
+//        binding.userNameIte.setOnFocusChangeListener { _, hasFocus ->
+//            if (!hasFocus) {
+//                binding.userNameIte.hint = ""
+//            } else {
+//                val imm =
+//                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                imm.showSoftInput(binding.userNameIte, InputMethodManager.SHOW_IMPLICIT)
+//
+//                binding.userNameIte.hint = getString(R.string.please_type_your_username)
+//            }
+//        }
+//
+//        binding.passwordIte.setOnFocusChangeListener { _, hasFocus ->
+//            if (!hasFocus) {
+//                binding.passwordIte.hint = ""
+//            } else {
+//                val imm =
+//                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//                imm.showSoftInput(binding.passwordIte, InputMethodManager.SHOW_IMPLICIT)
+//
+//                binding.passwordIte.hint = getString(R.string.please_type_your_password)
+//            }
+//        }
 
         return binding.root
     }
