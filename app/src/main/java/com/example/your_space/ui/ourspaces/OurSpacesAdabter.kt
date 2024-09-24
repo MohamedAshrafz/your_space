@@ -15,7 +15,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.your_space.R
 import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.databinding.CoworkingSpaceItemBinding
-import com.example.your_space.network.Constants.BASE_URL
+import com.example.your_space.network.Constants
 import com.example.your_space.network.DEFAULT_IMAGE_INDEX
 import com.example.your_space.network.Paths
 import com.example.your_space.repository.AppRepository
@@ -98,9 +98,9 @@ fun bindImage(imageView: ImageView, imageUrl: String?) {
 fun bindImage(imageView: ImageView, spaceId: String?, index: String?) {
 
     val imageUrl = if (index == null) {
-        "$BASE_URL${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$DEFAULT_IMAGE_INDEX"
+        "${Constants.getBaseUrl()}${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$DEFAULT_IMAGE_INDEX"
     } else {
-        "$BASE_URL${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$index"
+        "${Constants.getBaseUrl()}${Paths.IMAGE_VS_SPACEID_ENDPOINT.path}$spaceId/$index"
     }
 
     val repository = AppRepository.getInstance(imageView.context)

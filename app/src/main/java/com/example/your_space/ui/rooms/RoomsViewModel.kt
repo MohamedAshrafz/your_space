@@ -1,9 +1,14 @@
 package com.example.your_space.ui.rooms
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.example.your_space.database.SpaceRoomDB
-import com.example.your_space.database.WorkingSpaceDB
 import com.example.your_space.repository.AppRepository
 import kotlinx.coroutines.launch
 
@@ -32,10 +37,6 @@ class RoomsViewModel(app: Application, private val spaceIdString: String) : Andr
     private val _selectedRoomItem = MutableLiveData<SpaceRoomDB?>()
     val selectedRoomItem: LiveData<SpaceRoomDB?>
         get() = _selectedRoomItem
-
-    private val _imageString = MutableLiveData("http://192.168.1.12:8080/api/images/1")
-    val imageString: LiveData<String>
-        get() = _imageString
 
 
     private var _isSwipeRefreshing = MutableLiveData(false)

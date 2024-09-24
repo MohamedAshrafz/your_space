@@ -22,9 +22,9 @@ import com.example.your_space.repository.AppRepository
 fun bindImage(imageView: ImageView, roomId: String?, index: String?) {
 
     val imageUrl = if (index == null) {
-        "${Constants.BASE_URL}$IMAGE_VS_ROOMID_ENDPOINT$roomId/$DEFAULT_IMAGE_INDEX"
+        "${Constants.getBaseUrl()}$IMAGE_VS_ROOMID_ENDPOINT$roomId/$DEFAULT_IMAGE_INDEX"
     } else {
-        "${Constants.BASE_URL}$IMAGE_VS_ROOMID_ENDPOINT$roomId/$index"
+        "${Constants.getBaseUrl()}$IMAGE_VS_ROOMID_ENDPOINT$roomId/$index"
     }
 
     val repository = AppRepository.getInstance(imageView.context)

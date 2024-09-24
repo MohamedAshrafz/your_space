@@ -15,6 +15,10 @@ class MainAuthFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        binding.welcomeLottieAnimation.setOnLongClickListener {
+//
+//        }
     }
 
     override fun onCreateView(

@@ -9,7 +9,6 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.example.your_space.R
 import com.example.your_space.network.Constants
-import com.example.your_space.network.DEFAULT_IMAGE_INDEX
 import com.example.your_space.network.IMAGE_VS_USERID_ENDPOINT
 import com.example.your_space.repository.AppRepository
 
@@ -21,7 +20,7 @@ import com.example.your_space.repository.AppRepository
 @BindingAdapter(value = ["userIdForImage"])
 fun bindImage(imageView: ImageView, userId: String?) {
 
-    val imageUrl = "${Constants.BASE_URL}$IMAGE_VS_USERID_ENDPOINT$userId"
+    val imageUrl = "${Constants.getBaseUrl()}$IMAGE_VS_USERID_ENDPOINT$userId"
 
 
     val repository = AppRepository.getInstance(imageView.context)
